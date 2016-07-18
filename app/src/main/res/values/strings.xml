@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">GGA</string>
 
+    <string name="company_name">Gaharu Gading</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
