@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 
+import co.crazytech.gga.hive.HiveActivity;
 import co.crazytech.gga.zbar.BarcodeScanner;
 import co.crazytech.gga.zbar.QRResult;
 
@@ -116,6 +117,10 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==QRRES && resultCode== Activity.RESULT_OK){
             QRResult qrres = new QRResult(data.getStringExtra("scanres"));
+            Intent intent = new Intent();
+            if(qrres.getType().equals("B"))intent = new Intent(this, HiveActivity.class);
+            intent.putExtras(data.getExtras());
+            startActivity(intent);
             Log.d("QR Result",qrres.toString());
         }
         super.onActivityResult(requestCode, resultCode, data);

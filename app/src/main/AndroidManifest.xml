@@ -22,6 +22,9 @@
             android:name=".zbar.BarcodeScanner"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/app_name"/>
+        <activity
+            android:name=".hive.HiveActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
     <uses-permission android:name="android.permission.CAMERA"/>
