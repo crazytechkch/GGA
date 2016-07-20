@@ -1,44 +1,70 @@
 package co.crazytech.gga.hive;
 
+import android.content.Context;
+
 import java.math.BigDecimal;
 
+import co.crazytech.gga.R;
+import co.crazytech.gga.farm.Farm;
+import co.crazytech.gga.supplement.EntityStatus;
 import co.crazytech.gga.zbar.QRResult;
 
 /**
  * Created by eric on 7/19/2016.
  */
 public class Hive {
-    private int id,entityStatusId,farmId;
+    private Long id,entityStatusId,farmId;
     private int geoId;
     private Integer interv_extract,interv_inspect;
     private String nickname,geoCol,geoRow,remark;
     private BigDecimal geoLat,geoLong;
+    private Context context;
+    private Farm farm;
+    private EntityStatus entityStatus;
 
-    public Hive(QRResult qrres) {
+    public Hive(QRResult qrres, Context context) {
         geoId = qrres.getGeoId();
+        this.context = context;
+        farm = new Farm(farmId,context);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getEntityStatusId() {
+    public Farm getFarm() {
+        return farm;
+    }
+
+    public void setFarm(Farm farm) {
+        this.farm = farm;
+    }
+
+    public EntityStatus getEntityStatus() {
+        return entityStatus;
+    }
+
+    public void setEntityStatus(EntityStatus entityStatus) {
+        this.entityStatus = entityStatus;
+    }
+
+    public Long getEntityStatusId() {
         return entityStatusId;
     }
 
-    public void setEntityStatusId(int entityStatusId) {
+    public void setEntityStatusId(Long entityStatusId) {
         this.entityStatusId = entityStatusId;
     }
 
-    public int getFarmId() {
+    public Long getFarmId() {
         return farmId;
     }
 
-    public void setFarmId(int farmId) {
+    public void setFarmId(Long farmId) {
         this.farmId = farmId;
     }
 
@@ -67,7 +93,7 @@ public class Hive {
     }
 
     public String getNickname() {
-        return nickname;
+        return nickname!=null?nickname:context.getString(R.string.hive);
     }
 
     public void setNickname(String nickname) {
