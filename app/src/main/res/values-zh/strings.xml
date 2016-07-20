@@ -6,4 +6,15 @@
     <string name="navigation_drawer_close">关闭导航栏</string>
     <string name="navigation_drawer_open">打开导航栏</string>
     <string name="hive">蜂窝</string>
+    <string name="gaharu">沉香</string>
+    <string name="gaharu_tree">沉香树</string>
+    <string name="col_row">列行</string>
+    <string name="extraction_rec">提取记录</string>
+    <string name="inspection_rec">检视记录</string>
+    <string name="remark">备注</string>
+    <string name="add">添加</string>
+    <string name="edit">编辑</string>
+    <string name="column">列</string>
+    <string name="row">行</string>
+    <string name="nickname">昵称</string>
 </resources>

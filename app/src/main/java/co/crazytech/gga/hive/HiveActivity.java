@@ -17,15 +17,16 @@ public class HiveActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hive);
+        setContentView(R.layout.agroasset);
 
         QRResult qrres = new QRResult(getIntent().getStringExtra("scanres"));
         hive = new Hive(qrres,this);
 
         tvId = (TextView)findViewById(R.id.textViewId);
         tvId.setText(qrres.getType()+hive.getGeoId()+" "+hive.getNickname());
-
         tvFarm = (TextView)findViewById(R.id.textViewFarm);
         tvFarm.setText(hive.getFarm().getFarmName());
+
+
     }
 }

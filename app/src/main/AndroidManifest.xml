@@ -25,6 +25,9 @@
         <activity
             android:name=".hive.HiveActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".hive.HiveEditActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
     <uses-permission android:name="android.permission.CAMERA"/>
