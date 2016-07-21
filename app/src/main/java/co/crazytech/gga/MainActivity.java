@@ -1,7 +1,11 @@
 package co.crazytech.gga;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -117,13 +121,31 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==QRRES && resultCode== Activity.RESULT_OK){
-            QRResult qrres = new QRResult(data.getStringExtra("scanres"));
+            String qrresStr = data.getStringExtra("scanres");
             Intent intent = new Intent();
-            if(qrres.getType().equals("B"))intent = new Intent(this, HiveEditActivity.class);
-            intent.putExtras(data.getExtras());
+            if(qrresStr.contains("https://www.facebook.com")) {
+                intent = newFacebookIntent(this.getPackageManager(),qrresStr);
+            }
+            else {
+                QRResult qrres = new QRResult(qrresStr);
+                intent = new Intent(this, HiveEditActivity.class);
+                intent.putExtras(data.getExtras());
+            }
             startActivity(intent);
-            Log.d("QR Result",qrres.toString());
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public static Intent newFacebookIntent(PackageManager pm, String url) {
+        Uri uri = Uri.parse(url);
+        try {
+            ApplicationInfo applicationInfo = pm.getApplicationInfo("com.facebook.katana", 0);
+            if (applicationInfo.enabled) {
+                // http://stackoverflow.com/a/24547437/1048340
+                uri = Uri.parse("fb://facewebmodal/f?href=" + url);
+            }
+        } catch (PackageManager.NameNotFoundException ignored) {
+        }
+        return new Intent(Intent.ACTION_VIEW, uri);
     }
 }
