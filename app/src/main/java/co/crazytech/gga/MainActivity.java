@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity
         if(requestCode==QRRES && resultCode== Activity.RESULT_OK){
             String qrresStr = data.getStringExtra("scanres");
             Intent intent = new Intent();
-            if(qrresStr.contains("https://www.facebook.com")) {
+            if(qrresStr.contains("https://www.facebook.com/GaharuGading")) {
                 intent = newFacebookIntent(this.getPackageManager(),qrresStr);
             }
             else {
