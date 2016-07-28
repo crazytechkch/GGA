@@ -29,11 +29,19 @@
             android:name=".agroasset.AgroassetEditActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".hive.HiveActivity"
+            android:name=".agroasset.hive.HiveActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".hive.HiveEditActivity"
+            android:name=".agroasset.hive.HiveEditActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".agroasset.tree.TreeActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".agroasset.tree.TreeEditActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".agroasset.hive.HiveListActivity"/>
+        <activity android:name=".agroasset.tree.TreeListActivity"/>
     </application>
 
     <uses-permission android:name="android.permission.CAMERA"/>

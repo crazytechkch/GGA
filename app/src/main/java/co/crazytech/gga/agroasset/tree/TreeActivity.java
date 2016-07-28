@@ -1,17 +1,13 @@
-package co.crazytech.gga.hive;
+package co.crazytech.gga.agroasset.tree;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.widget.TextView;
 
-import co.crazytech.gga.R;
 import co.crazytech.gga.agroasset.AgroassetActivity;
-import co.crazytech.gga.zbar.QRResult;
 
 /**
  * Created by eric on 7/19/2016.
  */
-public class HiveActivity extends AgroassetActivity {
+public class TreeActivity extends AgroassetActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

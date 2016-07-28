@@ -1,10 +1,7 @@
-package co.crazytech.gga.hive;
+package co.crazytech.gga.agroasset.hive;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import co.crazytech.gga.R;
 import co.crazytech.gga.agroasset.AgroassetEditActivity;
@@ -22,5 +19,6 @@ public class HiveEditActivity extends AgroassetEditActivity {
         hive = new Hive(qrres,this);
         setAgroasset(hive);
         super.onCreate(savedInstanceState);
+        Toast.makeText(this,getString(R.string.hive),Toast.LENGTH_LONG).show();
      }
 }

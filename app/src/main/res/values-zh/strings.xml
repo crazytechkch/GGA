@@ -9,7 +9,7 @@
     <string name="gaharu">沉香</string>
     <string name="gaharu_tree">沉香树</string>
     <string name="col_row">列行</string>
-    <string name="extraction_rec">提取记录</string>
+    <string name="extraction_rec">收割记录</string>
     <string name="inspection_rec">检视记录</string>
     <string name="remark">备注</string>
     <string name="add">添加</string>
@@ -17,4 +17,10 @@
     <string name="column">列</string>
     <string name="row">行</string>
     <string name="nickname">昵称</string>
+    <string name="infusion_rec">注射记录</string>
+    <string name="scan">扫描</string>
+    <string name="extraction_pending">等待收割</string>
+    <string name="inspection_pending">等待检视</string>
+    <string name="infusion_pending">等待注射</string>
+    <string name="view_all">查看全部</string>
 </resources>

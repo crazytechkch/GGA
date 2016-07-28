@@ -1,13 +1,10 @@
-package co.crazytech.gga.hive;
+package co.crazytech.gga.agroasset.hive;
 
 import android.content.Context;
-
-import java.math.BigDecimal;
 
 import co.crazytech.gga.R;
 import co.crazytech.gga.agroasset.Agroasset;
 import co.crazytech.gga.farm.Farm;
-import co.crazytech.gga.supplement.EntityStatus;
 import co.crazytech.gga.zbar.QRResult;
 
 /**
@@ -20,5 +17,10 @@ public class Hive extends Agroasset {
         setGeoId(qrres.getGeoId());
         setContext(context);
         setFarm(new Farm(getFarmId(),context));
+    }
+
+    @Override
+    public String getNickname() {
+        return super.getNickname()!=null||!super.getNickname().equals("")?super.getNickname():getContext().getString(R.string.hive);
     }
 }

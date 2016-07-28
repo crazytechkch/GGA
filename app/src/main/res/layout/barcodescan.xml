@@ -22,7 +22,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="Scan" />
+            android:background="@drawable/coloraccentsel"
+            android:textAllCaps="true"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textColor="@android:color/white"
+            android:text="@string/scan" />
     </LinearLayout>
 
 </LinearLayout>

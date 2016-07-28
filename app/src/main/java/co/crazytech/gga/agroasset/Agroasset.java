@@ -96,7 +96,7 @@ public class Agroasset {
     }
 
     public String getNickname() {
-        return nickname!=null?nickname:context.getString(R.string.hive);
+        return nickname!=null?nickname:"";
     }
 
     public void setNickname(String nickname) {

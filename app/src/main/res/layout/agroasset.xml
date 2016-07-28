@@ -63,20 +63,42 @@
                     android:id="@+id/fabAddImage"/>
             </ImageSwitcher>
 
-            <Button
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/extraction_rec"
-                android:enabled="false"
-                android:id="@+id/buttonExtractRec" />
+                android:layout_height="80dp">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/inspection_rec"
-                android:enabled="false"
-                android:id="@+id/buttonInspectRec" />
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".33"
+                    android:text="@string/inspection_rec"
+                    android:src="@drawable/detectivesel"
+                    android:background="@drawable/backgroundsel"
+                    android:scaleType="fitCenter"
+                    android:id="@+id/buttonInspectRec" />
 
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".33"
+                    android:text="@string/extraction_rec"
+                    android:src="@drawable/sicklesel"
+                    android:background="@drawable/backgroundsel"
+                    android:scaleType="fitCenter"
+                    android:id="@+id/buttonExtractRec" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".33"
+                    android:text="@string/infusion_rec"
+                    android:src="@drawable/syringesel"
+                    android:background="@drawable/backgroundsel"
+                    android:scaleType="fitCenter"
+                    android:id="@+id/buttonInfuseRec" />
+
+            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -94,5 +116,7 @@
         android:layout_weight=".1"
         android:text="@string/edit"
         android:textAllCaps="true"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:textColor="@android:color/white"
         android:id="@+id/buttonEdit" />
 </LinearLayout>

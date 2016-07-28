@@ -2,16 +2,16 @@ package co.crazytech.gga.agroasset;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import co.crazytech.gga.R;
-import co.crazytech.gga.hive.Hive;
 import co.crazytech.gga.zbar.QRResult;
 
 /**
  * Created by eric on 7/19/2016.
  */
-public class AgroassetActivity extends Activity {
+public class AgroassetActivity extends AppCompatActivity {
     private TextView tvId,tvFarm;
     private Agroasset agroasset;
 

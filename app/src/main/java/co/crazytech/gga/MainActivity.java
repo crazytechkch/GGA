@@ -19,10 +19,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
+import android.widget.ImageButton;
 
-import co.crazytech.gga.hive.HiveActivity;
-import co.crazytech.gga.hive.HiveEditActivity;
+import co.crazytech.gga.agroasset.hive.HiveEditActivity;
+import co.crazytech.gga.agroasset.hive.HiveListActivity;
+import co.crazytech.gga.agroasset.tree.TreeEditActivity;
+import co.crazytech.gga.agroasset.tree.TreeListActivity;
 import co.crazytech.gga.zbar.BarcodeScanner;
 import co.crazytech.gga.zbar.QRResult;
 
@@ -59,6 +61,24 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        ImageButton btnHive = (ImageButton)findViewById(R.id.buttonHive);
+        btnHive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), HiveListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton btnTree = (ImageButton)findViewById(R.id.buttonTree);
+        btnTree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), TreeListActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -128,7 +148,8 @@ public class MainActivity extends AppCompatActivity
             }
             else {
                 QRResult qrres = new QRResult(qrresStr);
-                intent = new Intent(this, HiveEditActivity.class);
+                if(qrres.getType().equals("B"))intent = new Intent(this, HiveEditActivity.class);
+                if(qrres.getType().equals("T")) intent = new Intent(this, TreeEditActivity.class);
                 intent.putExtras(data.getExtras());
             }
             startActivity(intent);

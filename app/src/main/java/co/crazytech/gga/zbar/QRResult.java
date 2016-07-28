@@ -14,7 +14,7 @@ public class QRResult {
         farm = new Integer(decodedArr[2]);
         String typeId = decodedArr[3];
         geoId = new Integer(typeId.substring(1,typeId.length()));
-        type = typeId.substring(0,1);
+        type = typeId.substring(0,1).trim();
     }
 
     public int getCountry() {
