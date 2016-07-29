@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GGA.iml" filepath="$PROJECT_DIR$/GGA.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ctcommons/ctcommons.iml" filepath="$PROJECT_DIR$/ctcommons/ctcommons.iml" />
     </modules>
   </component>
 </project>
