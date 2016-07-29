@@ -19,10 +19,12 @@ public class TreeListActivity extends AgroassetListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTitle(R.string.gaharu_tree);
         List<AgroassetGroup> agrogrps = new ArrayList<AgroassetGroup>();
+        String sql = "";
         agrogrps.add(new AgroassetGroup(getString(R.string.extraction_pending), R.drawable.sickle,new ArrayList<Agroasset>()));
         agrogrps.add(new AgroassetGroup(getString(R.string.inspection_pending), R.drawable.detective,new ArrayList<Agroasset>()));
         agrogrps.add(new AgroassetGroup(getString(R.string.infusion_pending), R.drawable.syringe,new ArrayList<Agroasset>()));
-        agrogrps.add(new AgroassetGroup(getString(R.string.view_all), R.drawable.tree,new ArrayList<Agroasset>()));
+        sql = "select id,geo_id,nickname from tree order by date desc";
+        agrogrps.add(new AgroassetGroup(getString(R.string.view_all), R.drawable.tree,agroassets(sql)));
         setListAdapter(new AgroassetListAdapter(this,agrogrps));
         super.onCreate(savedInstanceState);
     }

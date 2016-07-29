@@ -25,6 +25,12 @@ public class Agroasset {
     public Agroasset() {
     }
 
+    public Agroasset(Long id, int geoId, String nickname) {
+        this.id = id;
+        this.geoId = geoId;
+        this.nickname = nickname;
+    }
+
     public Agroasset(QRResult qrres, Context context) {
         geoId = qrres.getGeoId();
         this.context = context;
