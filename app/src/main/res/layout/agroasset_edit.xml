@@ -21,15 +21,25 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:maxLength="1"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:hint="@string/column"
+                    android:id="@+id/editTextColumn" />
 
                 <EditText
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
+                    android:layout_height="match_parent"
+                    android:digits="1234567890"
+                    android:maxLength="4"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textStyle="bold"
-                    android:hint="ID"
-                    android:id="@+id/editTextId" />
+                    android:hint="@string/row"
+                    android:id="@+id/editTextRow" />
+
+
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -44,25 +54,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="end">
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:hint="@string/column"
-                        android:id="@+id/editTextColumn" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="-"/>
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:hint="@string/row"
-                        android:id="@+id/editTextRow" />
+                        android:layout_gravity="center_vertical"
+                        android:hint="ID"
+                        android:id="@+id/textViewId" />
+
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -70,8 +69,11 @@
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:id="@+id/spinnerFarm" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerStatus" />
 
             <ImageSwitcher
                 android:layout_width="match_parent"

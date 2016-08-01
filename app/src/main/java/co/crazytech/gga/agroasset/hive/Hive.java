@@ -19,8 +19,5 @@ public class Hive extends Agroasset {
         setFarm(new Farm(getFarmId(),context));
     }
 
-    @Override
-    public String getNickname() {
-        return super.getNickname()!=null||!super.getNickname().equals("")?super.getNickname():getContext().getString(R.string.hive);
-    }
-}
+
+ }

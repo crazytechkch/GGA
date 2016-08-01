@@ -28,17 +28,26 @@
                     android:layout_gravity="start"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textStyle="bold"
+                    android:text="@string/col_row"
+                    android:id="@+id/textViewColRow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textStyle="bold"
                     android:text="@string/hive"
-                    android:id="@+id/textViewId" />
+                    android:id="@+id/textViewNickName" />
 
                 <TextView
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="end"
                     android:textAlignment="textEnd"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/col_row"
-                    android:id="@+id/textViewColRow" />
+                    android:textAppearance="?android:attr/textAppearance"
+                    android:text="ID"
+                    android:id="@+id/textViewId" />
             </LinearLayout>
 
             <TextView

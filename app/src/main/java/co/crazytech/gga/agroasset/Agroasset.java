@@ -13,9 +13,9 @@ import co.crazytech.gga.zbar.QRResult;
  * Created by eric on 7/19/2016.
  */
 public class Agroasset {
-    private Long id,entityStatusId,farmId;
+    private Long id,entityStatusId,farmId,date;
     private int geoId;
-    private Integer interv_extract,interv_inspect;
+    private Integer intervExtract,intervInspect;
     private String nickname,geoCol,geoRow,remark;
     private BigDecimal geoLat,geoLong;
     private Context context;
@@ -30,6 +30,8 @@ public class Agroasset {
         this.geoId = geoId;
         this.nickname = nickname;
     }
+
+
 
     public Agroasset(QRResult qrres, Context context) {
         geoId = qrres.getGeoId();
@@ -77,6 +79,14 @@ public class Agroasset {
         this.farmId = farmId;
     }
 
+    public Long getDate() {
+        return date;
+    }
+
+    public void setDate(Long date) {
+        this.date = date;
+    }
+
     public int getGeoId() {
         return geoId;
     }
@@ -85,24 +95,24 @@ public class Agroasset {
         this.geoId = geoId;
     }
 
-    public Integer getInterv_extract() {
-        return interv_extract;
+    public Integer getIntervExtract() {
+        return intervExtract;
     }
 
-    public void setInterv_extract(Integer interv_extract) {
-        this.interv_extract = interv_extract;
+    public void setIntervExtract(Integer interv_extract) {
+        this.intervExtract = interv_extract;
     }
 
-    public Integer getInterv_inspect() {
-        return interv_inspect;
+    public Integer getIntervInspect() {
+        return intervInspect;
     }
 
-    public void setInterv_inspect(Integer interv_inspect) {
-        this.interv_inspect = interv_inspect;
+    public void setIntervInspect(Integer interv_inspect) {
+        this.intervInspect = interv_inspect;
     }
 
     public String getNickname() {
-        return nickname!=null?nickname:"";
+        return nickname;
     }
 
     public void setNickname(String nickname) {
@@ -155,5 +165,24 @@ public class Agroasset {
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    public String dbUpdate(String table) {
+        return "update "+table+" set nickname="+getNickname()+
+                ", geo_lat="+getGeoLat()+
+                ", geo_long="+getGeoLong()+
+                ", geo_col="+getGeoCol()+
+                ", geo_row="+getGeoRow()+
+                ", interv_extract="+getIntervExtract()+
+                ", interv_inspect="+getIntervExtract()+
+                ", remark="+getRemark()+
+                " where id="+getId();
+    }
+
+    public String dbInsert(String table) {
+        return "insert into "+table+" values ("+
+                getId()+","+getEntityStatusId()+","+getFarmId()+",'"+getNickname()+"',"+getDate()+","+
+                getGeoId()+","+getGeoLat()+","+getGeoLong()+",'"+getGeoCol()+"','"+getGeoRow()+"',"+
+                getIntervExtract()+","+getIntervInspect()+",'"+getRemark()+"')";
     }
 }

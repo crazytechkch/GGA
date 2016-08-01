@@ -4,6 +4,7 @@ import android.content.Context;
 
 import co.crazytech.gga.R;
 import co.crazytech.gga.agroasset.Agroasset;
+import co.crazytech.gga.db.PersistanceManager;
 import co.crazytech.gga.farm.Farm;
 import co.crazytech.gga.zbar.QRResult;
 

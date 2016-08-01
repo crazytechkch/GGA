@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Map;
 
 /**
  * Created by eric on 7/29/2016.
@@ -35,13 +36,8 @@ public class PersistanceManager {
 
 
 
-    public boolean rowExists(String table, String whereClause, String[] params){
-        String[] where = whereClause.split("\\?");
-        whereClause = "";
-        for (int i = 0; i < params.length; i++) {
-            whereClause+=(where[i]+params[i]);
-        }
-        String query = "SELECT EXISTS(SELECT 1 FROM "+table+" WHERE "+whereClause+" LIMIT 1)";
+    public boolean rowExists(String table, String whereClause){
+        String query = "SELECT EXISTS(SELECT 1 FROM "+table+(whereClause.length()>0?(" WHERE "+whereClause):"")+" LIMIT 1)";
         Cursor cursor = db.rawQuery(query, null);
         cursor.moveToFirst();
         int result = cursor.getInt(0);

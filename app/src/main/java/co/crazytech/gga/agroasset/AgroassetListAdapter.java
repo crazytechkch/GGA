@@ -2,7 +2,6 @@ package co.crazytech.gga.agroasset;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,15 +76,17 @@ public class AgroassetListAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
+
+
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView==null){
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.agroasset_listitem,null);
+            convertView = inflater.inflate(R.layout.simple_listitem,null);
         }
         TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
         Agroasset agroasset = agrogrps.get(groupPosition).getAgroassets().get(childPosition);
-        txtTitle.setText(agroasset.getGeoId()+" "+agroasset.getNickname());
+        txtTitle.setText(agroasset.getGeoCol()+agroasset.getGeoRow()+" "+agroasset.getNickname());
         return convertView;
     }
 

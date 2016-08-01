@@ -23,8 +23,10 @@ public class TreeEditActivity extends AgroassetEditActivity {
         tree = new Tree(qrres,this);
         setAgroasset(tree);
         super.onCreate(savedInstanceState);
-        ImageButton btnInfuseRec = (ImageButton)findViewById(R.id.buttonInfuseRec);
-        btnInfuseRec.setVisibility(View.VISIBLE);
+        getBtnInfuseRec().setVisibility(View.VISIBLE);
+        getBtnDone().setOnClickListener(doneListener("tree"));
         Toast.makeText(this,getString(R.string.gaharu_tree),Toast.LENGTH_LONG).show();
      }
+
+
 }

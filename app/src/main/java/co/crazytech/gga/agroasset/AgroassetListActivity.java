@@ -4,19 +4,27 @@ import android.app.ExpandableListActivity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ExpandableListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import co.crazytech.gga.R;
 import co.crazytech.gga.db.PersistanceManager;
 
 /**
  * Created by eric on 7/28/2016.
  */
-public class AgroassetListActivity extends ExpandableListActivity{
+public class AgroassetListActivity extends AppCompatActivity{
+    ExpandableListView expandableListView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.agroasset_listview);
+        expandableListView = (ExpandableListView)findViewById(R.id.expandableListView);
+
     }
 
     protected List<Agroasset> agroassets(String sql) {
@@ -37,4 +45,14 @@ public class AgroassetListActivity extends ExpandableListActivity{
         pm.close();
         return agroassets;
     }
+
+    public void setListAdapter(AgroassetListAdapter adapter){
+        expandableListView.setAdapter(adapter);
+    }
+
+    public void setOnChildClickListener(ExpandableListView.OnChildClickListener listener){
+        expandableListView.setOnChildClickListener(listener);
+    }
+
+
 }

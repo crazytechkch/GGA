@@ -23,8 +23,6 @@ public class AgroassetActivity extends AppCompatActivity {
         QRResult qrres = new QRResult(getIntent().getStringExtra("scanres"));
         agroasset = new Agroasset(qrres,this);
 
-        tvId = (TextView)findViewById(R.id.textViewId);
-        tvId.setText(qrres.getType()+ agroasset.getGeoId()+" "+ agroasset.getNickname());
         tvFarm = (TextView)findViewById(R.id.textViewFarm);
         tvFarm.setText(agroasset.getFarm().getFarmName());
 
