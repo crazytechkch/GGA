@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ctcommons</string>
+    <string name="succes">成功</string>
+    <string name="error">糟糕 出错了</string>
+</resources>

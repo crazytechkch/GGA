@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ctcommons</string>
+    <string name="succes">Success</string>
+    <string name="error">Oops... Something Went Wrong</string>
 </resources>

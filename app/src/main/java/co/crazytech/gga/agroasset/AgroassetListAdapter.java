@@ -2,6 +2,7 @@ package co.crazytech.gga.agroasset;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,12 +87,13 @@ public class AgroassetListAdapter extends BaseExpandableListAdapter {
         }
         TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
         Agroasset agroasset = agrogrps.get(groupPosition).getAgroassets().get(childPosition);
+        Log.d("Agroasset Adapter",agroasset.toString());
         txtTitle.setText(agroasset.getGeoCol()+agroasset.getGeoRow()+" "+agroasset.getNickname());
         return convertView;
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+        return true;
     }
 }

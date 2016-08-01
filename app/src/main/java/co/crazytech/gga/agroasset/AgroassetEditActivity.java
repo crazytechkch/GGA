@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -29,25 +30,29 @@ import ctcommons.SimpleObject;
  * Created by eric on 7/19/2016.
  */
 public class AgroassetEditActivity extends AppCompatActivity{
-    private EditText etId,etNickname,etGeoCol,etGeoRow;
+    private EditText etId,etNickname,etGeoCol,etGeoRow,etRemark;
     private ImageButton btnInspectRec,btnExtractRec,btnInfuseRec;
     private Button btnDone;
     private Spinner spnFarm,spnStatus;
     private Agroasset agroasset;
-    private int type;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.agroasset_edit);
 
-        QRResult qrres = new QRResult(getIntent().getStringExtra("scanres"));
-        agroasset = new Hive(qrres,this);
-
         etNickname = (EditText)findViewById(R.id.editTextNickname);
         etNickname.setText(agroasset.getNickname());
         etGeoCol = (EditText)findViewById(R.id.editTextColumn);
+        etGeoCol.setText(agroasset.getGeoCol());
         etGeoRow = (EditText)findViewById(R.id.editTextRow);
+        etGeoRow.setText(agroasset.getGeoRow());
+        etRemark= (EditText)findViewById(R.id.editTextRemark);
+        etRemark.setText(agroasset.getRemark());
+
+        TextView tvId = (TextView)findViewById(R.id.textViewId);
+        tvId.setText(agroasset.getType()+agroasset.getGeoId());
 
         spnFarm = (Spinner)findViewById(R.id.spinnerFarm);
         spnFarm.setAdapter(farmAdapter());
@@ -56,11 +61,11 @@ public class AgroassetEditActivity extends AppCompatActivity{
         spnStatus.setAdapter(statusAdapter());
 
         btnInspectRec = (ImageButton)findViewById(R.id.buttonInspectRec);
-        btnInspectRec.setEnabled(false);
+        if (!isRowExists()) btnInspectRec.setEnabled(false);
         btnExtractRec = (ImageButton)findViewById(R.id.buttonExtractRec);
-        btnExtractRec.setEnabled(false);
+        if (!isRowExists()) btnExtractRec.setEnabled(false);
         btnInfuseRec = (ImageButton)findViewById(R.id.buttonInfuseRec);
-        btnInfuseRec.setEnabled(false);
+        if (!isRowExists()) btnInfuseRec.setEnabled(false);
 
         btnDone = (Button)findViewById(R.id.buttonDone);
 
@@ -153,27 +158,65 @@ public class AgroassetEditActivity extends AppCompatActivity{
         };
     }
 
+    public boolean isRowExists() {
+        PersistanceManager pm = new PersistanceManager(this);
+        if(agroasset.getType().equals("B"))return pm.pmRowExists("hive","id = "+agroasset.getId());
+        if(agroasset.getType().equals("T"))return pm.pmRowExists("tree","id = "+agroasset.getId());
+        return false;
+    }
+
     private void onDone(String assetTable) {
         PersistanceManager pm = new PersistanceManager(this);
         pm.open();
         SQLiteDatabase db = pm.getDb();
-        boolean rowExists = pm.rowExists(assetTable,"id="+getAgroasset().getId());
         try {
-            if (rowExists) {
+            getAgroasset().setEntityStatusId(spnStatus.getSelectedItemId());
+            getAgroasset().setFarmId(spnFarm.getSelectedItemId());
+            getAgroasset().setNickname(etNickname.getText().toString());
+            getAgroasset().setGeoCol(etGeoCol.getText().toString());
+            getAgroasset().setGeoRow(etGeoRow.getText().toString());
+            getAgroasset().setRemark(etRemark.getText().toString());
+            if (isRowExists()) {
                 db.execSQL(getAgroasset().dbUpdate(assetTable));
             } else {
                 getAgroasset().setId(getNewId(db,assetTable));
-                getAgroasset().setEntityStatusId(spnStatus.getSelectedItemId());
-                getAgroasset().setFarmId(spnFarm.getSelectedItemId());
-                getAgroasset().setNickname(etNickname.getText().toString());
-                getAgroasset().setGeoCol(etGeoCol.getText().toString());
                 db.execSQL(getAgroasset().dbInsert(assetTable));
             }
+            Toast.makeText(this,getString(R.string.succes),Toast.LENGTH_LONG).show();
         } catch (SQLException e){
             Log.e("Agroasset SQL",e.getMessage());
+            Toast.makeText(this,getString(R.string.error),Toast.LENGTH_LONG).show();
         }
         pm.close();
         finish();
+    }
+
+    public EditText getEtId() {
+        return etId;
+    }
+
+    public EditText getEtNickname() {
+        return etNickname;
+    }
+
+    public EditText getEtGeoCol() {
+        return etGeoCol;
+    }
+
+    public EditText getEtGeoRow() {
+        return etGeoRow;
+    }
+
+    public EditText getEtRemark() {
+        return etRemark;
+    }
+
+    public Spinner getSpnFarm() {
+        return spnFarm;
+    }
+
+    public Spinner getSpnStatus() {
+        return spnStatus;
     }
 
     public static class TYPE {

@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 
+import co.crazytech.gga.agroasset.hive.Hive;
 import co.crazytech.gga.agroasset.hive.HiveEditActivity;
 import co.crazytech.gga.agroasset.hive.HiveListActivity;
 import co.crazytech.gga.agroasset.tree.TreeEditActivity;
@@ -148,9 +149,23 @@ public class MainActivity extends AppCompatActivity
             }
             else {
                 QRResult qrres = new QRResult(qrresStr);
-                if(qrres.getType().equals("B"))intent = new Intent(this, HiveEditActivity.class);
-                if(qrres.getType().equals("T")) intent = new Intent(this, TreeEditActivity.class);
-                intent.putExtras(data.getExtras());
+                Bundle extras = new Bundle();
+                if(qrres.getType().equals("B")){
+                    intent = new Intent(this, HiveEditActivity.class);
+                    extras.putLong("id",0);
+                    extras.putInt("geoId",qrres.getGeoId());
+                    extras.putString("nickname","");
+                    extras.putString("type","B");
+                    intent.putExtras(extras);
+                }
+                if(qrres.getType().equals("T")) {
+                    intent = new Intent(this, TreeEditActivity.class);
+                    extras.putLong("id",0);
+                    extras.putInt("geoId",qrres.getGeoId());
+                    extras.putString("nickname","");
+                    extras.putString("type","T");
+                    intent.putExtras(extras);
+                }
             }
             startActivity(intent);
         }

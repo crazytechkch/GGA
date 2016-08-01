@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 
@@ -24,7 +25,6 @@ public class AgroassetListActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.agroasset_listview);
         expandableListView = (ExpandableListView)findViewById(R.id.expandableListView);
-
     }
 
     protected List<Agroasset> agroassets(String sql) {
@@ -38,7 +38,9 @@ public class AgroassetListActivity extends AppCompatActivity{
             Long id = cursor.getLong(0);
             int geoId = cursor.getInt(1);
             String nickname = cursor.getString(2);
-            agroassets.add(new Agroasset(id,geoId,nickname));
+            String geoCol = cursor.getString(3);
+            String geoRow = cursor.getString(4);
+            agroassets.add(new Agroasset(id,geoId,nickname,geoCol,geoRow));
             cursor.moveToNext();
         }
         cursor.close();

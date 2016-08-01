@@ -98,9 +98,9 @@ CREATE TABLE tree (
   geo_col VARCHAR(20) NULL,
   geo_row VARCHAR(20) NULL,
   interv_extract INTEGER UNSIGNED NULL,
-  interv_infuse INTEGER UNSIGNED NULL,
   interv_inspect INTEGER UNSIGNED NULL,
   remark TEXT NULL,
+  interv_infuse INTEGER UNSIGNED NULL,
   PRIMARY KEY(id)
 );
 

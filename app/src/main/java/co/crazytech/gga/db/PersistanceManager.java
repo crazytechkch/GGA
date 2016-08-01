@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,6 +43,17 @@ public class PersistanceManager {
         cursor.moveToFirst();
         int result = cursor.getInt(0);
         cursor.close();
+        return result==1 ? true:false;
+    }
+
+    public boolean pmRowExists(String table, String whereClause){
+        open();
+        String query = "SELECT EXISTS(SELECT 1 FROM "+table+(whereClause.length()>0?(" WHERE "+whereClause):"")+" LIMIT 1)";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        int result = cursor.getInt(0);
+        cursor.close();
+        close();
         return result==1 ? true:false;
     }
 
