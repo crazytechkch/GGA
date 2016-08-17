@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageSwitcher
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".5"
+        android:id="@+id/imageSwitcher"
+        android:layout_gravity="center_horizontal" >
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@android:drawable/ic_menu_camera"
+            android:scaleType="fitCenter"
+            android:id="@+id/fabAddImage"/>
+    </ImageSwitcher>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".5">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".95"
+            android:id="@+id/scrollView"
+            android:layout_gravity="center_horizontal" >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        android:maxLength="1"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:hint="@string/column"
+                        android:id="@+id/editTextColumn" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:digits="1234567890"
+                        android:maxLength="4"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:hint="@string/row"
+                        android:id="@+id/editTextRow" />
+
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textStyle="bold"
+                        android:hint="@string/nickname"
+                        android:id="@+id/editTextNickname" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|end"
+                        android:hint="ID"
+                        android:padding="3dp"
+                        android:id="@+id/textViewId" />
+
+                </LinearLayout>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerFarm" />
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerStatus" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
+
+                    <ImageButton
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".33"
+                        android:text="@string/inspection_rec"
+                        android:src="@drawable/detectivesel"
+                        android:background="@drawable/backgroundsel"
+                        android:scaleType="fitCenter"
+                        android:id="@+id/buttonInspectRec" />
+
+                    <ImageButton
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".33"
+                        android:text="@string/extraction_rec"
+                        android:src="@drawable/sicklesel"
+                        android:background="@drawable/backgroundsel"
+                        android:scaleType="fitCenter"
+                        android:id="@+id/buttonExtractRec" />
+
+                    <ImageButton
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".33"
+                        android:text="@string/infusion_rec"
+                        android:src="@drawable/syringesel"
+                        android:background="@drawable/backgroundsel"
+                        android:scaleType="fitCenter"
+                        android:visibility="gone"
+                        android:id="@+id/buttonInfuseRec" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/remark"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/editTextRemark" />
+            </LinearLayout>
+
+        </ScrollView>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@android:string/ok"
+            android:textAllCaps="true"
+            android:background="@drawable/coloraccentsel"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textColor="@android:color/white"
+            android:id="@+id/buttonDone" />
+    </LinearLayout>
+
+</LinearLayout>
