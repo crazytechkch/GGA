@@ -45,14 +45,14 @@ public class AgroassetEditActivity extends AppCompatActivity{
         etNickname = (EditText)findViewById(R.id.editTextNickname);
         etNickname.setText(agroasset.getNickname());
         etGeoCol = (EditText)findViewById(R.id.editTextColumn);
-        etGeoCol.setText(agroasset.getGeoCol());
+        etGeoCol.setText(agroasset.getGeoArea());
         etGeoRow = (EditText)findViewById(R.id.editTextRow);
-        etGeoRow.setText(agroasset.getGeoRow());
+        etGeoRow.setText(agroasset.getGeoAeid().toString());
         etRemark= (EditText)findViewById(R.id.editTextRemark);
         etRemark.setText(agroasset.getRemark());
 
         TextView tvId = (TextView)findViewById(R.id.textViewId);
-        tvId.setText(agroasset.getType()+agroasset.getGeoId());
+        tvId.setText(agroasset.getType()+agroasset.getGeoArea()+agroasset.getGeoAeid());
 
         spnFarm = (Spinner)findViewById(R.id.spinnerFarm);
         spnFarm.setAdapter(farmAdapter());
@@ -173,8 +173,8 @@ public class AgroassetEditActivity extends AppCompatActivity{
             getAgroasset().setEntityStatusId(spnStatus.getSelectedItemId());
             getAgroasset().setFarmId(spnFarm.getSelectedItemId());
             getAgroasset().setNickname(etNickname.getText().toString());
-            getAgroasset().setGeoCol(etGeoCol.getText().toString());
-            getAgroasset().setGeoRow(etGeoRow.getText().toString());
+            getAgroasset().setGeoArea(etGeoCol.getText().toString());
+            getAgroasset().setGeoAeid(new Integer(etGeoRow.getText().toString()));
             getAgroasset().setRemark(etRemark.getText().toString());
             if (isRowExists()) {
                 db.execSQL(getAgroasset().dbUpdate(assetTable));

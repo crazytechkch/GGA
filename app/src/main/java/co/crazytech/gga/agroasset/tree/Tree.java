@@ -17,7 +17,8 @@ public class Tree extends Agroasset {
 
 
     public Tree(QRResult qrres, Context context) {
-        setGeoId(qrres.getGeoId());
+        setGeoArea(qrres.getGeoArea());
+        setGeoAeid(qrres.getGeoAeid());
         setContext(context);
         setFarm(new Farm(getFarmId(),context));
     }
@@ -36,8 +37,8 @@ public class Tree extends Agroasset {
         return "update "+table+" set nickname='"+getNickname()+"',"+
                 "geo_lat="+getGeoLat()+","+
                 "geo_long="+getGeoLong()+","+
-                "geo_col='"+getGeoCol()+"',"+
-                "geo_row='"+getGeoRow()+"',"+
+                "geo_area='"+getGeoArea()+"',"+
+                "geo_aeid='"+getGeoAeid()+"',"+
                 "interv_extract="+getIntervExtract()+","+
                 "interv_inspect="+getIntervExtract()+","+
                 "remark='"+getRemark()+"',"+
@@ -49,7 +50,7 @@ public class Tree extends Agroasset {
     public String dbInsert(String table) {
         return "insert into "+table+" values ("+
                 getId()+","+getEntityStatusId()+","+getFarmId()+",'"+getNickname()+"',"+getDate()+","+
-                getGeoId()+","+getGeoLat()+","+getGeoLong()+",'"+getGeoCol()+"','"+getGeoRow()+"',"+
+                getGeoLat()+","+getGeoLong()+",'"+getGeoArea()+"','"+getGeoAeid()+"',"+
                 getIntervExtract()+","+getIntervInspect()+",'"+getRemark()+"',"+getIntervInfuse()+")";
     }
 

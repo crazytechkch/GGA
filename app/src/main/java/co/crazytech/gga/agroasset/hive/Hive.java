@@ -15,12 +15,13 @@ public class Hive extends Agroasset {
 
 
     public Hive(QRResult qrres, Context context) {
-        setGeoId(qrres.getGeoId());
+        setGeoArea(qrres.getGeoArea());
+        setGeoAeid(qrres.getGeoAeid());
         setContext(context);
     }
 
-    public Hive(Long id, int geoId, String nickname, String geoCol, String geoRow) {
-        super(id, geoId, nickname,geoCol,geoRow);
+    public Hive(Long id, String nickname, String geoArea, int geoAeid) {
+        super(id, nickname,geoArea,geoAeid);
     }
 
     public Hive(Context context, Bundle extras, String assetTable) {

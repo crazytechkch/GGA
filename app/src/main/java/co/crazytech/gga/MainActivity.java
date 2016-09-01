@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import co.crazytech.gga.agroasset.hive.Hive;
 import co.crazytech.gga.agroasset.hive.HiveEditActivity;
@@ -144,16 +145,19 @@ public class MainActivity extends AppCompatActivity
         if(requestCode==QRRES && resultCode== Activity.RESULT_OK){
             String qrresStr = data.getStringExtra("scanres");
             Intent intent = new Intent();
-            if(qrresStr.contains("https://www.facebook.com/GaharuGading")) {
+            QRResult qrres = new QRResult(qrresStr);
+            if (qrres.resType().equals("fb")){
                 intent = newFacebookIntent(this.getPackageManager(),qrresStr);
+                startActivity(intent);
             }
-            else {
-                QRResult qrres = new QRResult(qrresStr);
+            else if(qrres.resType().equals("gga")){
+                qrres = new QRResult(qrresStr);
                 Bundle extras = new Bundle();
                 if(qrres.getType().equals("B")){
                     intent = new Intent(this, HiveEditActivity.class);
                     extras.putLong("id",0);
-                    extras.putInt("geoId",qrres.getGeoId());
+                    extras.putString("geoArea",qrres.getGeoArea());
+                    extras.putInt("geoAeid",qrres.getGeoAeid());
                     extras.putString("nickname","");
                     extras.putString("type","B");
                     intent.putExtras(extras);
@@ -161,13 +165,15 @@ public class MainActivity extends AppCompatActivity
                 if(qrres.getType().equals("T")) {
                     intent = new Intent(this, TreeEditActivity.class);
                     extras.putLong("id",0);
-                    extras.putInt("geoId",qrres.getGeoId());
+                    extras.putString("geoArea",qrres.getGeoArea());
+                    extras.putInt("geoAeid",qrres.getGeoAeid());
                     extras.putString("nickname","");
                     extras.putString("type","T");
                     intent.putExtras(extras);
                 }
+                startActivity(intent);
             }
-            startActivity(intent);
+            else Toast.makeText(this,"Non GGA QR code",Toast.LENGTH_LONG).show();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

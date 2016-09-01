@@ -29,7 +29,7 @@ public class TreeListActivity extends AgroassetListActivity {
         agrogrps.add(new AgroassetGroup(getString(R.string.extraction_pending), R.drawable.sickle,new ArrayList<Agroasset>()));
         agrogrps.add(new AgroassetGroup(getString(R.string.inspection_pending), R.drawable.detective,new ArrayList<Agroasset>()));
         agrogrps.add(new AgroassetGroup(getString(R.string.infusion_pending), R.drawable.syringe,new ArrayList<Agroasset>()));
-        sql = "select id,geo_id,nickname,geo_col,geo_row from tree order by date desc";
+        sql = "select id,nickname,geo_area,geo_aeid from tree order by date desc";
         agrogrps.add(new AgroassetGroup(getString(R.string.view_all), R.drawable.tree,agroassets(sql)));
         setListAdapter(new AgroassetListAdapter(this,agrogrps));
         setOnChildClickListener(childClickListener());
@@ -42,7 +42,8 @@ public class TreeListActivity extends AgroassetListActivity {
                 Agroasset asset = agrogrps.get(groupPosition).getAgroassets().get(childPosition);
                 Bundle data = new Bundle();
                 data.putLong("id",asset.getId());
-                data.putInt("geoId",asset.getGeoId());
+                data.putString("geoArea",asset.getGeoArea());
+                data.putInt("geoAeid",asset.getGeoAeid());
                 data.putString("nickname",asset.getNickname());
                 data.putString("type","T");
                 Intent intent = new Intent(parent.getContext(),TreeEditActivity.class);

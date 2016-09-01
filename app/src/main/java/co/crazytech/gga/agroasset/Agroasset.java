@@ -20,9 +20,8 @@ import co.crazytech.gga.zbar.QRResult;
  */
 public class Agroasset {
     private Long id,entityStatusId,farmId,date;
-    private int geoId;
-    private Integer intervExtract,intervInspect;
-    private String nickname,geoCol,geoRow,remark,type;
+    private Integer intervExtract,intervInspect,geoAeid;
+    private String nickname,geoArea,remark,type;
     private BigDecimal geoLat,geoLong;
     private Context context;
     private Farm farm;
@@ -31,12 +30,11 @@ public class Agroasset {
     public Agroasset() {
     }
 
-    public Agroasset(Long id, int geoId, String nickname, String geoCol, String geoRow) {
+    public Agroasset(Long id, String nickname, String geoArea, int geoAeid) {
         this.id = id;
-        this.geoId = geoId;
         this.nickname = nickname;
-        this.geoCol = geoCol;
-        this.geoRow = geoRow;
+        this.geoArea = geoArea;
+        this.geoAeid = geoAeid;
     }
 
     public Agroasset(Context context, Bundle extras, String assetTable) {
@@ -53,17 +51,17 @@ public class Agroasset {
                 farmId = cursor.getLong(2);
                 nickname = cursor.getString(3);
                 date = cursor.getLong(4);
-                geoId = cursor.getInt(5);
-                geoLat = new BigDecimal(cursor.getDouble(6));
-                geoLong = new BigDecimal(cursor.getDouble(7));
-                geoCol = cursor.getString(8);
-                geoRow = cursor.getString(9);
-                intervExtract = cursor.getInt(10);
-                intervInspect = cursor.getInt(11);
-                remark = cursor.getString(12);
+                geoLat = new BigDecimal(cursor.getDouble(5));
+                geoLong = new BigDecimal(cursor.getDouble(6));
+                geoArea = cursor.getString(7);
+                geoAeid = cursor.getInt(8);
+                intervExtract = cursor.getInt(9);
+                intervInspect = cursor.getInt(10);
+                remark = cursor.getString(11);
                 type = extras.getString("type");
             } else {
-                geoId = extras.getInt("geoId");
+                geoArea = extras.getString("geoArea");
+                geoAeid = extras.getInt("geoAeid");
                 nickname = extras.getString("nickname");
                 type = extras.getString("type");
             }
@@ -77,7 +75,8 @@ public class Agroasset {
 
 
     public Agroasset(QRResult qrres, Context context) {
-        geoId = qrres.getGeoId();
+        geoArea = qrres.getGeoArea();
+        geoAeid = qrres.getGeoAeid();
         this.context = context;
         farm = new Farm(farmId,context);
     }
@@ -130,12 +129,20 @@ public class Agroasset {
         this.date = date;
     }
 
-    public int getGeoId() {
-        return geoId;
+    public String getGeoArea() {
+        return geoArea;
     }
 
-    public void setGeoId(int geoId) {
-        this.geoId = geoId;
+    public void setGeoArea(String geoArea) {
+        this.geoArea = geoArea;
+    }
+
+    public Integer getGeoAeid() {
+        return geoAeid;
+    }
+
+    public void setGeoAeid(Integer geoAeid) {
+        this.geoAeid = geoAeid;
     }
 
     public Integer getIntervExtract() {
@@ -160,22 +167,6 @@ public class Agroasset {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
-    }
-
-    public String getGeoCol() {
-        return geoCol;
-    }
-
-    public void setGeoCol(String geoCol) {
-        this.geoCol = geoCol;
-    }
-
-    public String getGeoRow() {
-        return geoRow;
-    }
-
-    public void setGeoRow(String geoRow) {
-        this.geoRow = geoRow;
     }
 
     public String getType() {
@@ -222,8 +213,8 @@ public class Agroasset {
         return "update "+table+" set nickname='"+getNickname()+"',"+
                 "geo_lat="+getGeoLat()+","+
                 "geo_long="+getGeoLong()+","+
-                "geo_col='"+getGeoCol()+"',"+
-                "geo_row='"+getGeoRow()+"',"+
+                "geo_area='"+getGeoArea()+"',"+
+                "geo_aeid='"+getGeoAeid()+"',"+
                 "interv_extract="+getIntervExtract()+","+
                 "interv_inspect="+getIntervExtract()+","+
                 "remark='"+getRemark()+"'"+
@@ -233,12 +224,12 @@ public class Agroasset {
     public String dbInsert(String table) {
         return "insert into "+table+" values ("+
                 getId()+","+getEntityStatusId()+","+getFarmId()+",'"+getNickname()+"',"+getDate()+","+
-                getGeoId()+","+getGeoLat()+","+getGeoLong()+",'"+getGeoCol()+"','"+getGeoRow()+"',"+
+                getGeoLat()+","+getGeoLong()+",'"+getGeoArea()+"','"+getGeoAeid()+"',"+
                 getIntervExtract()+","+getIntervInspect()+",'"+getRemark()+"')";
     }
 
     @Override
     public String toString() {
-        return "id:"+id+",geoId:"+geoId+",nickname:"+nickname+",geoCol:"+geoCol+",geoRow:"+geoRow;
+        return "id:"+id+",nickname:"+nickname+",geoArea:"+geoArea+",geoRow:"+geoAeid;
     }
 }

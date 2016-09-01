@@ -45,8 +45,8 @@ public class TreeEditActivity extends AgroassetEditActivity {
                     tree.setEntityStatusId(getSpnStatus().getSelectedItemId());
                     tree.setFarmId(getSpnFarm().getSelectedItemId());
                     tree.setNickname(getEtNickname().getText().toString());
-                    tree.setGeoCol(getEtGeoCol().getText().toString());
-                    tree.setGeoRow(getEtGeoRow().getText().toString());
+                    tree.setGeoArea(getEtGeoCol().getText().toString());
+                    tree.setGeoAeid(new Integer(getEtGeoRow().getText().toString()));
                     tree.setRemark(getEtRemark().getText().toString());
                     if (isRowExists()) {
                         db.execSQL(tree.dbUpdate("tree"));
