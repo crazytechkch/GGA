@@ -153,22 +153,18 @@ public class MainActivity extends AppCompatActivity
             else if(qrres.resType().equals("gga")){
                 qrres = new QRResult(qrresStr);
                 Bundle extras = new Bundle();
-                if(qrres.getType().equals("B")){
+                if(qrres.getTypeCode().equals("BA")){
                     intent = new Intent(this, HiveEditActivity.class);
                     extras.putLong("id",0);
-                    extras.putString("geoArea",qrres.getGeoArea());
-                    extras.putInt("geoAeid",qrres.getGeoAeid());
                     extras.putString("nickname","");
-                    extras.putString("type","B");
+                    extras.putString("type","BA");
                     intent.putExtras(extras);
                 }
-                if(qrres.getType().equals("T")) {
+                if(qrres.getTypeCode().equals("AA")) {
                     intent = new Intent(this, TreeEditActivity.class);
                     extras.putLong("id",0);
-                    extras.putString("geoArea",qrres.getGeoArea());
-                    extras.putInt("geoAeid",qrres.getGeoAeid());
                     extras.putString("nickname","");
-                    extras.putString("type","T");
+                    extras.putString("type","AA");
                     intent.putExtras(extras);
                 }
                 startActivity(intent);

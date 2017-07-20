@@ -75,8 +75,8 @@ public class Agroasset {
 
 
     public Agroasset(QRResult qrres, Context context) {
-        geoArea = qrres.getGeoArea();
-        geoAeid = qrres.getGeoAeid();
+//        geoArea = qrres.getGeoArea();
+//        geoAeid = qrres.getGeoAeid();
         this.context = context;
         farm = new Farm(farmId,context);
     }

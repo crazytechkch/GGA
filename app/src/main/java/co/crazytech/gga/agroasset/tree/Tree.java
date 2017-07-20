@@ -17,8 +17,8 @@ public class Tree extends Agroasset {
 
 
     public Tree(QRResult qrres, Context context) {
-        setGeoArea(qrres.getGeoArea());
-        setGeoAeid(qrres.getGeoAeid());
+//        setGeoArea(qrres.getGeoArea());
+//        setGeoAeid(qrres.getGeoAeid());
         setContext(context);
         setFarm(new Farm(getFarmId(),context));
     }

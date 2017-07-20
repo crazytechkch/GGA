@@ -15,8 +15,8 @@ public class Hive extends Agroasset {
 
 
     public Hive(QRResult qrres, Context context) {
-        setGeoArea(qrres.getGeoArea());
-        setGeoAeid(qrres.getGeoAeid());
+//        setGeoArea(qrres.getGeoArea());
+//        setGeoAeid(qrres.getGeoAeid());
         setContext(context);
     }
 
