@@ -24,6 +24,6 @@ public class HiveEditActivity extends AgroassetEditActivity {
         setAgroasset(hive);
         super.onCreate(savedInstanceState);
         getBtnDone().setOnClickListener(doneListener("agroasset"));
-        Toast.makeText(this,getString(R.string.hive)+"\n"+hive.getFarm().getFarmName(),Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"Gaharu Gading - "+getString(R.string.hive),Toast.LENGTH_LONG).show();
      }
 }

@@ -20,8 +20,8 @@ public class Hive extends Agroasset {
         setContext(context);
     }
 
-    public Hive(Long id, String nickname, String geoArea, int geoAeid) {
-        super(id, nickname,geoArea,geoAeid);
+    public Hive(Long id, String nickname, String code, String dcode) {
+        super(id, nickname, code, dcode);
     }
 
     public Hive(Context context, Bundle extras, String assetTable) {

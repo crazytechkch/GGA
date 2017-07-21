@@ -42,6 +42,8 @@ public class AgroassetEditActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.agroasset_edit);
 
+        etId = (EditText)findViewById(R.id.editTextDcode);
+        etId.setText(agroasset.getDcode());
         etNickname = (EditText)findViewById(R.id.editTextNickname);
         etNickname.setText(agroasset.getNickname());
         etRemark= (EditText)findViewById(R.id.editTextRemark);
@@ -170,6 +172,7 @@ public class AgroassetEditActivity extends AppCompatActivity{
             getAgroasset().setFarmId(spnFarm.getSelectedItemId());
             getAgroasset().setNickname(etNickname.getText().toString());
             getAgroasset().setRemark(etRemark.getText().toString());
+            getAgroasset().setDcode(etId.getText().toString());
             if (isRowExists()) {
                 db.execSQL(getAgroasset().dbUpdate(assetTable));
             } else {

@@ -37,9 +37,9 @@ public class AgroassetListActivity extends AppCompatActivity{
         while (!cursor.isAfterLast()){
             Long id = cursor.getLong(0);
             String nickname = cursor.getString(1);
-            String geoArea = cursor.getString(2);
-            int geoAeid = cursor.getInt(3);
-            agroassets.add(new Agroasset(id,nickname,geoArea,geoAeid));
+            String code = cursor.getString(2);
+            String dcode = cursor.getString(3);
+            agroassets.add(new Agroasset(id,nickname,code,dcode));
             cursor.moveToNext();
         }
         cursor.close();

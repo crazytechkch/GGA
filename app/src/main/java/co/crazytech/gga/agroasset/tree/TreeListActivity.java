@@ -29,7 +29,7 @@ public class TreeListActivity extends AgroassetListActivity {
         agrogrps.add(new AgroassetGroup(getString(R.string.extraction_pending), R.drawable.sickle,new ArrayList<Agroasset>()));
         agrogrps.add(new AgroassetGroup(getString(R.string.inspection_pending), R.drawable.detective,new ArrayList<Agroasset>()));
         agrogrps.add(new AgroassetGroup(getString(R.string.infusion_pending), R.drawable.syringe,new ArrayList<Agroasset>()));
-        sql = "select id,nickname,geo_info_id from v_tree order by date desc";
+        sql = "select id,nickname,code,dcode from v_tree order by date desc";
         agrogrps.add(new AgroassetGroup(getString(R.string.view_all), R.drawable.tree,agroassets(sql)));
         setListAdapter(new AgroassetListAdapter(this,agrogrps));
         setOnChildClickListener(childClickListener());

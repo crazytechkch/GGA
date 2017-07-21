@@ -30,9 +30,11 @@ public class Agroasset {
     public Agroasset() {
     }
 
-    public Agroasset(Long id, String nickname, String geoArea, int geoAeid) {
+    public Agroasset(Long id, String nickname, String code, String dcode) {
         this.id = id;
         this.nickname = nickname;
+        this.code = code;
+        this.dcode = dcode;
     }
 
     public Agroasset(Context context, Bundle extras, String assetTable) {
@@ -228,7 +230,9 @@ public class Agroasset {
     }
 
     public String dbUpdate(String table) {
-        return "update "+table+" set nickname='"+getNickname()+"',"+
+        return "update "+table+" set "+
+                "dcode="+checkNullString(getDcode())+","+
+                "nickname="+checkNullString(getNickname())+","+
                 "geo_info_id='"+getGeoInfoId()+"',"+
                 "interv_extract="+getIntervExtract()+","+
                 "interv_inspect="+getIntervExtract()+","+
@@ -239,18 +243,22 @@ public class Agroasset {
     public String dbInsert(String table) {
         return "insert into "+table+" values ("+
                 getId()+","+
-                getFarmId()+",'"+
+                getFarmId()+","+
                 getEntityStatusId()+","+
-                getCode()+","+
-                getDcode()+","+
-                getNickname()+"',"+
+                "'"+getCode()+"',"+
+                checkNullString(getDcode())+","+
+                checkNullString(getNickname())+","+
                 getDate()+","+
-                getGeoInfoId()+"',"+
+                getGeoInfoId()+","+
                 getIntervExtract()+","+
                 getIntervInfuse()+","+
-                getIntervInspect()+",'"+
+                getIntervInspect()+","+
                 getProdTypeId()+","+
-                getRemark()+"')";
+                checkNullString(getRemark())+")";
+    }
+
+    private String checkNullString(String value){
+        return value.length()>0?("'"+value+"'"):null;
     }
 
     @Override
