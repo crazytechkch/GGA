@@ -35,10 +35,7 @@ public class Tree extends Agroasset {
     @Override
     public String dbUpdate(String table) {
         return "update "+table+" set nickname='"+getNickname()+"',"+
-                "geo_lat="+getGeoLat()+","+
-                "geo_long="+getGeoLong()+","+
-                "geo_area='"+getGeoArea()+"',"+
-                "geo_aeid='"+getGeoAeid()+"',"+
+                "geo_info_id='"+getGeoInfoId()+"',"+
                 "interv_extract="+getIntervExtract()+","+
                 "interv_inspect="+getIntervExtract()+","+
                 "remark='"+getRemark()+"',"+
@@ -46,13 +43,7 @@ public class Tree extends Agroasset {
                 " where id="+getId();
     }
 
-    @Override
-    public String dbInsert(String table) {
-        return "insert into "+table+" values ("+
-                getId()+","+getEntityStatusId()+","+getFarmId()+",'"+getNickname()+"',"+getDate()+","+
-                getGeoLat()+","+getGeoLong()+",'"+getGeoArea()+"','"+getGeoAeid()+"',"+
-                getIntervExtract()+","+getIntervInspect()+",'"+getRemark()+"',"+getIntervInfuse()+")";
-    }
+
 
     public Integer getIntervInfuse() {
         return intervInfuse;

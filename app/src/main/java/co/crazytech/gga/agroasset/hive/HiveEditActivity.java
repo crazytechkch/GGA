@@ -20,10 +20,10 @@ public class HiveEditActivity extends AgroassetEditActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Bundle extras = getIntent().getExtras();
-        hive = new Hive(this,extras,"hive");
+        hive = new Hive(this,extras,"v_hive");
         setAgroasset(hive);
         super.onCreate(savedInstanceState);
-        Toast.makeText(this,getString(R.string.hive),Toast.LENGTH_LONG).show();
-        getBtnDone().setOnClickListener(doneListener("hive"));
+        getBtnDone().setOnClickListener(doneListener("agroasset"));
+        Toast.makeText(this,getString(R.string.hive)+"\n"+hive.getFarm().getFarmName(),Toast.LENGTH_LONG).show();
      }
 }

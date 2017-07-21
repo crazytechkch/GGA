@@ -25,43 +25,11 @@ public class TreeEditActivity extends AgroassetEditActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Bundle extras = getIntent().getExtras();
-        tree = new Tree(this,extras,"tree");
+        tree = new Tree(this,extras,"v_tree");
         setAgroasset(tree);
         super.onCreate(savedInstanceState);
         getBtnInfuseRec().setVisibility(View.VISIBLE);
-        getBtnDone().setOnClickListener(doneListener("tree"));
-        Toast.makeText(this,getString(R.string.gaharu_tree),Toast.LENGTH_LONG).show();
+        getBtnDone().setOnClickListener(doneListener("agroasset"));
+        Toast.makeText(this,getString(R.string.gaharu_tree)+"\n"+tree.getFarm().getFarmName(),Toast.LENGTH_LONG).show();
      }
-
-    @Override
-    public View.OnClickListener doneListener(String table) {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PersistanceManager pm = new PersistanceManager(v.getContext());
-                pm.open();
-                SQLiteDatabase db = pm.getDb();
-                try {
-                    tree.setEntityStatusId(getSpnStatus().getSelectedItemId());
-                    tree.setFarmId(getSpnFarm().getSelectedItemId());
-                    tree.setNickname(getEtNickname().getText().toString());
-                    tree.setGeoArea(getEtGeoCol().getText().toString());
-                    tree.setGeoAeid(new Integer(getEtGeoRow().getText().toString()));
-                    tree.setRemark(getEtRemark().getText().toString());
-                    if (isRowExists()) {
-                        db.execSQL(tree.dbUpdate("tree"));
-                    } else {
-                        tree.setId(getNewId(db,"tree"));
-                        db.execSQL(tree.dbInsert("tree"));
-                    }
-                    Toast.makeText(v.getContext(),getString(R.string.succes),Toast.LENGTH_LONG).show();
-                } catch (SQLException e){
-                    Log.e("Agroasset SQL",e.getMessage());
-                    Toast.makeText(v.getContext(),getString(R.string.error),Toast.LENGTH_LONG).show();
-                }
-                pm.close();
-                finish();
-            }
-        };
-    }
 }

@@ -157,19 +157,21 @@ public class MainActivity extends AppCompatActivity
                     intent = new Intent(this, HiveEditActivity.class);
                     extras.putLong("id",0);
                     extras.putString("nickname","");
-                    extras.putString("type","BA");
+                    extras.putLong("prodTypeId",2);
+                    extras.putString("prodCode",qrres.getProdCode());
                     intent.putExtras(extras);
                 }
                 if(qrres.getTypeCode().equals("AA")) {
                     intent = new Intent(this, TreeEditActivity.class);
                     extras.putLong("id",0);
                     extras.putString("nickname","");
-                    extras.putString("type","AA");
+                    extras.putLong("prodTypeId",1);
+                    extras.putString("prodCode",qrres.getProdCode());
                     intent.putExtras(extras);
                 }
                 startActivity(intent);
             }
-            else Toast.makeText(this,"Non GGA QR code",Toast.LENGTH_LONG).show();
+            else Toast.makeText(this,"Non Gaharu Gading code\n scanned result - "+qrresStr,Toast.LENGTH_LONG).show();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

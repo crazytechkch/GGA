@@ -19,9 +19,9 @@ import co.crazytech.gga.zbar.QRResult;
  * Created by eric on 7/19/2016.
  */
 public class Agroasset {
-    private Long id,entityStatusId,farmId,date;
-    private Integer intervExtract,intervInspect,geoAeid;
-    private String nickname,geoArea,remark,type;
+    private Long id,entityStatusId,farmId,date,geoInfoId,prodTypeId;
+    private Integer intervExtract,intervInfuse,intervInspect;
+    private String code,dcode,nickname,remark;
     private BigDecimal geoLat,geoLong;
     private Context context;
     private Farm farm;
@@ -33,8 +33,6 @@ public class Agroasset {
     public Agroasset(Long id, String nickname, String geoArea, int geoAeid) {
         this.id = id;
         this.nickname = nickname;
-        this.geoArea = geoArea;
-        this.geoAeid = geoAeid;
     }
 
     public Agroasset(Context context, Bundle extras, String assetTable) {
@@ -47,23 +45,23 @@ public class Agroasset {
             if(cursor.getCount()>0) {
                 cursor.moveToFirst();
                 id = cursor.getLong(0);
-                entityStatusId = cursor.getLong(1);
-                farmId = cursor.getLong(2);
-                nickname = cursor.getString(3);
-                date = cursor.getLong(4);
-                geoLat = new BigDecimal(cursor.getDouble(5));
-                geoLong = new BigDecimal(cursor.getDouble(6));
-                geoArea = cursor.getString(7);
-                geoAeid = cursor.getInt(8);
-                intervExtract = cursor.getInt(9);
+                farmId = cursor.getLong(1);
+                entityStatusId = cursor.getLong(2);
+                code = cursor.getString(3);
+                dcode = cursor.getString(4);
+                nickname = cursor.getString(5);
+                date = cursor.getLong(6);
+                geoInfoId = cursor.getLong(7);
+                intervExtract = cursor.getInt(8);
+                intervInfuse = cursor.getInt(9);
                 intervInspect = cursor.getInt(10);
-                remark = cursor.getString(11);
-                type = extras.getString("type");
+                prodTypeId = cursor.getLong(11);
+                remark = cursor.getString(12);
             } else {
-                geoArea = extras.getString("geoArea");
-                geoAeid = extras.getInt("geoAeid");
+                farm = new Farm(new Long("1"),this.getContext());
                 nickname = extras.getString("nickname");
-                type = extras.getString("type");
+                prodTypeId = extras.getLong("prodTypeId");
+                code = extras.getString("prodCode");
             }
             cursor.close();
         } catch (SQLException e) {
@@ -129,20 +127,12 @@ public class Agroasset {
         this.date = date;
     }
 
-    public String getGeoArea() {
-        return geoArea;
+    public Long getGeoInfoId() {
+        return geoInfoId;
     }
 
-    public void setGeoArea(String geoArea) {
-        this.geoArea = geoArea;
-    }
-
-    public Integer getGeoAeid() {
-        return geoAeid;
-    }
-
-    public void setGeoAeid(Integer geoAeid) {
-        this.geoAeid = geoAeid;
+    public void setGeoAeid(Long geoInfoId) {
+        this.geoInfoId = geoInfoId;
     }
 
     public Integer getIntervExtract() {
@@ -169,12 +159,12 @@ public class Agroasset {
         this.nickname = nickname;
     }
 
-    public String getType() {
-        return type;
+    public Long getProdTypeId() {
+        return prodTypeId;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setProdTypeId(Long prodTypeId) {
+        this.prodTypeId = prodTypeId;
     }
 
     public String getRemark() {
@@ -201,6 +191,34 @@ public class Agroasset {
         this.geoLong = geoLong;
     }
 
+    public void setGeoInfoId(Long geoInfoId) {
+        this.geoInfoId = geoInfoId;
+    }
+
+    public Integer getIntervInfuse() {
+        return intervInfuse;
+    }
+
+    public void setIntervInfuse(Integer intervInfuse) {
+        this.intervInfuse = intervInfuse;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getDcode() {
+        return dcode;
+    }
+
+    public void setDcode(String dcode) {
+        this.dcode = dcode;
+    }
+
     public Context getContext() {
         return context;
     }
@@ -211,10 +229,7 @@ public class Agroasset {
 
     public String dbUpdate(String table) {
         return "update "+table+" set nickname='"+getNickname()+"',"+
-                "geo_lat="+getGeoLat()+","+
-                "geo_long="+getGeoLong()+","+
-                "geo_area='"+getGeoArea()+"',"+
-                "geo_aeid='"+getGeoAeid()+"',"+
+                "geo_info_id='"+getGeoInfoId()+"',"+
                 "interv_extract="+getIntervExtract()+","+
                 "interv_inspect="+getIntervExtract()+","+
                 "remark='"+getRemark()+"'"+
@@ -223,13 +238,23 @@ public class Agroasset {
 
     public String dbInsert(String table) {
         return "insert into "+table+" values ("+
-                getId()+","+getEntityStatusId()+","+getFarmId()+",'"+getNickname()+"',"+getDate()+","+
-                getGeoLat()+","+getGeoLong()+",'"+getGeoArea()+"','"+getGeoAeid()+"',"+
-                getIntervExtract()+","+getIntervInspect()+",'"+getRemark()+"')";
+                getId()+","+
+                getFarmId()+",'"+
+                getEntityStatusId()+","+
+                getCode()+","+
+                getDcode()+","+
+                getNickname()+"',"+
+                getDate()+","+
+                getGeoInfoId()+"',"+
+                getIntervExtract()+","+
+                getIntervInfuse()+","+
+                getIntervInspect()+",'"+
+                getProdTypeId()+","+
+                getRemark()+"')";
     }
 
     @Override
     public String toString() {
-        return "id:"+id+",nickname:"+nickname+",geoArea:"+geoArea+",geoRow:"+geoAeid;
+        return "id:"+id+",nickname:"+nickname;
     }
 }

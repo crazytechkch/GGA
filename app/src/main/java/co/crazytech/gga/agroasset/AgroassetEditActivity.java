@@ -30,7 +30,7 @@ import ctcommons.SimpleObject;
  * Created by eric on 7/19/2016.
  */
 public class AgroassetEditActivity extends AppCompatActivity{
-    private EditText etId,etNickname,etGeoCol,etGeoRow,etRemark;
+    private EditText etId,etNickname,etRemark;
     private ImageButton btnInspectRec,btnExtractRec,btnInfuseRec;
     private Button btnDone;
     private Spinner spnFarm,spnStatus;
@@ -44,15 +44,11 @@ public class AgroassetEditActivity extends AppCompatActivity{
 
         etNickname = (EditText)findViewById(R.id.editTextNickname);
         etNickname.setText(agroasset.getNickname());
-        etGeoCol = (EditText)findViewById(R.id.editTextColumn);
-        etGeoCol.setText(agroasset.getGeoArea());
-        etGeoRow = (EditText)findViewById(R.id.editTextRow);
-        etGeoRow.setText(agroasset.getGeoAeid().toString());
         etRemark= (EditText)findViewById(R.id.editTextRemark);
         etRemark.setText(agroasset.getRemark());
 
         TextView tvId = (TextView)findViewById(R.id.textViewId);
-        tvId.setText(agroasset.getType()+agroasset.getGeoArea()+agroasset.getGeoAeid());
+        tvId.setText(agroasset.getCode()!=null?agroasset.getCode():"NOCODE");
 
         spnFarm = (Spinner)findViewById(R.id.spinnerFarm);
         spnFarm.setAdapter(farmAdapter());
@@ -75,7 +71,7 @@ public class AgroassetEditActivity extends AppCompatActivity{
     private SimpleCustomAdapter farmAdapter() {
         List<SimpleObject> simObjs = new ArrayList<SimpleObject>();
         PersistanceManager pm = new PersistanceManager(this);
-        String sql = "select id,farmname from farm order by farmname asc";
+        String sql = "select id,name from farm order by name asc";
         pm.open();
         SQLiteDatabase db = pm.getDb();
         try {
@@ -160,8 +156,8 @@ public class AgroassetEditActivity extends AppCompatActivity{
 
     public boolean isRowExists() {
         PersistanceManager pm = new PersistanceManager(this);
-        if(agroasset.getType().equals("B"))return pm.pmRowExists("hive","id = "+agroasset.getId());
-        if(agroasset.getType().equals("T"))return pm.pmRowExists("tree","id = "+agroasset.getId());
+        if(agroasset.getProdTypeId()==2)return pm.pmRowExists("v_hive","id = "+agroasset.getId());
+        if(agroasset.getProdTypeId()==1)return pm.pmRowExists("v_tree","id = "+agroasset.getId());
         return false;
     }
 
@@ -173,8 +169,6 @@ public class AgroassetEditActivity extends AppCompatActivity{
             getAgroasset().setEntityStatusId(spnStatus.getSelectedItemId());
             getAgroasset().setFarmId(spnFarm.getSelectedItemId());
             getAgroasset().setNickname(etNickname.getText().toString());
-            getAgroasset().setGeoArea(etGeoCol.getText().toString());
-            getAgroasset().setGeoAeid(new Integer(etGeoRow.getText().toString()));
             getAgroasset().setRemark(etRemark.getText().toString());
             if (isRowExists()) {
                 db.execSQL(getAgroasset().dbUpdate(assetTable));
@@ -197,14 +191,6 @@ public class AgroassetEditActivity extends AppCompatActivity{
 
     public EditText getEtNickname() {
         return etNickname;
-    }
-
-    public EditText getEtGeoCol() {
-        return etGeoCol;
-    }
-
-    public EditText getEtGeoRow() {
-        return etGeoRow;
     }
 
     public EditText getEtRemark() {

@@ -11,7 +11,6 @@ public class QRResult {
         this.decodedStr = decodedStr;
         if(resType().equals("gga")){
 
-            String[] decodedArr = decodedStr.split("_");
             typeCode = decodedStr.substring(2,4);
             farmCode = decodedStr.substring(4,7);
             prodCode = decodedStr.substring(7);
