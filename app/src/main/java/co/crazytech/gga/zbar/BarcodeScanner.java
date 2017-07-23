@@ -109,6 +109,7 @@ public class BarcodeScanner extends AppCompatActivity {
         switch (requestCode) {
             case PERM_CAMERA:{
                 if (grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                    mCamera = getCameraInstance();
                     mPreview = new CameraPreview(BarcodeScanner.this, mCamera, previewCb,
                             autoFocusCB);
                     FrameLayout preview = (FrameLayout) findViewById(R.id.cameraPreview);
