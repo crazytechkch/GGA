@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,13 +51,15 @@ public class AgroassetEditActivity extends AppCompatActivity{
         etRemark.setText(agroasset.getRemark());
 
         TextView tvId = (TextView)findViewById(R.id.textViewId);
-        tvId.setText(agroasset.getCode()!=null?agroasset.getCode():"NOCODE");
+        tvId.setText(agroasset.getCode()!=null?agroasset.getCode().substring(5):"NOCODE");
 
         spnFarm = (Spinner)findViewById(R.id.spinnerFarm);
         spnFarm.setAdapter(farmAdapter());
 
         spnStatus = (Spinner)findViewById(R.id.spinnerStatus);
         spnStatus.setAdapter(statusAdapter());
+        Long entityStatusId = getAgroasset().getEntityStatusId();
+        spnStatus.setSelection(entityStatusId!=null?(Integer.valueOf(entityStatusId+"")-1):0);
 
         btnInspectRec = (ImageButton)findViewById(R.id.buttonInspectRec);
         if (!isRowExists()) btnInspectRec.setEnabled(false);

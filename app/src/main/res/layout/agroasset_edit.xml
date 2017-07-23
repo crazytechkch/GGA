@@ -31,7 +31,7 @@
                     android:layout_gravity="start"
                     android:layout_weight="0.2"
                     android:hint="ID"
-                    android:inputType="text"
+                    android:inputType="text|number"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textStyle="bold" />
 

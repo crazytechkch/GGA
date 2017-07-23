@@ -21,7 +21,7 @@ import java.io.OutputStream;
 public class DbHelper extends SQLiteOpenHelper {
     private Context context;
     public static final String DB_NAME = "ggadb";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
 
     public DbHelper(Context context, String name, CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -31,7 +31,7 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
-            insertFromFile(context,db);
+            insertFromFile(context,db,"ggadb.sqlite.sql");
         } catch (SQLException | IOException e) {
             Log.e("SQL",e.getMessage());
         }
@@ -39,11 +39,17 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        try {
+            switch (oldVersion) {
+                case 1: insertFromFile(context, db, "ggadb.sqlite.2.sql");
+            }
+        } catch (SQLException | IOException e) {
+            Log.e("SQL",e.getMessage());
+        }
     }
 
-    private void insertFromFile(Context context, SQLiteDatabase db) throws SQLException,IOException {
-        InputStream is = context.getAssets().open("ggadb.sqlite.sql");
+    private void insertFromFile(Context context, SQLiteDatabase db, String filename) throws SQLException,IOException {
+        InputStream is = context.getAssets().open(filename);
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         String line;
 

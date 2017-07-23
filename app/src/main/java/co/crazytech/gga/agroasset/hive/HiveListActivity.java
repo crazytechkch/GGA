@@ -28,10 +28,24 @@ public class HiveListActivity extends AgroassetListActivity {
         super.onCreate(savedInstanceState);
         setTitle(R.string.hive);
         agrogrps = new ArrayList<AgroassetGroup>();
+//        agrogrps.add(new AgroassetGroup(getString(R.string.extraction_pending), R.drawable.sickle,new ArrayList<Agroasset>()));
+//        agrogrps.add(new AgroassetGroup(getString(R.string.inspection_pending), R.drawable.detective,new ArrayList<Agroasset>()));
         String sql = "";
-        agrogrps.add(new AgroassetGroup(getString(R.string.extraction_pending), R.drawable.sickle,new ArrayList<Agroasset>()));
-        agrogrps.add(new AgroassetGroup(getString(R.string.inspection_pending), R.drawable.detective,new ArrayList<Agroasset>()));
-        sql = "select id,nickname,code,dcode from v_hive order by date desc";
+        PersistanceManager pm = new PersistanceManager(this);
+        pm.open();
+        SQLiteDatabase db = pm.getDb();
+        Cursor cursor = db.rawQuery("select id,status_name from entity_status",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            Long id = cursor.getLong(0);
+            String statName = cursor.getString(1);
+            sql = "select id,nickname,code,dcode,CAST(dcode as SIGNED) AS casted_column from v_hive where entity_status_id = "+id+" order by casted_column asc, dcode asc";
+            agrogrps.add(new AgroassetGroup(statName.toUpperCase(),R.drawable.bee,agroassets(sql)));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        pm.close();
+        sql = "select id,nickname,code,dcode,CAST(dcode as SIGNED) AS casted_column from v_hive order by casted_column asc, dcode asc";
         agrogrps.add(new AgroassetGroup(getString(R.string.view_all), R.drawable.bee, agroassets(sql)));
         setListAdapter(new AgroassetListAdapter(this,agrogrps));
         setOnChildClickListener(childClickListener());

@@ -44,23 +44,15 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                        android:maxLength="1"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:hint="@string/column"
-                        android:id="@+id/editTextColumn" />
 
                     <EditText
+                        android:id="@+id/editTextDcode"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:digits="1234567890"
-                        android:maxLength="4"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:hint="@string/row"
-                        android:id="@+id/editTextRow" />
+                        android:maxLength="4"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 
                     <EditText

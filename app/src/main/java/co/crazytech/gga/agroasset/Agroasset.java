@@ -39,6 +39,7 @@ public class Agroasset {
 
     public Agroasset(Context context, Bundle extras, String assetTable) {
         id = extras.getLong("id");
+        this.context = context;
         PersistanceManager pm = new PersistanceManager(context);
         pm.open();
         SQLiteDatabase db = pm.getDb();
@@ -60,10 +61,9 @@ public class Agroasset {
                 prodTypeId = cursor.getLong(11);
                 remark = cursor.getString(12);
             } else {
-                farm = new Farm(new Long("1"),this.getContext());
                 nickname = extras.getString("nickname");
                 prodTypeId = extras.getLong("prodTypeId");
-                code = extras.getString("prodCode");
+                code = extras.getString("typeCode")+extras.getString("farmCode")+extras.getString("prodCode");
             }
             cursor.close();
         } catch (SQLException e) {
@@ -90,7 +90,8 @@ public class Agroasset {
     }
 
     public Farm getFarm() {
-        return farm;
+        if(farmId!=null&&farmId>0) return new Farm(farmId,context);
+        return null;
     }
 
     public void setFarm(Farm farm) {
@@ -233,10 +234,11 @@ public class Agroasset {
         return "update "+table+" set "+
                 "dcode="+checkNullString(getDcode())+","+
                 "nickname="+checkNullString(getNickname())+","+
-                "geo_info_id='"+getGeoInfoId()+"',"+
-                "interv_extract="+getIntervExtract()+","+
-                "interv_inspect="+getIntervExtract()+","+
-                "remark='"+getRemark()+"'"+
+                "entity_status_id="+checkNullLong(getEntityStatusId())+","+
+                "geo_info_id="+checkNullLong(getGeoInfoId())+","+
+                "interv_extract="+checkNullInt(getIntervExtract())+","+
+                "interv_inspect="+checkNullInt(getIntervExtract())+","+
+                "remark="+checkNullString(getRemark())+
                 " where id="+getId();
     }
 
@@ -248,17 +250,28 @@ public class Agroasset {
                 "'"+getCode()+"',"+
                 checkNullString(getDcode())+","+
                 checkNullString(getNickname())+","+
-                getDate()+","+
-                getGeoInfoId()+","+
-                getIntervExtract()+","+
-                getIntervInfuse()+","+
-                getIntervInspect()+","+
-                getProdTypeId()+","+
+                checkNullLong(getDate())+","+
+                checkNullLong(getGeoInfoId())+","+
+                checkNullInt(getIntervExtract())+","+
+                checkNullInt(getIntervInfuse())+","+
+                checkNullInt(getIntervInspect())+","+
+                checkNullLong(getProdTypeId())+","+
                 checkNullString(getRemark())+")";
     }
 
     private String checkNullString(String value){
-        return value.length()>0?("'"+value+"'"):null;
+        if (value!=null&&value.length()>0) return "'"+value+"'";
+        return "NULL";
+    }
+
+    private String checkNullLong(Long value){
+        if (value!=null&&value>0) return value+"";
+        return "NULL";
+    }
+
+    private String checkNullInt (Integer value){
+        if (value!=null&&value>0) return value+"";
+        return "NULL";
     }
 
     @Override

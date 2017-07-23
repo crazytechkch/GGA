@@ -1,26 +1,40 @@
 package co.crazytech.gga.farm;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.math.BigDecimal;
 
 import co.crazytech.gga.R;
+import co.crazytech.gga.db.PersistanceManager;
 
 /**
  * Created by eric on 7/20/2016.
  */
 public class Farm {
     private Context context;
-    private Long id;
-    private int entityStatusId,geoId;
-    private String farmName,address1,address2,address3;
-    private String countryCode,regionCode,remark;
+    private Long id, entityStatusId,geoInfoId,date;
+    private String code,farmName,address1,address2,address3;
+    private String countryCode,remark;
     private BigDecimal geoLat,geoLong;
-    private Long date;
 
     public Farm(Long id, Context context) {
         this.id = id;
         this.context = context;
+        PersistanceManager pm = new PersistanceManager(context);
+        pm.open();
+        SQLiteDatabase db = pm.getDb();
+        Cursor cursor = db.rawQuery("select * from farm where id = "+id,null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            entityStatusId=cursor.getLong(1);
+            code=cursor.getString(2);
+            farmName=cursor.getString(3);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        pm.close();
     }
 
     public Long getId() {
@@ -31,24 +45,32 @@ public class Farm {
         this.id = id;
     }
 
-    public int getEntityStatusId() {
+    public Long getEntityStatusId() {
         return entityStatusId;
     }
 
-    public void setEntityStatusId(int entityStatusId) {
+    public void setEntityStatusId(Long entityStatusId) {
         this.entityStatusId = entityStatusId;
     }
 
-    public int getGeoId() {
-        return geoId;
+    public Long getGeoInfoId() {
+        return geoInfoId;
     }
 
-    public void setGeoId(int geoId) {
-        this.geoId = geoId;
+    public void setGeoInfoId(Long geoInfoId) {
+        this.geoInfoId = geoInfoId;
     }
 
     public String getFarmName() {
         return farmName!=null?farmName:context.getString(R.string.company_name);
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public void setFarmName(String farmName) {
@@ -85,14 +107,6 @@ public class Farm {
 
     public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
-    }
-
-    public String getRegionCode() {
-        return regionCode;
-    }
-
-    public void setRegionCode(String regionCode) {
-        this.regionCode = regionCode;
     }
 
     public String getRemark() {

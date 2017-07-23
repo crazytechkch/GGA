@@ -18,6 +18,10 @@ public class QRResult {
         }
     }
 
+    public String getCode() {
+        return typeCode+farmCode+prodCode;
+    }
+
     public String getTypeCode() {
         return typeCode;
     }

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -27,6 +29,7 @@ import co.crazytech.gga.agroasset.hive.HiveEditActivity;
 import co.crazytech.gga.agroasset.hive.HiveListActivity;
 import co.crazytech.gga.agroasset.tree.TreeEditActivity;
 import co.crazytech.gga.agroasset.tree.TreeListActivity;
+import co.crazytech.gga.db.PersistanceManager;
 import co.crazytech.gga.zbar.BarcodeScanner;
 import co.crazytech.gga.zbar.QRResult;
 
@@ -155,25 +158,41 @@ public class MainActivity extends AppCompatActivity
                 Bundle extras = new Bundle();
                 if(qrres.getTypeCode().equals("BA")){
                     intent = new Intent(this, HiveEditActivity.class);
-                    extras.putLong("id",0);
-                    extras.putString("nickname","");
+                    putExtraFromDb(extras,qrres,"v_hive");
                     extras.putLong("prodTypeId",2);
-                    extras.putString("prodCode",qrres.getProdCode());
-                    intent.putExtras(extras);
                 }
                 if(qrres.getTypeCode().equals("AA")) {
                     intent = new Intent(this, TreeEditActivity.class);
-                    extras.putLong("id",0);
-                    extras.putString("nickname","");
+                    putExtraFromDb(extras,qrres,"v_tree");
                     extras.putLong("prodTypeId",1);
-                    extras.putString("prodCode",qrres.getProdCode());
-                    intent.putExtras(extras);
                 }
+                extras.putString("typeCode",qrres.getTypeCode());
+                extras.putString("farmCode",qrres.getFarmCode());
+                extras.putString("prodCode",qrres.getProdCode());
+                intent.putExtras(extras);
                 startActivity(intent);
             }
             else Toast.makeText(this,"Non Gaharu Gading code\n scanned result - "+qrresStr,Toast.LENGTH_LONG).show();
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void putExtraFromDb(Bundle extras, QRResult qrres,String table){
+        PersistanceManager pm = new PersistanceManager(this);
+        pm.open();
+        SQLiteDatabase db = pm.getDb();
+        if(pm.rowExists(table,"code = '"+qrres.getCode()+"'")){
+            Cursor cursor = db.rawQuery("select id,nickname,dcode from "+table+" where code = '"+qrres.getCode()+"' limit 1",null);
+            cursor.moveToFirst();
+            extras.putLong("id",cursor.getLong(0));
+            extras.putString("nickname",cursor.getString(1));
+            extras.putString("dcode",cursor.getString(0));
+            cursor.close();
+        } else {
+            extras.putLong("id",0);
+        }
+        pm.close();
+
     }
 
     public static Intent newFacebookIntent(PackageManager pm, String url) {

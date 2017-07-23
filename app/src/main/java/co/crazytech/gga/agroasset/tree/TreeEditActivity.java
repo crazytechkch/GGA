@@ -30,6 +30,8 @@ public class TreeEditActivity extends AgroassetEditActivity {
         super.onCreate(savedInstanceState);
         getBtnInfuseRec().setVisibility(View.VISIBLE);
         getBtnDone().setOnClickListener(doneListener("agroasset"));
-        Toast.makeText(this,"Gaharu Gading - "+getString(R.string.gaharu_tree),Toast.LENGTH_LONG).show();
+        String farmName = tree.getFarm()!=null?tree.getFarm().getFarmName():"Gaharu Gading";
+        String treeInfo = (tree.getDcode()!=null?tree.getDcode()+" - ":"")+(tree.getNickname()!=null?tree.getNickname():getString(R.string.gaharu_tree));
+        Toast.makeText(this,farmName+"\n"+treeInfo,Toast.LENGTH_LONG).show();
      }
 }
