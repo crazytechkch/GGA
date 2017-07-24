@@ -65,19 +65,12 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/spinnerStatus" />
 
-            <ImageSwitcher
+            <android.support.v4.view.ViewPager
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:id="@+id/imageSwitcher"
-                android:layout_gravity="center_horizontal" >
-                <android.support.design.widget.FloatingActionButton
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:src="@android:drawable/ic_menu_camera"
-                    android:scaleType="fitCenter"
-                    android:id="@+id/fabAddImage"/>
-            </ImageSwitcher>
+                android:id="@+id/imagepager">
+
+            </android.support.v4.view.ViewPager>
 
             <LinearLayout
                 android:orientation="horizontal"

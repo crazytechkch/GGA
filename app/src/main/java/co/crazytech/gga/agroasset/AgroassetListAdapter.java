@@ -87,7 +87,6 @@ public class AgroassetListAdapter extends BaseExpandableListAdapter {
         }
         TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
         Agroasset agroasset = agrogrps.get(groupPosition).getAgroassets().get(childPosition);
-        Log.d("Agroasset Adapter",agroasset.toString());
         txtTitle.setText(agroasset.getDcode()+" - "+agroasset.getNickname()+" ("+agroasset.getCode().substring(5)+")");
         return convertView;
     }

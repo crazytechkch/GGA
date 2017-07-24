@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/GGA.iml" filepath="$PROJECT_DIR$/GGA.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/ctcommons/ctcommons.iml" filepath="$PROJECT_DIR$/ctcommons/ctcommons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/glide-full-4.0.0-RC1/glide-full-4.0.0-RC1.iml" filepath="$PROJECT_DIR$/glide-full-4.0.0-RC1/glide-full-4.0.0-RC1.iml" />
     </modules>
   </component>
 </project>

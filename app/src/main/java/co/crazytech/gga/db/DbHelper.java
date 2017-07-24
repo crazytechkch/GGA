@@ -21,7 +21,7 @@ import java.io.OutputStream;
 public class DbHelper extends SQLiteOpenHelper {
     private Context context;
     public static final String DB_NAME = "ggadb";
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 3;
 
     public DbHelper(Context context, String name, CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -41,7 +41,8 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         try {
             switch (oldVersion) {
-                case 1: insertFromFile(context, db, "ggadb.sqlite.2.sql");
+                case 1: insertFromFile(context, db, "ggadb.sqlite.2.sql");insertFromFile(context, db, "ggadb.sqlite.3.sql");
+                case 2: insertFromFile(context, db, "ggadb.sqlite.3.sql");
             }
         } catch (SQLException | IOException e) {
             Log.e("SQL",e.getMessage());

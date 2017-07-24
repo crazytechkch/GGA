@@ -68,7 +68,7 @@ CREATE TABLE `hive_extract` (
   `volume_uom_id` int(11) DEFAULT NULL,
   `weight_uom_id` int(11) DEFAULT NULL,
   `date` int(10) DEFAULT NULL,
-  `extract_type` int(10) DEFAULT NULL,
+  `pod_count` int(10) DEFAULT NULL,
   `weight` decimal(50,10) DEFAULT NULL,
   `volume` decimal(50,10) DEFAULT NULL,
   `remark` text,

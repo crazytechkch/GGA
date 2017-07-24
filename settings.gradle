@@ -1,1 +1,1 @@
-include ':app', ':ctcommons'
+include ':app', ':ctcommons', ':glide-full-4.0.0-RC1'

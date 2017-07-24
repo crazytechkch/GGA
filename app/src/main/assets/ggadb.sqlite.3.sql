@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS `hive_extract_temp`;
+CREATE TABLE `hive_extract_temp` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `hive_id` int(10) NOT NULL, `volume_uom_id` int(11) DEFAULT NULL, `weight_uom_id` int(11) DEFAULT NULL, `date` int(10) DEFAULT NULL, `pod_count` int(10) DEFAULT NULL, `weight` decimal(50,10) DEFAULT NULL, `volume` decimal(50,10) DEFAULT NULL, `remark` text, FOREIGN KEY (`hive_id`) REFERENCES `agroasset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`volume_uom_id`) REFERENCES `volume_uom` (`id`) ON DELETE SET NULL ON UPDATE CASCADE, FOREIGN KEY (`weight_uom_id`) REFERENCES `weight_uom` (`id`) ON DELETE SET NULL ON UPDATE CASCADE );
+INSERT INTO `hive_extract_temp` SELECT * FROM `hive_extract`;
+DROP TABLE IF EXISTS `hive_extract`;
+ALTER TABLE `hive_extract_temp` RENAME TO `hive_extract`;
