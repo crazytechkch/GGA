@@ -31,7 +31,7 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
-            insertFromFile(context,db,"ggadb.sqlite.sql");
+            runFromFile(context,db,"ggadb.sqlite.sql");
         } catch (SQLException | IOException e) {
             Log.e("SQL",e.getMessage());
         }
@@ -41,15 +41,16 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         try {
             switch (oldVersion) {
-                case 1: insertFromFile(context, db, "ggadb.sqlite.2.sql");insertFromFile(context, db, "ggadb.sqlite.3.sql");
-                case 2: insertFromFile(context, db, "ggadb.sqlite.3.sql");
+                case 1: runFromFile(context, db, "ggadb.sqlite.2.sql");
+                    runFromFile(context, db, "ggadb.sqlite.3.sql");
+                case 2: runFromFile(context, db, "ggadb.sqlite.3.sql");
             }
         } catch (SQLException | IOException e) {
             Log.e("SQL",e.getMessage());
         }
     }
 
-    private void insertFromFile(Context context, SQLiteDatabase db, String filename) throws SQLException,IOException {
+    private void runFromFile(Context context, SQLiteDatabase db, String filename) throws SQLException,IOException {
         InputStream is = context.getAssets().open(filename);
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         String line;
