@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
+import java.io.File;
 import java.util.List;
 
 import co.crazytech.gga.R;
@@ -18,13 +21,14 @@ import ctcommons.SimpleObject;
  * Created by Eric on 7/24/2017.
  */
 
-public class AgroassetImgPagerAdapter extends PagerAdapter {
+public class AgroassetImageAdapter extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
+    private File[] images;
 
-    public AgroassetImgPagerAdapter(Context context) {
-        List<SimpleObject> imgObjs;
+    public AgroassetImageAdapter(Context context, File[] images) {
+        this.images =  images;
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -34,6 +38,7 @@ public class AgroassetImgPagerAdapter extends PagerAdapter {
         View view = layoutInflater.inflate(R.layout.agroasset_image,container);
 
         ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
+        Glide.with(context).asFile().load(images[position]).into(imageView);
 
         container.addView(view);
         return view;

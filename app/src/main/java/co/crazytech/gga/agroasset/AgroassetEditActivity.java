@@ -4,29 +4,24 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageSwitcher;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import co.crazytech.gga.R;
-import co.crazytech.gga.agroasset.hive.Hive;
 import co.crazytech.gga.db.PersistanceManager;
-import co.crazytech.gga.zbar.QRResult;
 import ctcommons.SimpleCustomAdapter;
 import ctcommons.SimpleObject;
 
@@ -67,7 +62,8 @@ public class AgroassetEditActivity extends AppCompatActivity{
         spnStatus.setSelection(entityStatusId!=null?(Integer.valueOf(entityStatusId+"")-1):0);
 
         ViewPager imgPager = (ViewPager)findViewById(R.id.imagepager);
-        imgPager.setAdapter(new AgroassetImgPagerAdapter(this));
+        File[] images = null;
+        imgPager.setAdapter(new AgroassetImageAdapter(this, images));
 
         btnInspectRec = (ImageButton)findViewById(R.id.buttonInspectRec);
         if (!isRowExists()) btnInspectRec.setEnabled(false);
