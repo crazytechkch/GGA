@@ -3,20 +3,13 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageSwitcher
+    <android.support.v4.view.ViewPager
+        android:id="@+id/imagepager"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight=".5"
-        android:id="@+id/imageSwitcher"
-        android:layout_gravity="center_horizontal" >
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:src="@android:drawable/ic_menu_camera"
-            android:scaleType="fitCenter"
-            android:id="@+id/fabAddImage"/>
-    </ImageSwitcher>
+        android:layout_height="300dp"
+        android:layout_weight=".5">
+
+    </android.support.v4.view.ViewPager>
 
 
     <LinearLayout

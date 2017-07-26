@@ -1,21 +1,18 @@
 package co.crazytech.gga.agroasset;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.v4.view.PagerAdapter;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 
 import java.io.File;
-import java.util.List;
 
 import co.crazytech.gga.R;
-import ctcommons.SimpleObject;
 
 /**
  * Created by Eric on 7/24/2017.
@@ -25,20 +22,20 @@ public class AgroassetImageAdapter extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private File[] images;
+    private File[] imageFiles;
 
-    public AgroassetImageAdapter(Context context, File[] images) {
-        this.images =  images;
+    public AgroassetImageAdapter(Context context, File[] imageFiles) {
+        this.imageFiles = imageFiles;
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view = layoutInflater.inflate(R.layout.agroasset_image,container);
+        View view = layoutInflater.inflate(R.layout.agroasset_image,container,false);
 
         ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
-        Glide.with(context).asFile().load(images[position]).into(imageView);
+        Glide.with(context).load(imageFiles[position]).into(imageView);
 
         container.addView(view);
         return view;
@@ -51,6 +48,11 @@ public class AgroassetImageAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return imageFiles.length;
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        container.removeView((LinearLayout) object);
     }
 }

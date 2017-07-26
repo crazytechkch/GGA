@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GGA</string>
+    <string name="app_name">GAHARU-M</string>
 
     <string name="company_name">Gaharu Gading</string>
 
@@ -7,7 +7,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="hive">Bee Hive</string>
+    <string name="hive">Trigona Hive</string>
     <string name="gaharu">Agarwood</string>
     <string name="gaharu_tree">Agarwood Tree</string>
     <string name="col_row">Column-Row</string>
@@ -21,7 +21,7 @@
     <string name="nickname">Nickname</string>
     <string name="infusion_rec">Infusion Record</string>
     <string name="scan">Scan</string>
-    <string name="extraction_pending">Pending Extraction</string>
+    <string name="extraction_pending">Pending Harvest</string>
     <string name="inspection_pending">Pending Inspection</string>
     <string name="infusion_pending">Pending Infusion</string>
     <string name="view_all">View All</string>

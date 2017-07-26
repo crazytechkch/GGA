@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">GGA</string>
+    <string name="app_name">GAHARU-M</string>
     <string name="action_settings">设置</string>
     <string name="company_name">象牙上沉香苑</string>
     <string name="navigation_drawer_close">关闭导航栏</string>
     <string name="navigation_drawer_open">打开导航栏</string>
-    <string name="hive">蜂窝</string>
+    <string name="hive">银蜂窝</string>
     <string name="gaharu">沉香</string>
     <string name="gaharu_tree">沉香树</string>
     <string name="col_row">列行</string>
@@ -16,7 +16,7 @@
     <string name="edit">编辑</string>
     <string name="column">列</string>
     <string name="row">行</string>
-    <string name="nickname">昵称</string>
+    <string name="nickname">小名</string>
     <string name="infusion_rec">注射记录</string>
     <string name="scan">扫描</string>
     <string name="extraction_pending">等待收割</string>

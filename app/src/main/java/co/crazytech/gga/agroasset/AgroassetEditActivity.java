@@ -1,9 +1,12 @@
 package co.crazytech.gga.agroasset;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -20,10 +23,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.crazytech.gga.MainActivity;
 import co.crazytech.gga.R;
 import co.crazytech.gga.db.PersistanceManager;
 import ctcommons.SimpleCustomAdapter;
 import ctcommons.SimpleObject;
+import ctcommons.permission.Permission;
 
 /**
  * Created by eric on 7/19/2016.
@@ -63,6 +68,15 @@ public class AgroassetEditActivity extends AppCompatActivity{
 
         ViewPager imgPager = (ViewPager)findViewById(R.id.imagepager);
         File[] images = null;
+        String dataDir = "";
+        if(Permission.isPermissionGranted(this, Manifest.permission.READ_EXTERNAL_STORAGE,1))dataDir = MainActivity.STORAGE_DIR+"agroasset/pictures/";
+        File imageDir = new File(dataDir);
+        if(!imageDir.exists()&&Permission.isPermissionGranted(this, Manifest.permission.WRITE_EXTERNAL_STORAGE,2))imageDir.mkdirs();
+        images = imageDir.listFiles();
+        for (File file: images) {
+            Log.d("App Data Dir",file.toString());
+        }
+
         imgPager.setAdapter(new AgroassetImageAdapter(this, images));
 
         btnInspectRec = (ImageButton)findViewById(R.id.buttonInspectRec);
