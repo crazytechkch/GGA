@@ -1,1 +1,1 @@
-include ':app', ':ctcommons', ':glide-full-4.0.0-RC1'
+include ':app', ':ctcommons', ':glide-full-4.0.0-RC1', ':metadata-extractor-2.10.1'
