@@ -73,10 +73,6 @@ public class AgroassetEditActivity extends AppCompatActivity{
         File imageDir = new File(dataDir);
         if(!imageDir.exists()&&Permission.isPermissionGranted(this, Manifest.permission.WRITE_EXTERNAL_STORAGE,2))imageDir.mkdirs();
         images = imageDir.listFiles();
-        for (File file: images) {
-            Log.d("App Data Dir",file.toString());
-        }
-
         imgPager.setAdapter(new AgroassetImageAdapter(this, images));
 
         btnInspectRec = (ImageButton)findViewById(R.id.buttonInspectRec);
