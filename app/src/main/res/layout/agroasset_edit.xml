@@ -5,72 +5,84 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".9"
+        android:layout_weight="0.9"
         android:id="@+id/scrollView"
         android:layout_gravity="center_horizontal" >
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal">
 
-            <LinearLayout
+            <android.support.design.widget.CoordinatorLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="1">
+                android:layout_height="match_parent">
 
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/imagepager"
+                    android:layout_width="match_parent"
+                    android:layout_height="550dp">
 
-                <EditText
-                    android:id="@+id/editTextDcode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_weight="0.2"
-                    android:hint="ID"
-                    android:inputType="text|number"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textStyle="bold" />
+                </android.support.v4.view.ViewPager>
 
-                <EditText
-                    android:id="@+id/editTextNickname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.6"
-                    android:layout_gravity="start"
-                    android:hint="@string/nickname"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textViewId"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.2"
-                    android:gravity="center_vertical|end"
-                    android:hint="ID"
-                    android:padding="3dp" />
+                    android:orientation="vertical"
+                    android:background="#90FFFFFF">
 
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
 
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinnerFarm" />
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinnerStatus" />
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/imagepager"
-                android:layout_width="match_parent"
-                android:layout_height="300dp">
+                        <EditText
+                            android:id="@+id/editTextDcode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_weight="0.2"
+                            android:hint="ID"
+                            android:inputType="text|number"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textStyle="bold" />
 
-            </android.support.v4.view.ViewPager>
+                        <EditText
+                            android:id="@+id/editTextNickname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_weight="0.6"
+                            android:hint="@string/nickname"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textViewId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2"
+                            android:gravity="center_vertical|end"
+                            android:hint="ID"
+                            android:padding="3dp" />
+
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/spinnerFarm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Spinner
+                        android:id="@+id/spinnerStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </android.support.design.widget.CoordinatorLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
