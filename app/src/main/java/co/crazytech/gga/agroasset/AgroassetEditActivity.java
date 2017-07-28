@@ -1,12 +1,19 @@
 package co.crazytech.gga.agroasset;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -20,6 +27,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,10 +47,12 @@ import ctcommons.permission.Permission;
 public class AgroassetEditActivity extends AppCompatActivity{
     private EditText etId,etNickname,etRemark;
     private ImageButton btnInspectRec,btnExtractRec,btnInfuseRec;
+    private ViewPager imagePager;
     private Button btnDone;
     private Spinner spnFarm,spnStatus;
     private Agroasset agroasset;
-
+    private String dataDir;
+    private static final int REQ_PICK_IMAGE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +79,9 @@ public class AgroassetEditActivity extends AppCompatActivity{
         Long entityStatusId = getAgroasset().getEntityStatusId();
         spnStatus.setSelection(entityStatusId!=null?(Integer.valueOf(entityStatusId+"")-1):0);
 
-        ViewPager imgPager = (ViewPager)findViewById(R.id.imagepager);
-        File[] images = null;
-        String dataDir = "";
-        if(Permission.isPermissionGranted(this, Manifest.permission.READ_EXTERNAL_STORAGE,1))dataDir = MainActivity.STORAGE_DIR+"agroasset/pictures/";
-        File imageDir = new File(dataDir);
-        if(!imageDir.exists()&&Permission.isPermissionGranted(this, Manifest.permission.WRITE_EXTERNAL_STORAGE,2))imageDir.mkdirs();
-        images = imageDir.listFiles();
-        imgPager.setAdapter(new AgroassetImageAdapter(this, images));
+        imagePager = (ViewPager)findViewById(R.id.imagepager);
+        initImageAdapter();
+
 
         btnInspectRec = (ImageButton)findViewById(R.id.buttonInspectRec);
         if (!isRowExists()) btnInspectRec.setEnabled(false);
@@ -83,6 +91,7 @@ public class AgroassetEditActivity extends AppCompatActivity{
         if (!isRowExists()) btnInfuseRec.setEnabled(false);
 
         btnDone = (Button)findViewById(R.id.buttonDone);
+        initImageButtons();
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
@@ -205,6 +214,30 @@ public class AgroassetEditActivity extends AppCompatActivity{
         finish();
     }
 
+    private void initImageAdapter(){
+        File[] images = null;
+        dataDir = "";
+        if(Permission.isPermissionGranted(this, Manifest.permission.READ_EXTERNAL_STORAGE,1))dataDir = MainActivity.STORAGE_DIR+"agroasset/pictures/"+agroasset.getCode();
+        File imageDir = new File(dataDir);
+        if(!imageDir.exists()&&Permission.isPermissionGranted(this, Manifest.permission.WRITE_EXTERNAL_STORAGE,2))imageDir.mkdirs();
+        images = imageDir.listFiles();
+        imagePager.setAdapter(new AgroassetImageAdapter(this, images));
+    }
+
+    private void initImageButtons() {
+        FloatingActionButton fabCamera,fabGallery;
+        fabGallery = (FloatingActionButton)findViewById(R.id.fabGallery);
+        fabGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQ_PICK_IMAGE);
+            }
+        });
+    }
+
     public EditText getEtId() {
         return etId;
     }
@@ -228,5 +261,25 @@ public class AgroassetEditActivity extends AppCompatActivity{
     public static class TYPE {
         public static final int TREE = 1;
         public static final int HIVE = 2;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode== Activity.RESULT_OK){
+            switch (requestCode){
+                case REQ_PICK_IMAGE:
+                    Uri uri = data.getData();
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                        FileOutputStream out = new FileOutputStream(dataDir+"/"+agroasset.getCode()+".jpg");
+                        bitmap.compress(Bitmap.CompressFormat.JPEG,90,out);
+                        out.close();
+                        initImageAdapter();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ScrollView
@@ -22,7 +23,7 @@
                 <android.support.v4.view.ViewPager
                     android:id="@+id/imagepager"
                     android:layout_width="match_parent"
-                    android:layout_height="550dp">
+                    android:layout_height="500dp">
 
                 </android.support.v4.view.ViewPager>
 
@@ -80,6 +81,34 @@
                         android:id="@+id/spinnerStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:orientation="horizontal"
+                    app:layout_anchor="@+id/imagepager"
+                    app:layout_anchorGravity="bottom|right">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/fabCamera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        app:fabSize="normal"
+                        app:srcCompat="@android:drawable/ic_menu_camera" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/fabGallery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        app:fabSize="normal"
+                        app:srcCompat="@android:drawable/ic_menu_gallery" />
 
                 </LinearLayout>
             </android.support.design.widget.CoordinatorLayout>

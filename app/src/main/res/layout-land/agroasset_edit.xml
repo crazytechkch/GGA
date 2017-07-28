@@ -1,15 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/imagepager"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:layout_weight=".5">
 
-    </android.support.v4.view.ViewPager>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/imagepager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v4.view.ViewPager>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal"
+            app:layout_anchor="@+id/imagepager"
+            app:layout_anchorGravity="bottom|left">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                app:fabSize="normal"
+                app:srcCompat="@android:drawable/ic_menu_camera" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                app:fabSize="normal"
+                app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+        </LinearLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
 
 
     <LinearLayout
