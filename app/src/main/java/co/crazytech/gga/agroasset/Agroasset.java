@@ -35,7 +35,7 @@ public class Agroasset {
         this.nickname = nickname;
         this.code = code;
         this.dcode = dcode;
-    }
+     }
 
     public Agroasset(Context context, Bundle extras, String assetTable) {
         id = extras.getLong("id");
