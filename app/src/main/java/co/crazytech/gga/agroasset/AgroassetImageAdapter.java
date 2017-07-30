@@ -53,8 +53,9 @@ public class AgroassetImageAdapter extends PagerAdapter {
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             Metadata imgMetadata = ImageMetadataReader.readMetadata(imageFile);
             ExifSubIFDDirectory directory = imgMetadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
+
             if(directory!=null){
-                Date dateTaken = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
+                Date dateTaken = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_DIGITIZED);
                 String dateStr = (String)DateFormat.format("dd/MM/yyyy EEE HH:mm:ss",dateTaken);
                 TextView textView = (TextView)view.findViewById(R.id.textView);
                 textView.setText(dateStr);

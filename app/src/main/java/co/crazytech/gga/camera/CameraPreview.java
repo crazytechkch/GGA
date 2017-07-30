@@ -1,4 +1,4 @@
-package co.crazytech.gga.zbar;
+package co.crazytech.gga.camera;
 
 /**
  * Created by eric on 7/18/2016.

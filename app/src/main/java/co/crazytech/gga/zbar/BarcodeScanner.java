@@ -27,6 +27,7 @@ import net.sourceforge.zbar.Symbol;
 import net.sourceforge.zbar.SymbolSet;
 
 import co.crazytech.gga.R;
+import co.crazytech.gga.camera.CameraPreview;
 
 /**
  * Created by eric on 7/18/2016.

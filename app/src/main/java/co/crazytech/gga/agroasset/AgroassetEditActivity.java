@@ -2,6 +2,7 @@ package co.crazytech.gga.agroasset;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -9,6 +10,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -48,6 +50,7 @@ public class AgroassetEditActivity extends AppCompatActivity{
     private EditText etId,etNickname,etRemark;
     private ImageButton btnInspectRec,btnExtractRec,btnInfuseRec;
     private ViewPager imagePager;
+    private int imgPagerCurrPos;
     private Button btnDone;
     private Spinner spnFarm,spnStatus;
     private Agroasset agroasset;
@@ -221,7 +224,33 @@ public class AgroassetEditActivity extends AppCompatActivity{
         File imageDir = new File(dataDir);
         if(!imageDir.exists()&&Permission.isPermissionGranted(this, Manifest.permission.WRITE_EXTERNAL_STORAGE,2))imageDir.mkdirs();
         images = imageDir.listFiles();
+        final File[] imgs = images;
         imagePager.setAdapter(new AgroassetImageAdapter(this, images));
+        imagePager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                imgPagerCurrPos = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        imagePager.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                File currFile = imgs[imgPagerCurrPos];
+                currFile.delete();
+                initImageAdapter();
+                return false;
+            }
+        });
     }
 
     private void initImageButtons() {
@@ -236,6 +265,45 @@ public class AgroassetEditActivity extends AppCompatActivity{
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQ_PICK_IMAGE);
             }
         });
+    }
+
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) {}
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
+    }
+
+    public String getRealPathFromURI(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
     }
 
     public EditText getEtId() {
@@ -264,6 +332,12 @@ public class AgroassetEditActivity extends AppCompatActivity{
     }
 
     @Override
+    protected void onDestroy() {
+        deleteCache(this);
+        super.onDestroy();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode== Activity.RESULT_OK){
@@ -272,9 +346,19 @@ public class AgroassetEditActivity extends AppCompatActivity{
                     Uri uri = data.getData();
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
-                        FileOutputStream out = new FileOutputStream(dataDir+"/"+agroasset.getCode()+".jpg");
+
+                        String filePath = dataDir+"/"+agroasset.getCode()+(new File(dataDir)).listFiles().length+".jpg";
+                        FileOutputStream out = new FileOutputStream(filePath);
                         bitmap.compress(Bitmap.CompressFormat.JPEG,90,out);
                         out.close();
+                        String inPath = getRealPathFromURI(this,uri);
+                        Log.d("Agroasset Image",inPath);
+                        ExifInterface exifIn = new ExifInterface(inPath);
+                        ExifInterface exifOut = new ExifInterface(filePath);
+                        exifOut.setAttribute(ExifInterface.TAG_DATETIME,exifIn.getAttribute(ExifInterface.TAG_DATETIME));
+                        exifOut.setAttribute(ExifInterface.TAG_DATETIME_DIGITIZED,exifIn.getAttribute(ExifInterface.TAG_DATETIME_DIGITIZED));
+                        exifOut.saveAttributes();
+                        deleteCache(this);
                         initImageAdapter();
                     } catch (IOException e) {
                         e.printStackTrace();
