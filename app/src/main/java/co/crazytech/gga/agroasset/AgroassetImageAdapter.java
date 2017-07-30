@@ -46,16 +46,24 @@ public class AgroassetImageAdapter extends PagerAdapter {
         View view = layoutInflater.inflate(R.layout.agroasset_image,container,false);
 
         ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
-        File imageFile = imageFiles[position];
+        final File imageFile = imageFiles[position];
         try {
             if(!imageFile.exists()||imageFile.isDirectory()) throw new FileNotFoundException();
             Glide.with(context).load(imageFile).into(imageView);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    imageFile.delete();
+                    return false;
+                }
+            });
             Metadata imgMetadata = ImageMetadataReader.readMetadata(imageFile);
             ExifSubIFDDirectory directory = imgMetadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
 
             if(directory!=null){
                 Date dateTaken = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_DIGITIZED);
+                dateTaken.setTime(dateTaken.getTime()-43200000);
                 String dateStr = (String)DateFormat.format("dd/MM/yyyy EEE HH:mm:ss",dateTaken);
                 TextView textView = (TextView)view.findViewById(R.id.textView);
                 textView.setText(dateStr);

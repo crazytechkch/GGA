@@ -10,6 +10,7 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -17,7 +18,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 
 import net.sourceforge.zbar.Config;
@@ -38,7 +38,7 @@ public class BarcodeScanner extends AppCompatActivity {
     private CameraPreview mPreview;
     private Handler autoFocusHandler;
 
-    private Button scanButton;
+    private FloatingActionButton fabCamera;
     private ImageScanner scanner;
 
     private boolean barcodeScanned = false;
@@ -54,7 +54,7 @@ public class BarcodeScanner extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.barcodescan);
+        setContentView(R.layout.camera);
 
         initControls();
     }
@@ -77,9 +77,9 @@ public class BarcodeScanner extends AppCompatActivity {
             preview.addView(mPreview);
         }
 
-        scanButton = (Button) findViewById(R.id.ScanButton);
+        fabCamera = (FloatingActionButton) findViewById(R.id.fabCamera);
 
-        scanButton.setOnClickListener(new View.OnClickListener() {
+        fabCamera.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (barcodeScanned) {
                     barcodeScanned = false;

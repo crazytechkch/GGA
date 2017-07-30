@@ -38,6 +38,7 @@ import java.util.List;
 
 import co.crazytech.gga.MainActivity;
 import co.crazytech.gga.R;
+import co.crazytech.gga.camera.CameraActivity;
 import co.crazytech.gga.db.PersistanceManager;
 import ctcommons.SimpleCustomAdapter;
 import ctcommons.SimpleObject;
@@ -50,12 +51,12 @@ public class AgroassetEditActivity extends AppCompatActivity{
     private EditText etId,etNickname,etRemark;
     private ImageButton btnInspectRec,btnExtractRec,btnInfuseRec;
     private ViewPager imagePager;
-    private int imgPagerCurrPos;
     private Button btnDone;
     private Spinner spnFarm,spnStatus;
     private Agroasset agroasset;
     private String dataDir;
     private static final int REQ_PICK_IMAGE = 0;
+    private static final int REQ_CAPTURE_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -226,31 +227,7 @@ public class AgroassetEditActivity extends AppCompatActivity{
         images = imageDir.listFiles();
         final File[] imgs = images;
         imagePager.setAdapter(new AgroassetImageAdapter(this, images));
-        imagePager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                imgPagerCurrPos = position;
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        imagePager.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                File currFile = imgs[imgPagerCurrPos];
-                currFile.delete();
-                initImageAdapter();
-                return false;
-            }
-        });
     }
 
     private void initImageButtons() {
@@ -263,6 +240,14 @@ public class AgroassetEditActivity extends AppCompatActivity{
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQ_PICK_IMAGE);
+            }
+        });
+        fabCamera = (FloatingActionButton)findViewById(R.id.fabCamera);
+        fabCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), CameraActivity.class);
+                startActivityForResult(intent,REQ_CAPTURE_IMAGE);
             }
         });
     }
@@ -352,7 +337,6 @@ public class AgroassetEditActivity extends AppCompatActivity{
                         bitmap.compress(Bitmap.CompressFormat.JPEG,90,out);
                         out.close();
                         String inPath = getRealPathFromURI(this,uri);
-                        Log.d("Agroasset Image",inPath);
                         ExifInterface exifIn = new ExifInterface(inPath);
                         ExifInterface exifOut = new ExifInterface(filePath);
                         exifOut.setAttribute(ExifInterface.TAG_DATETIME,exifIn.getAttribute(ExifInterface.TAG_DATETIME));
