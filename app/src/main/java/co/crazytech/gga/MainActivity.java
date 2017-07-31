@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static int QRRES = 0;
-    public static String STORAGE_DIR = Environment.getExternalStorageDirectory()+"/GAHARU-M/";
+    public static final String STORAGE_DIR = Environment.getExternalStorageDirectory()+"/GAHARU-M/";
+    public static final int PERM_READ_SD = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

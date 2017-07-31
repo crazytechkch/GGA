@@ -84,10 +84,17 @@
 
                 </LinearLayout>
 
+            </android.support.design.widget.CoordinatorLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_height="match_parent"
+                    android:gravity="center|left"
                     android:orientation="horizontal"
                     app:layout_anchor="@+id/imagepager"
                     app:layout_anchorGravity="bottom|right">
@@ -111,43 +118,38 @@
                         app:srcCompat="@android:drawable/ic_menu_gallery" />
 
                 </LinearLayout>
-            </android.support.design.widget.CoordinatorLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="80dp">
-
-                <ImageButton
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight=".33"
-                    android:text="@string/inspection_rec"
-                    android:src="@drawable/detectivesel"
-                    android:background="@drawable/backgroundsel"
-                    android:scaleType="fitCenter"
-                    android:id="@+id/buttonInspectRec" />
+                    android:gravity="center|right"
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".33"
-                    android:text="@string/extraction_rec"
-                    android:src="@drawable/sicklesel"
-                    android:background="@drawable/backgroundsel"
-                    android:scaleType="fitCenter"
-                    android:id="@+id/buttonExtractRec" />
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/fabExtract"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        app:srcCompat="@drawable/sicklesel" />
 
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".33"
-                    android:text="@string/infusion_rec"
-                    android:src="@drawable/syringesel"
-                    android:background="@drawable/backgroundsel"
-                    android:scaleType="fitCenter"
-                    android:visibility="gone"
-                    android:id="@+id/buttonInfuseRec" />
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/fabInfuse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/syringesel" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/fabInspect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        app:srcCompat="@drawable/detectivesel" />
+                </LinearLayout>
 
             </LinearLayout>
 

@@ -1,6 +1,7 @@
 package co.crazytech.gga.camera;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import co.crazytech.gga.R;
 
@@ -34,14 +40,12 @@ public class CameraActivity extends Activity {
     }
 
     private void initControls() {
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         afHandler = new Handler();
-        try{
-            camera = Camera.open();
-        } catch (Exception e){
-            Log.w("Camera",e.getMessage());
-        }
-        if (camera!=null){
+        camera = getCameraInstance();
+
+         if (camera!=null){
+             previewing = true;
             camPreview = new CameraPreview(this,camera,previewCb,autoFocusCB);
             FrameLayout preview = (FrameLayout)findViewById(R.id.cameraPreview);
             preview.addView(camPreview);
@@ -59,6 +63,16 @@ public class CameraActivity extends Activity {
         });
     }
 
+    private Camera getCameraInstance() {
+        Camera cam = null;
+        try {
+            cam = Camera.open();
+        } catch (Exception e) {
+            Log.w("Camera",e.getMessage());
+        }
+        return cam;
+    }
+
     private void releaseCamera() {
         if (camera != null) {
             previewing = false;
@@ -67,6 +81,7 @@ public class CameraActivity extends Activity {
             camera = null;
         }
     }
+
 
     // Mimic continuous auto-focusing
     Camera.AutoFocusCallback autoFocusCB = new Camera.AutoFocusCallback() {
@@ -87,10 +102,11 @@ public class CameraActivity extends Activity {
             Camera.Parameters parameters = camera.getParameters();
             Camera.Size size = parameters.getPreviewSize();
 
-             previewing = false;
-            camera.setPreviewCallback(null);
-            camera.stopPreview();
-            finish();
+//             previewing = false;
+//            camera.setPreviewCallback(null);
+//            camera.stopPreview();
+//            finish();
         }
     };
+
 }

@@ -11,6 +11,8 @@ import android.support.v4.content.ContextCompat;
  */
 
 public class Permission {
+    public static final int PERM_EXT_STORAGE_READ = 0;
+    public static final int PERM_EXT_STORAGE_WRITE = 1;
 
     public static boolean isPermissionGranted(Activity activity, String permission, int permCode) {
         if (ContextCompat.checkSelfPermission(activity, permission)!= PackageManager.PERMISSION_GRANTED){

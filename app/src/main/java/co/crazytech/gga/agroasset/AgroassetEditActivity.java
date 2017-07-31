@@ -4,16 +4,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
@@ -29,11 +26,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import co.crazytech.gga.MainActivity;
@@ -316,6 +313,29 @@ public class AgroassetEditActivity extends AppCompatActivity{
         public static final int HIVE = 2;
     }
 
+    private void onGalleryResult(Intent data) {
+        Uri uri = data.getData();
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            Bitmap resized = Bitmap.createScaledBitmap(bitmap,(int)(bitmap.getWidth()*0.2),(int)(bitmap.getHeight()*0.2),true);
+            String filePath = dataDir+"/"+agroasset.getCode()+"_"+timeStamp;
+            FileOutputStream out = new FileOutputStream(filePath);
+            resized.compress(Bitmap.CompressFormat.JPEG,90,out);
+            out.close();
+            String inPath = getRealPathFromURI(this,uri);
+            ExifInterface exifIn = new ExifInterface(inPath);
+            ExifInterface exifOut = new ExifInterface(filePath);
+            exifOut.setAttribute(ExifInterface.TAG_DATETIME,exifIn.getAttribute(ExifInterface.TAG_DATETIME));
+            exifOut.setAttribute(ExifInterface.TAG_DATETIME_DIGITIZED,exifIn.getAttribute(ExifInterface.TAG_DATETIME_DIGITIZED));
+            exifOut.saveAttributes();
+            deleteCache(this);
+            initImageAdapter();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void onDestroy() {
         deleteCache(this);
@@ -327,26 +347,7 @@ public class AgroassetEditActivity extends AppCompatActivity{
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode== Activity.RESULT_OK){
             switch (requestCode){
-                case REQ_PICK_IMAGE:
-                    Uri uri = data.getData();
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
-
-                        String filePath = dataDir+"/"+agroasset.getCode()+(new File(dataDir)).listFiles().length+".jpg";
-                        FileOutputStream out = new FileOutputStream(filePath);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG,90,out);
-                        out.close();
-                        String inPath = getRealPathFromURI(this,uri);
-                        ExifInterface exifIn = new ExifInterface(inPath);
-                        ExifInterface exifOut = new ExifInterface(filePath);
-                        exifOut.setAttribute(ExifInterface.TAG_DATETIME,exifIn.getAttribute(ExifInterface.TAG_DATETIME));
-                        exifOut.setAttribute(ExifInterface.TAG_DATETIME_DIGITIZED,exifIn.getAttribute(ExifInterface.TAG_DATETIME_DIGITIZED));
-                        exifOut.saveAttributes();
-                        deleteCache(this);
-                        initImageAdapter();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                case REQ_PICK_IMAGE: onGalleryResult(data);
             }
         }
     }

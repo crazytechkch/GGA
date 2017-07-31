@@ -20,9 +20,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layout_anchor="@+id/imagepager"
-            app:layout_anchorGravity="bottom|left">
+            app:layout_anchorGravity="top|left">
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fabCamera"
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="true"
-                app:fabSize="normal"
+                app:fabSize="mini"
                 app:srcCompat="@android:drawable/ic_menu_camera" />
 
             <android.support.design.widget.FloatingActionButton
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="true"
-                app:fabSize="normal"
+                app:fabSize="mini"
                 app:srcCompat="@android:drawable/ic_menu_gallery" />
 
         </LinearLayout>
@@ -114,38 +114,32 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp">
+                    android:layout_height="80dp"
+                    android:gravity="center|right">
 
-                    <ImageButton
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".33"
-                        android:text="@string/inspection_rec"
-                        android:src="@drawable/detectivesel"
-                        android:background="@drawable/backgroundsel"
-                        android:scaleType="fitCenter"
-                        android:id="@+id/buttonInspectRec" />
+                    <android.support.design.widget.FloatingActionButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/detectivesel"
+                        android:clickable="true"
+                        android:id="@+id/fabInspect" />
 
-                    <ImageButton
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".33"
-                        android:text="@string/extraction_rec"
-                        android:src="@drawable/sicklesel"
-                        android:background="@drawable/backgroundsel"
-                        android:scaleType="fitCenter"
-                        android:id="@+id/buttonExtractRec" />
+                    <android.support.design.widget.FloatingActionButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/sicklesel"
+                        android:clickable="true"
+                        android:id="@+id/fabExtract" />
 
-                    <ImageButton
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".33"
-                        android:text="@string/infusion_rec"
-                        android:src="@drawable/syringesel"
-                        android:background="@drawable/backgroundsel"
-                        android:scaleType="fitCenter"
+                    <android.support.design.widget.FloatingActionButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/syringesel"
+                        android:clickable="true"
                         android:visibility="gone"
-                        android:id="@+id/buttonInfuseRec" />
+                        android:id="@+id/fabInfuse" />
+
+
 
                 </LinearLayout>
 

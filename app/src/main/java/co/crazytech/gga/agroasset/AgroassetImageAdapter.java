@@ -1,7 +1,10 @@
 package co.crazytech.gga.agroasset;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.app.AlertDialog;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,31 +45,36 @@ public class AgroassetImageAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(final ViewGroup container, int position) {
         View view = layoutInflater.inflate(R.layout.agroasset_image,container,false);
 
         ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
+        FloatingActionButton fabDelete = (FloatingActionButton)view.findViewById(R.id.fabDelete);
         final File imageFile = imageFiles[position];
         try {
             if(!imageFile.exists()||imageFile.isDirectory()) throw new FileNotFoundException();
             Glide.with(context).load(imageFile).into(imageView);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            final View v = view;
+
+            fabDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
-                    imageFile.delete();
-                    return false;
+                public void onClick(View v) {
+                    showAlertDialog("Delete this image?", imageFile);
                 }
             });
+
             Metadata imgMetadata = ImageMetadataReader.readMetadata(imageFile);
             ExifSubIFDDirectory directory = imgMetadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
 
             if(directory!=null){
                 Date dateTaken = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_DIGITIZED);
-                dateTaken.setTime(dateTaken.getTime()-43200000);
-                String dateStr = (String)DateFormat.format("dd/MM/yyyy EEE HH:mm:ss",dateTaken);
-                TextView textView = (TextView)view.findViewById(R.id.textView);
-                textView.setText(dateStr);
+                if(dateTaken!=null) {
+                    dateTaken.setTime(dateTaken.getTime()-43200000);
+                    String dateStr = (String)DateFormat.format("dd/MM/yyyy EEE HH:mm:ss",dateTaken);
+                    TextView textView = (TextView)view.findViewById(R.id.textView);
+                    textView.setText(dateStr);
+                }
             }
         } catch (ImageProcessingException | IOException e) {
 //            Log.w("Image Exception",e.getMessage());
@@ -74,6 +82,26 @@ public class AgroassetImageAdapter extends PagerAdapter {
 
         container.addView(view);
         return view;
+    }
+
+    private void showAlertDialog(String message,final File imgFile) {
+        new AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.app_name))
+                .setCancelable(true)
+                .setMessage(message)
+                .setPositiveButton(context.getString(android.R.string.ok),new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        imgFile.delete();
+                    }
+                })
+                .setNegativeButton(context.getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     @Override
