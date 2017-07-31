@@ -25,10 +25,12 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_gravity="center_vertical"
+        app:fabSize="normal"
         android:src="@drawable/qrlogo"
+        android:clickable="true"
         android:scaleType="fitCenter"/>
 
 </android.support.design.widget.CoordinatorLayout>

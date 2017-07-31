@@ -67,15 +67,21 @@ public class AgroassetImageAdapter extends PagerAdapter {
             Metadata imgMetadata = ImageMetadataReader.readMetadata(imageFile);
             ExifSubIFDDirectory directory = imgMetadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
 
+            String dateStr = "";
+            String remark = "";
+            String imgIdx = (position+1)+" of "+imageFiles.length;
             if(directory!=null){
                 Date dateTaken = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_DIGITIZED);
                 if(dateTaken!=null) {
                     dateTaken.setTime(dateTaken.getTime()-43200000);
-                    String dateStr = (String)DateFormat.format("dd/MM/yyyy EEE HH:mm:ss",dateTaken);
-                    TextView textView = (TextView)view.findViewById(R.id.textView);
-                    textView.setText(dateStr);
+                    dateStr = (String)DateFormat.format("dd/MM/yyyy EEE HH:mm:ss",dateTaken);
                 }
             }
+            TextView textView = (TextView)view.findViewById(R.id.textView);
+            textView.setText(
+                    ((dateStr!=null&&dateStr.length()>0)?dateStr:"")+
+                    ((remark!=null&&remark.length()>0)?"\n":"")+
+                    remark+"\n"+imgIdx);
         } catch (ImageProcessingException | IOException e) {
 //            Log.w("Image Exception",e.getMessage());
         }

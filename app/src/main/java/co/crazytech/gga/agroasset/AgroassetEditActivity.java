@@ -318,7 +318,10 @@ public class AgroassetEditActivity extends AppCompatActivity{
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            Bitmap resized = Bitmap.createScaledBitmap(bitmap,(int)(bitmap.getWidth()*0.2),(int)(bitmap.getHeight()*0.2),true);
+            double ratio = 1;
+            if(bitmap.getWidth()>=bitmap.getHeight())ratio = bitmap.getWidth()/1280;
+            else ratio = bitmap.getWidth()/720;
+            Bitmap resized = Bitmap.createScaledBitmap(bitmap,(int)(bitmap.getWidth()/ratio),(int)(bitmap.getHeight()/ratio),true);
             String filePath = dataDir+"/"+agroasset.getCode()+"_"+timeStamp;
             FileOutputStream out = new FileOutputStream(filePath);
             resized.compress(Bitmap.CompressFormat.JPEG,90,out);

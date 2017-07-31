@@ -131,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:clickable="true"
-                        app:srcCompat="@drawable/sicklesel" />
+                        app:srcCompat="@drawable/sickle_holo_dark" />
 
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/fabInfuse"
@@ -140,7 +140,7 @@
                         android:layout_weight="1"
                         android:clickable="true"
                         android:visibility="gone"
-                        app:srcCompat="@drawable/syringesel" />
+                        app:srcCompat="@drawable/syringe_holo_dark" />
 
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/fabInspect"
@@ -148,7 +148,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:clickable="true"
-                        app:srcCompat="@drawable/detectivesel" />
+                        app:srcCompat="@drawable/detective_holo_dark" />
                 </LinearLayout>
 
             </LinearLayout>
