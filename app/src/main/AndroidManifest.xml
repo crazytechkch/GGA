@@ -43,6 +43,17 @@
         <activity
             android:name=".agroasset.tree.TreeEditActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".agroasset.extract.AgroassetExtractActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".agroasset.hive.HiveExtractActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".agroasset.tree.TreeExtractActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+
         <activity android:name=".agroasset.hive.HiveListActivity"/>
         <activity android:name=".agroasset.tree.TreeListActivity"/>
     </application>

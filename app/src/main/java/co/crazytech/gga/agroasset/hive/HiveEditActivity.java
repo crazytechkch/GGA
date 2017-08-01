@@ -1,15 +1,12 @@
 package co.crazytech.gga.agroasset.hive;
 
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import co.crazytech.gga.R;
-import co.crazytech.gga.agroasset.Agroasset;
 import co.crazytech.gga.agroasset.AgroassetEditActivity;
-import co.crazytech.gga.db.PersistanceManager;
-import co.crazytech.gga.zbar.QRResult;
 
 /**
  * Created by eric on 7/19/2016.
@@ -28,4 +25,22 @@ public class HiveEditActivity extends AgroassetEditActivity {
         String hiveInfo = (hive.getDcode()!=null?hive.getDcode()+" - ":"")+(hive.getNickname()!=null?hive.getNickname():getString(R.string.hive));
         Toast.makeText(this,farmName+"\n"+hiveInfo,Toast.LENGTH_LONG).show();
      }
+
+    @Override
+    public View.OnClickListener btnExtractListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getAgroasset().getId()!=null){
+                    Intent intent = new Intent(v.getContext(),HiveExtractActivity.class);
+                    intent.putExtra("agroassetId",getAgroasset().getId());
+                    intent.putExtra("nickname",getAgroasset().getNickname());
+                    intent.putExtra("dcode",getAgroasset().getDcode());
+                    intent.putExtra("code",getAgroasset().getCode());
+                    startActivityForResult(intent,REQ_EXTRACT);
+                }
+
+            }
+        };
+    }
 }

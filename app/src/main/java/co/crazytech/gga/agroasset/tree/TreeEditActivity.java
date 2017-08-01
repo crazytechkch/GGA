@@ -1,5 +1,6 @@
 package co.crazytech.gga.agroasset.tree;
 
+import android.content.Intent;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import co.crazytech.gga.R;
 import co.crazytech.gga.agroasset.AgroassetEditActivity;
 import co.crazytech.gga.agroasset.hive.Hive;
+import co.crazytech.gga.agroasset.hive.HiveExtractActivity;
 import co.crazytech.gga.db.PersistanceManager;
 import co.crazytech.gga.zbar.QRResult;
 
@@ -34,4 +36,19 @@ public class TreeEditActivity extends AgroassetEditActivity {
         String treeInfo = (tree.getDcode()!=null?tree.getDcode()+" - ":"")+(tree.getNickname()!=null?tree.getNickname():getString(R.string.gaharu_tree));
         Toast.makeText(this,farmName+"\n"+treeInfo,Toast.LENGTH_LONG).show();
      }
+
+    @Override
+    public View.OnClickListener btnExtractListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getAgroasset().getId()!=null){
+                    Intent intent = new Intent(v.getContext(),TreeExtractActivity.class);
+                    intent.putExtra("agroassetId",getAgroasset().getId());
+                    startActivityForResult(intent,REQ_EXTRACT);
+                }
+
+            }
+        };
+    }
 }

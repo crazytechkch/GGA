@@ -259,17 +259,17 @@ public class Agroasset {
                 checkNullString(getRemark())+")";
     }
 
-    private String checkNullString(String value){
+    protected String checkNullString(String value){
         if (value!=null&&value.length()>0) return "'"+value+"'";
         return "NULL";
     }
 
-    private String checkNullLong(Long value){
+    protected String checkNullLong(Long value){
         if (value!=null&&value>0) return value+"";
         return "NULL";
     }
 
-    private String checkNullInt (Integer value){
+    protected String checkNullInt (Integer value){
         if (value!=null&&value>0) return value+"";
         return "NULL";
     }

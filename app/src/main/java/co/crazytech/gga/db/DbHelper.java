@@ -21,7 +21,7 @@ import java.io.OutputStream;
 public class DbHelper extends SQLiteOpenHelper {
     private Context context;
     public static final String DB_NAME = "ggadb";
-    public static final int DB_VERSION = 3;
+    public static final int DB_VERSION = 4;
 
     public DbHelper(Context context, String name, CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -43,7 +43,10 @@ public class DbHelper extends SQLiteOpenHelper {
             switch (oldVersion) {
                 case 1: runFromFile(context, db, "ggadb.sqlite.2.sql");
                     runFromFile(context, db, "ggadb.sqlite.3.sql");
+                    runFromFile(context, db, "ggadb.sqlite.4.sql");
                 case 2: runFromFile(context, db, "ggadb.sqlite.3.sql");
+                    runFromFile(context, db, "ggadb.sqlite.4.sql");
+                case 3: runFromFile(context, db, "ggadb.sqlite.4.sql");
             }
         } catch (SQLException | IOException e) {
             Log.e("SQL",e.getMessage());

@@ -13,7 +13,6 @@ import co.crazytech.gga.zbar.QRResult;
  * Created by eric on 7/19/2016.
  */
 public class Tree extends Agroasset {
-    private Integer intervInfuse;
 
 
     public Tree(QRResult qrres, Context context) {
@@ -25,31 +24,5 @@ public class Tree extends Agroasset {
 
     public Tree(Context context, Bundle extras, String assetTable) {
         super(context, extras, assetTable);
-    }
-
-    @Override
-    public String getNickname() {
-        return super.getNickname()!=null||!super.getNickname().equals("")?super.getNickname():getContext().getString(R.string.gaharu_tree);
-    }
-
-    @Override
-    public String dbUpdate(String table) {
-        return "update "+table+" set nickname='"+getNickname()+"',"+
-                "geo_info_id='"+getGeoInfoId()+"',"+
-                "interv_extract="+getIntervExtract()+","+
-                "interv_inspect="+getIntervExtract()+","+
-                "remark='"+getRemark()+"',"+
-                "interv_infuse="+getIntervInfuse()+
-                " where id="+getId();
-    }
-
-
-
-    public Integer getIntervInfuse() {
-        return intervInfuse;
-    }
-
-    public void setIntervInfuse(Integer intervInfuse) {
-        this.intervInfuse = intervInfuse;
     }
 }

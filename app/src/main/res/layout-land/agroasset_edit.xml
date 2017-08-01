@@ -122,6 +122,7 @@
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/detective_holo_dark"
                         android:clickable="true"
+                        android:visibility="gone"
                         android:id="@+id/fabInspect" />
 
                     <android.support.design.widget.FloatingActionButton

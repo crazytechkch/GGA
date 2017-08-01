@@ -46,14 +46,16 @@ import ctcommons.permission.Permission;
  */
 public class AgroassetEditActivity extends AppCompatActivity{
     private EditText etId,etNickname,etRemark;
-    private ImageButton btnInspectRec,btnExtractRec,btnInfuseRec;
+    private FloatingActionButton btnInspectRec,btnExtractRec,btnInfuseRec;
     private ViewPager imagePager;
     private Button btnDone;
     private Spinner spnFarm,spnStatus;
     private Agroasset agroasset;
     private String dataDir;
-    private static final int REQ_PICK_IMAGE = 0;
-    private static final int REQ_CAPTURE_IMAGE = 1;
+    public static final int REQ_PICK_IMAGE = 0;
+    public static final int REQ_CAPTURE_IMAGE = 1;
+    public static final int REQ_EXTRACT = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,17 +86,28 @@ public class AgroassetEditActivity extends AppCompatActivity{
         initImageAdapter();
 
 
-        btnInspectRec = (ImageButton)findViewById(R.id.buttonInspectRec);
+        btnInspectRec = (FloatingActionButton) findViewById(R.id.fabInspect);
         if (!isRowExists()) btnInspectRec.setEnabled(false);
-        btnExtractRec = (ImageButton)findViewById(R.id.buttonExtractRec);
+        btnExtractRec = (FloatingActionButton)findViewById(R.id.fabExtract);
+        btnExtractRec.setOnClickListener(btnExtractListener());
         if (!isRowExists()) btnExtractRec.setEnabled(false);
-        btnInfuseRec = (ImageButton)findViewById(R.id.buttonInfuseRec);
+        btnInfuseRec = (FloatingActionButton)findViewById(R.id.fabInfuse);
         if (!isRowExists()) btnInfuseRec.setEnabled(false);
 
         btnDone = (Button)findViewById(R.id.buttonDone);
         initImageButtons();
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+    }
+
+
+    protected View.OnClickListener btnExtractListener(){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        };
     }
 
     private SimpleCustomAdapter farmAdapter() {

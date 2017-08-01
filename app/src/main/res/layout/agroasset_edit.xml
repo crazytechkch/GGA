@@ -148,6 +148,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:clickable="true"
+                        android:visibility="gone"
                         app:srcCompat="@drawable/detective_holo_dark" />
                 </LinearLayout>
 

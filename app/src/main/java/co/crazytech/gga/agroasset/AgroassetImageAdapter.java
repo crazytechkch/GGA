@@ -45,8 +45,8 @@ public class AgroassetImageAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(final ViewGroup container, int position) {
-        View view = layoutInflater.inflate(R.layout.agroasset_image,container,false);
+    public Object instantiateItem(final ViewGroup container, final int position) {
+        final View view = layoutInflater.inflate(R.layout.agroasset_image,container,false);
 
         ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
         FloatingActionButton fabDelete = (FloatingActionButton)view.findViewById(R.id.fabDelete);
@@ -55,12 +55,17 @@ public class AgroassetImageAdapter extends PagerAdapter {
             if(!imageFile.exists()||imageFile.isDirectory()) throw new FileNotFoundException();
             Glide.with(context).load(imageFile).into(imageView);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            final View v = view;
-
             fabDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showAlertDialog("Delete this image?", imageFile);
+                    showAlertDialog("Delete this image?", new Runnable() {
+                        @Override
+                        public void run() {
+                            imageFile.delete();
+                            container.removeView(view);
+                            notifyDataSetChanged();
+                        }
+                    });
                 }
             });
 
@@ -90,7 +95,7 @@ public class AgroassetImageAdapter extends PagerAdapter {
         return view;
     }
 
-    private void showAlertDialog(String message,final File imgFile) {
+    private void showAlertDialog(String message, final Runnable runnable) {
         new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.app_name))
                 .setCancelable(true)
@@ -98,7 +103,7 @@ public class AgroassetImageAdapter extends PagerAdapter {
                 .setPositiveButton(context.getString(android.R.string.ok),new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        imgFile.delete();
+                        runnable.run();
                     }
                 })
                 .setNegativeButton(context.getString(android.R.string.cancel), new DialogInterface.OnClickListener() {

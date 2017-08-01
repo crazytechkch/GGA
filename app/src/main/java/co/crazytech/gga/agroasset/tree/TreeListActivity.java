@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,12 @@ public class TreeListActivity extends AgroassetListActivity {
         PersistanceManager pm = new PersistanceManager(this);
         pm.open();
         SQLiteDatabase db = pm.getDb();
+        Cursor totalCurs = db.rawQuery("select count(id) from v_tree",null);
+        totalCurs.moveToFirst();
+        int count = totalCurs.getInt(0);
+        totalCurs.close();
+        TextView tvTotal = (TextView)findViewById(R.id.textViewTotal);
+        tvTotal.setText("Total records : "+count);
         Cursor cursor = db.rawQuery("select id,status_name from entity_status",null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
@@ -48,8 +57,6 @@ public class TreeListActivity extends AgroassetListActivity {
         }
         cursor.close();
         pm.close();
-        sql = "select id,nickname,code,dcode,CAST(dcode as SIGNED) AS casted_column from v_tree order by casted_column asc, dcode asc";
-        agrogrps.add(new AgroassetGroup(getString(R.string.view_all), R.drawable.tree,agroassets(sql)));
         setListAdapter(new AgroassetListAdapter(this,agrogrps));
         setOnChildClickListener(childClickListener());
     }

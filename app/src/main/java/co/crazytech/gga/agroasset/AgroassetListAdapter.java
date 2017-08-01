@@ -2,14 +2,20 @@ package co.crazytech.gga.agroasset;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.media.Image;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.List;
 
 import co.crazytech.gga.R;
@@ -80,19 +86,52 @@ public class AgroassetListAdapter extends BaseExpandableListAdapter {
 
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView==null){
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.simple_listitem,null);
+            convertView = inflater.inflate(R.layout.agroasset_listitem,null);
         }
         TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
         Agroasset agroasset = agrogrps.get(groupPosition).getAgroassets().get(childPosition);
         txtTitle.setText(agroasset.getDcode()+" - "+agroasset.getNickname()+" ("+agroasset.getCode().substring(5)+")");
+        ImageButton btnDelete = (ImageButton) convertView.findViewById(R.id.fabDelete);
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertDialog("Delete this record?", new Runnable() {
+                    @Override
+                    public void run() {
+                        agrogrps.get(groupPosition).getAgroassets().remove(childPosition);
+                        notifyDataSetChanged();
+                    }
+                });
+            }
+        });
         return convertView;
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    private void showAlertDialog(String message, final Runnable runnable) {
+        new AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.app_name))
+                .setCancelable(true)
+                .setMessage(message)
+                .setPositiveButton(context.getString(android.R.string.ok),new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        runnable.run();
+                    }
+                })
+                .setNegativeButton(context.getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 }
