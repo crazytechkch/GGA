@@ -16,6 +16,9 @@ public class TreeExtractActivity extends AgroassetExtractActivity {
         Bundle extras = getIntent().getExtras();
         setAgroassetId(extras.getLong("agroassetId"));
         setSqlView("v_extract_tree");
+        setNickname(extras.getString("nickname"));
+        setDcode(extras.getString("dcode"));
+        setCode(extras.getString("code"));
         super.onCreate(savedInstanceState);
     }
 }

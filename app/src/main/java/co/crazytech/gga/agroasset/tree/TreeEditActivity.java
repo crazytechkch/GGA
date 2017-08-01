@@ -45,6 +45,9 @@ public class TreeEditActivity extends AgroassetEditActivity {
                 if(getAgroasset().getId()!=null){
                     Intent intent = new Intent(v.getContext(),TreeExtractActivity.class);
                     intent.putExtra("agroassetId",getAgroasset().getId());
+                    intent.putExtra("nickname",getAgroasset().getNickname());
+                    intent.putExtra("dcode",getAgroasset().getDcode());
+                    intent.putExtra("code",getAgroasset().getCode());
                     startActivityForResult(intent,REQ_EXTRACT);
                 }
 

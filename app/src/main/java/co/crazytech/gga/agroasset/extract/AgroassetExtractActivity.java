@@ -1,6 +1,7 @@
 package co.crazytech.gga.agroasset.extract;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +40,22 @@ public class AgroassetExtractActivity extends Activity {
     }
 
     protected void initView(){
+        TextView tvDcode,tvNickname;
+        tvNickname = (TextView)findViewById(R.id.textViewNickname);
+        tvNickname.setText(getDcode()+". "+getNickname()+" ("+getCode().substring(5)+")");
+
         lv = (ListView)findViewById(R.id.lvExtracts);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Long extractId = parent.getItemIdAtPosition(position);
+                Intent intent = new Intent(view.getContext(),AgroassetExtractEditActivity.class);
+                intent.putExtra("id",extractId);
+                intent.putExtra("sqlView",getSqlView());
+                intent.putExtra("dcode",getDcode());
+                intent.putExtra("nickname",getNickname());
+                intent.putExtra("code",getCode());
+                startActivityForResult(intent,REQ_REC_EDIT);
 
             }
         });

@@ -22,7 +22,7 @@ public class HiveExtractActivity extends AgroassetExtractActivity {
         setSqlView("v_extract_hive");
         setNickname(extras.getString("nickname"));
         setDcode(extras.getString("dcode"));
-        setCode(extras.getString("code").substring(7));
+        setCode(extras.getString("code"));
         super.onCreate(savedInstanceState);
     }
 }
