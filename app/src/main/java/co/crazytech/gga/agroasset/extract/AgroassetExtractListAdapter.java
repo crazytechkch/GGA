@@ -4,14 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -54,17 +58,35 @@ public class AgroassetExtractListAdapter extends BaseAdapter {
         TextView tvTitle = (TextView) convertView.findViewById(R.id.title);
         AgroassetExtract extract = extracts.get(position);
         new SimpleDateFormat();
-        String title = "";
         String dateStr = "";
-        if(extract.getDate()!=null)dateStr = extract.getDate();
-        String vol = "v:"+(extract.getVolume()!=null?String.format("%1$,.2f",extract.getVolume()):"/");
-        String weight = "w:"+(extract.getWeight()!=null?String.format("%1$,.2f",extract.getWeight()):"/");
-        if(extract.getProdTypeId()==1) title = dateStr+" "+vol+" "+weight;
-        else if(extract.getProdTypeId()==2) {
-            String pod = "pod:"+(extract.getPodCount()!=null?extract.getPodCount():"/");
-            title = dateStr+" "+pod+" "+vol+" "+weight;
+        if(extract.getDate()!=null){
+            Calendar date = Calendar.getInstance();
+            try{
+                date.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(extract.getDate()));
+                dateStr = new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(date.getTime());
+                tvTitle.setText(dateStr);
+            } catch (ParseException e){
+                Log.w("Date Parse Error",e.getMessage());
+            }
         }
-        tvTitle.setText(title);
+
+        String vol = (extract.getVolume()!=null?String.format("%1$,.2f",extract.getVolume()):"/")+" "+extract.getVolumeUnit();
+        String weight = (extract.getWeight()!=null?String.format("%1$,.2f",extract.getWeight()):"/")+" "+extract.getWeightUnit();
+        String pod = (extract.getPodCount()!=null?extract.getPodCount():"/")+" pods";
+
+        LinearLayout linlay = (LinearLayout) convertView.findViewById(R.id.linlay);
+        TextView tvPod = new TextView(convertView.getContext());
+        TextView tvVol = new TextView(convertView.getContext());
+        TextView tvWeight = new TextView(convertView.getContext());
+        if(extract.getProdTypeId()==2) {
+            tvPod.setText(pod);
+            linlay.addView(tvPod);
+        }
+        tvVol.setText(vol);
+        linlay.addView(tvVol);
+        tvWeight.setText(weight);
+        linlay.addView(tvWeight);
+
         ImageButton btnDelete = (ImageButton) convertView.findViewById(R.id.fabDelete);
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override

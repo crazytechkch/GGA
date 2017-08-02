@@ -35,7 +35,7 @@
         android:layout_centerVertical="true" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnNewRec"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1"

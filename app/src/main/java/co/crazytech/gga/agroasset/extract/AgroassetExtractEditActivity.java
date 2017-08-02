@@ -3,6 +3,7 @@ package co.crazytech.gga.agroasset.extract;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -24,6 +27,7 @@ import java.util.Date;
 
 import co.crazytech.gga.MainActivity;
 import co.crazytech.gga.R;
+import co.crazytech.gga.agroasset.UomSpinnerAdapter;
 
 /**
  * Created by eric on 8/1/2017.
@@ -33,6 +37,9 @@ public class AgroassetExtractEditActivity extends Activity {
     private AgroassetExtract extract;
     private Button btnPodPlus,btnPodMinus,btnOk;
     private EditText etDate,etTime,etPods,etVol,etWeight,etRemark;
+    private Spinner spnWeight,spnVol;
+    private boolean reqSuccess;
+    private int reqCode;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +50,7 @@ public class AgroassetExtractEditActivity extends Activity {
 
     private void initView(){
         Bundle extras = getIntent().getExtras();
+        reqCode = extras.getInt("reqCode");
         TextView tvNickname;
         tvNickname = (TextView)findViewById(R.id.textViewNickname);
         tvNickname.setText(extras.getString("dcode")+". "+extras.getString("nickname")+"("+extras.getString("code").substring(5)+")");
@@ -55,23 +63,37 @@ public class AgroassetExtractEditActivity extends Activity {
         etTime = (EditText)findViewById(R.id.editTextTime);
         Calendar date = Calendar.getInstance();
         try {
-            date.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(extract.getDate().replaceAll("\\p{Cntrl}", "")));
+            if(extract.getDate()!=null)date.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(extract.getDate().replaceAll("\\p{Cntrl}", "")));
+            else date.setTimeInMillis(date.getTimeInMillis()+43200000);
         } catch (ParseException e) {
             Log.w("Date Parse Error",e.getMessage());
         }
+
+
         etDate.setText(new SimpleDateFormat("dd MMM yyyy").format(date.getTime()));
         etTime.setText(new SimpleDateFormat("hh:mm:ss a").format(date.getTime()));
         etDate.setOnClickListener(dateTimeClickListenser());
         etTime.setOnClickListener(dateTimeClickListenser());
 
         etPods = (EditText)findViewById(R.id.editTextPods);
-        etPods.setText(extract.getPodCount()+"");
+        if(extract.getProdTypeId()!=null){
+            if(extract.getProdTypeId()==2)etPods.setText(extract.getPodCount()+"");
+            else {
+                LinearLayout linlayPod = (LinearLayout)findViewById(R.id.linlayPod);
+                linlayPod.setVisibility(View.GONE);
+            }
+        }
         etVol = (EditText)findViewById(R.id.editTextVolume);
-        etVol.setText(extract.getVolume()+"");
+        etVol.setText(extract.getVolume()!=null?extract.getVolume().toString():null);
         etWeight = (EditText)findViewById(R.id.editTextWeight);
-        etWeight.setText(extract.getWeight()+"");
+        etWeight.setText(extract.getWeight()!=null?extract.getWeight().toString():null);
         etRemark = (EditText)findViewById(R.id.editTextRemark);
         etRemark.setText(extract.getRemark());
+
+        spnVol = (Spinner)findViewById(R.id.spinnerVolume);
+        spnVol.setAdapter(new UomSpinnerAdapter(this,android.R.layout.simple_spinner_dropdown_item,MainActivity.Uom.VOLUME));
+        spnWeight = (Spinner)findViewById(R.id.spinnerWeight);
+        spnWeight.setAdapter(new UomSpinnerAdapter(this,android.R.layout.simple_spinner_dropdown_item,MainActivity.Uom.WIEGHT));
 
         btnPodPlus = (Button)findViewById(R.id.btnPlus);
         btnPodPlus.setOnClickListener(podBtnClickListener(etPods));
@@ -93,18 +115,25 @@ public class AgroassetExtractEditActivity extends Activity {
                 } catch (ParseException e){
                     Log.w("Date Parse Exception",e.getMessage());
                 }
-                extract.setPodCount(Integer.valueOf(etPods.getText()+""));
-                extract.setVolume(Double.valueOf(etVol.getText()+""));
-                extract.setWeight(Double.valueOf(etWeight.getText()+""));
-                extract.setRemark(etRemark.getText()+"");
+                if(etPods.getText().toString().length()>0)extract.setPodCount(Integer.valueOf(etPods.getText()+""));
+                if(etVol.getText().toString().length()>0)extract.setVolume(Double.valueOf(etVol.getText()+""));
+                if(etWeight.getText().toString().length()>0)extract.setWeight(Double.valueOf(etWeight.getText()+""));
+                extract.setRemark(etRemark.getText().toString());
+                extract.setVolUomId(spnVol.getSelectedItemId());
+                extract.setWeightUomId(spnWeight.getSelectedItemId());
 
-                int reqCode = getIntent().getExtras().getInt("reqCode");
                 switch (reqCode){
                     case MainActivity.Request.REQ_REC_EDIT:
-                        extract.dbUpdate();
+                        reqSuccess=extract.dbUpdate(v.getContext());
+                        break;
                     case MainActivity.Request.REQ_REC_NEW:
-                        extract.dbInsert();
+                        Long agroassetId = getIntent().getLongExtra("agroassetId",0);
+                        extract.setAgroassetId(agroassetId);
+                        reqSuccess=extract.dbInsert(v.getContext());
+                        break;
+                    default: break;
                 }
+                finish();
 
             }
         });
@@ -154,14 +183,17 @@ public class AgroassetExtractEditActivity extends Activity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer podCount = Integer.valueOf(etPod.getText().toString());
-                if (podCount!=null){
-                    if(v==btnPodPlus){
-                        podCount+=1;
-                    } else if(v==btnPodMinus&&podCount>0){
-                        podCount-=1;
+                String podStr = etPod.getText().toString();
+                if (podStr!=null&&podStr.length()>0){
+                    Integer podCount = Integer.valueOf(podStr);
+                    if (podCount!=null){
+                        if(v==btnPodPlus){
+                            podCount+=1;
+                        } else if(v==btnPodMinus&&podCount>0){
+                            podCount-=1;
+                        }
+                        etPod.setText(podCount+"");
                     }
-                    etPod.setText(podCount+"");
                 }
             }
         };
@@ -205,8 +237,9 @@ public class AgroassetExtractEditActivity extends Activity {
 
         @Override
         public void run() {
-            if(updaterRunning) {
-                Integer podCount = Integer.valueOf(etPod.getText().toString());
+            String podStr = etPod.getText().toString();
+            if(updaterRunning&&podStr!=null&&podStr.length()>0) {
+                Integer podCount = Integer.valueOf(podStr);
                 if (podCount != null) {
                     if (view == btnPodPlus) podCount++;
                     else if (view == btnPodMinus&&podCount>0) podCount--;
@@ -215,6 +248,14 @@ public class AgroassetExtractEditActivity extends Activity {
                 }
             }
         }
+    }
+
+    @Override
+    public void finish() {
+        Log.d("REQ Success",reqSuccess+"");
+        if(reqSuccess) setResult(Activity.RESULT_OK);
+        else setResult(Activity.RESULT_CANCELED);
+        super.finish();
     }
 
     public AgroassetExtract getExtract() {

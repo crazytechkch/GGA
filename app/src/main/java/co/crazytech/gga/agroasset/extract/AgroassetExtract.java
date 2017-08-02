@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import co.crazytech.gga.db.PersistanceManager;
 
@@ -17,7 +18,7 @@ public class AgroassetExtract {
     private Long extractType,prodTypeId;
     private Integer podCount;
     private Double weight,volume;
-    private String date,remark;
+    private String date,remark,weightUnit,volumeUnit;
 
     public AgroassetExtract(Context context, Long id, String sqlView) {
         this.id = id;
@@ -28,37 +29,81 @@ public class AgroassetExtract {
         PersistanceManager pm = new PersistanceManager(context);
         pm.open();
         SQLiteDatabase db = pm.getDb();
-        Cursor cursor = db.rawQuery("select * from "+sqlView+" where id="+id,null);
+        String sql = "select ae.*,w.unit,v.unit from "+sqlView+" ae  " +
+                "left join weight_uom w on ae.weight_uom_id = w.id " +
+                "left join volume_uom v on ae.volume_uom_id = v.id " +
+                "where ae.id = ?";
+        Cursor cursor = db.rawQuery(sql,new String[]{(id!=null?id:0)+""});
         cursor.moveToFirst();
-        id = cursor.getLong(0);
-        agroassetId = cursor.getLong(1);
-        volUomId = cursor.getLong(2);
-        weightUomId = cursor.getLong(3);
-        extractType = cursor.getLong(4);
-        date = cursor.getString(5);
-        podCount = cursor.getInt(6);
-        weight = cursor.getDouble(7);
-        volume = cursor.getDouble(8);
-        remark = cursor.getString(9);
-        prodTypeId = cursor.getLong(10);
+        if (cursor.getCount()>0){
+            id = cursor.getLong(0);
+            agroassetId = cursor.getLong(1);
+            volUomId = cursor.getLong(2);
+            weightUomId = cursor.getLong(3);
+            extractType = cursor.getLong(4);
+            date = cursor.getString(5);
+            podCount = cursor.getInt(6);
+            weight = cursor.getDouble(7);
+            volume = cursor.getDouble(8);
+            remark = cursor.getString(9);
+            prodTypeId = cursor.getLong(10);
+            weightUnit = cursor.getString(11);
+            volumeUnit = cursor.getString(12);
+        }
         cursor.close();
         pm.close();
     }
 
     public boolean dbUpdate(Context context){
+        boolean success;
         PersistanceManager pm = new PersistanceManager(context);
+        pm.open();
         SQLiteDatabase db = pm.getDb();
-        ContentValues cv = new ContentValues();
-        cv.put("agroasset_id",agroassetId);
-        db.beginTransaction();
-        db.insert("agroasset_extract","NULL",cv);
-        db.endTransaction();
+        try{
+            ContentValues cv = new ContentValues();
+            cv.put("agroasset_id",agroassetId);
+            cv.put("volume_uom_id",volUomId);
+            cv.put("weight_uom_id",weightUomId);
+            cv.put("extract_type",extractType);
+            cv.put("date",date);
+            cv.put("pod_count",podCount);
+            cv.put("weight",weight);
+            cv.put("volume",volume);
+            cv.put("remark",remark);
+            db.update("agroasset_extract",cv,"id=?",new String[]{id+""});
+            success=true;
+        } catch (SQLException e){
+            success=false;
+            Log.w("SQL Update Error",e.getMessage());
+        }
         pm.close();
-        return false;
+        return success;
     }
 
     public boolean dbInsert(Context context){
-        return false;
+        boolean success;
+        PersistanceManager pm = new PersistanceManager(context);
+        pm.open();
+        SQLiteDatabase db = pm.getDb();
+        try{
+            ContentValues cv = new ContentValues();
+            cv.put("agroasset_id",agroassetId);
+            cv.put("volume_uom_id",volUomId);
+            cv.put("weight_uom_id",weightUomId);
+            cv.put("extract_type",extractType);
+            cv.put("date",date);
+            cv.put("pod_count",podCount);
+            cv.put("weight",weight);
+            cv.put("volume",volume);
+            cv.put("remark",remark);
+            db.insert("agroasset_extract","NULL",cv);
+            success = true;
+        } catch (SQLException e){
+            success=false;
+            Log.w("SQL Update Error",e.getMessage());
+        }
+        pm.close();
+        return success;
     }
 
     public Long getId() {
@@ -147,5 +192,21 @@ public class AgroassetExtract {
 
     public void setProdTypeId(Long prodTypeId) {
         this.prodTypeId = prodTypeId;
+    }
+
+    public String getWeightUnit() {
+        return weightUnit;
+    }
+
+    public void setWeightUnit(String weightUnit) {
+        this.weightUnit = weightUnit;
+    }
+
+    public String getVolumeUnit() {
+        return volumeUnit;
+    }
+
+    public void setVolumeUnit(String volumeUnit) {
+        this.volumeUnit = volumeUnit;
     }
 }

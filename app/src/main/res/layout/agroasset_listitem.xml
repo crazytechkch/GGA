@@ -4,26 +4,40 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="3dp"
-        android:layout_alignParentLeft="true"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:gravity="center_vertical"
-        android:paddingRight="40dp"
-        android:text="Title"/>
+        android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/fabDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:srcCompat="@android:drawable/ic_menu_delete"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_weight=".6"
+            android:gravity="center_vertical"
+            android:minHeight="?android:attr/listPreferredItemHeightSmall"
+            android:padding="3dp"
+            android:paddingRight="40dp"
+            android:text="Title"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+
+        <LinearLayout
+            android:id="@+id/linlay"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:orientation="vertical"></LinearLayout>
+
+        <ImageButton
+            android:id="@+id/fabDelete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".1"
+            android:layout_gravity="center"
+            android:background="@drawable/coloraccentsel"
+            android:clickable="true"
+            android:src="@android:drawable/ic_menu_delete"/>
+    </LinearLayout>
 
 </RelativeLayout>

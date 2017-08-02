@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.media.Image;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -92,6 +94,7 @@ public class AgroassetListAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.agroasset_listitem,null);
         }
         TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
+        txtTitle.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,0.9f));
         Agroasset agroasset = agrogrps.get(groupPosition).getAgroassets().get(childPosition);
         txtTitle.setText(agroasset.getDcode()+" - "+agroasset.getNickname()+" ("+agroasset.getCode().substring(5)+")");
         ImageButton btnDelete = (ImageButton) convertView.findViewById(R.id.fabDelete);
@@ -107,6 +110,9 @@ public class AgroassetListAdapter extends BaseExpandableListAdapter {
                 });
             }
         });
+
+        LinearLayout linlay = (LinearLayout) convertView.findViewById(R.id.linlay);
+        linlay.setVisibility(View.GONE);
         return convertView;
     }
 

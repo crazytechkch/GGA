@@ -66,16 +66,17 @@
                     android:inputType="time"
                     android:selectAllOnFocus="true"
                     android:textIsSelectable="true"/>
+
             </LinearLayout>
 
-            <GridLayout
+            <LinearLayout
+                android:id="@+id/linlayPod"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:columnCount="2">
-
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_columnSpan="2"
                     android:layout_columnWeight="1"
@@ -95,10 +96,10 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/coloraccentsel"
-                        android:textColor="@android:color/white"
                         android:clickable="true"
                         android:text="-"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@android:color/white" />
 
                     <EditText
                         android:id="@+id/editTextPods"
@@ -114,24 +115,33 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/coloraccentsel"
-                        android:textColor="@android:color/white"
                         android:clickable="true"
                         android:text="+"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@android:color/white" />
+
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnSpan="2"
-                    android:layout_columnWeight="1"
-                    android:text="Volume" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="2"
+                android:layout_columnWeight="1"
+                android:text="Volume" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/editTextVolume"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_columnWeight="1"
+                    android:layout_weight=".6"
                     android:ems="10"
                     android:gravity="center"
                     android:inputType="numberDecimal"
@@ -141,21 +151,27 @@
                     android:id="@+id/spinnerVolume"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight=".4" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnSpan="2"
-                    android:layout_columnWeight="1"
-                    android:text="Weight" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Weight" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/editTextWeight"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_columnWeight="1"
+                    android:layout_weight=".6"
                     android:ems="10"
                     android:gravity="center"
                     android:inputType="numberDecimal"
@@ -163,16 +179,18 @@
 
                 <Spinner
                     android:id="@+id/spinnerWeight"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_columnWeight="1"
-                    android:layout_gravity="center_vertical" />
-            </GridLayout>
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight=".4" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/remark" />
 
             <EditText

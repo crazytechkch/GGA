@@ -6,9 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,6 +28,7 @@ public class AgroassetExtractActivity extends Activity {
     private ListView lv;
     private Long agroassetId;
     private String sqlView,nickname,dcode,code;
+    private Button btnNewRec;
 
 
 
@@ -42,7 +43,7 @@ public class AgroassetExtractActivity extends Activity {
     protected void initView(){
         TextView tvDcode,tvNickname;
         tvNickname = (TextView)findViewById(R.id.textViewNickname);
-        tvNickname.setText(getDcode()+". "+getNickname()+" ("+getCode().substring(5)+")");
+        tvNickname.setText(getDcode()+". "+getNickname()+" ("+getCode().substring(5)+") "+"("+extracts.size()+")");
 
         lv = (ListView)findViewById(R.id.lvExtracts);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -62,6 +63,21 @@ public class AgroassetExtractActivity extends Activity {
         });
         lv.setAdapter(new AgroassetExtractListAdapter(this,extracts));
 
+        btnNewRec = (Button) findViewById(R.id.btnNewRec);
+        btnNewRec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),AgroassetExtractEditActivity.class);
+                intent.putExtra("agroassetId",getAgroassetId());
+                intent.putExtra("sqlView",getSqlView());
+                intent.putExtra("dcode",getDcode());
+                intent.putExtra("nickname",getNickname());
+                intent.putExtra("code",getCode());
+                intent.putExtra("reqCode",MainActivity.Request.REQ_REC_NEW);
+                startActivityForResult(intent, MainActivity.Request.REQ_REC_NEW);
+            }
+        });
+
     }
 
     private void populateExtracts(){
@@ -69,8 +85,7 @@ public class AgroassetExtractActivity extends Activity {
         PersistanceManager pm = new PersistanceManager(this);
         pm.open();
         SQLiteDatabase db = pm.getDb();
-        Cursor cursor = db.rawQuery("select id from "+sqlView+" where agroasset_id="+agroassetId,null);
-        Log.d("Agroasset Extracts","Cursor size:"+cursor.getCount());
+        Cursor cursor = db.rawQuery("select id from "+sqlView+" where agroasset_id=? order by date desc",new String[]{agroassetId+""});
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
             extracts.add(new AgroassetExtract(this,cursor.getLong(0),sqlView));
@@ -78,7 +93,6 @@ public class AgroassetExtractActivity extends Activity {
         }
         cursor.close();
         pm.close();
-        Log.d("Agroasset Extracts",sqlView+":"+agroassetId+":"+extracts.size());
     }
 
     public Long getAgroassetId() {
@@ -119,5 +133,24 @@ public class AgroassetExtractActivity extends Activity {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case MainActivity.Request.REQ_REC_EDIT:
+                if(resultCode==Activity.RESULT_OK){
+                    populateExtracts();
+                    lv.setAdapter(new AgroassetExtractListAdapter(this,extracts));
+                }
+                break;
+            case MainActivity.Request.REQ_REC_NEW:
+                if(resultCode==Activity.RESULT_OK){
+                    populateExtracts();
+                    lv.setAdapter(new AgroassetExtractListAdapter(this,extracts));
+                }
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

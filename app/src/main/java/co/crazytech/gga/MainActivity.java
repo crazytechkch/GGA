@@ -47,6 +47,11 @@ public class MainActivity extends AppCompatActivity
         public static final int REQ_REC_EDIT = 1;
     }
 
+    public static class Uom {
+        public static final int WIEGHT = 0;
+        public static final int VOLUME = 1;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
