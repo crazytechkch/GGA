@@ -1,5 +1,6 @@
 package co.crazytech.gga.agroasset.extract;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -13,10 +14,10 @@ import co.crazytech.gga.db.PersistanceManager;
 
 public class AgroassetExtract {
     private Long id,agroassetId,volUomId,weightUomId;
-    private Long date,extractType,prodTypeId;
+    private Long extractType,prodTypeId;
     private Integer podCount;
     private Double weight,volume;
-    private String remark;
+    private String date,remark;
 
     public AgroassetExtract(Context context, Long id, String sqlView) {
         this.id = id;
@@ -34,7 +35,7 @@ public class AgroassetExtract {
         volUomId = cursor.getLong(2);
         weightUomId = cursor.getLong(3);
         extractType = cursor.getLong(4);
-        date = cursor.getLong(5);
+        date = cursor.getString(5);
         podCount = cursor.getInt(6);
         weight = cursor.getDouble(7);
         volume = cursor.getDouble(8);
@@ -42,6 +43,22 @@ public class AgroassetExtract {
         prodTypeId = cursor.getLong(10);
         cursor.close();
         pm.close();
+    }
+
+    public boolean dbUpdate(Context context){
+        PersistanceManager pm = new PersistanceManager(context);
+        SQLiteDatabase db = pm.getDb();
+        ContentValues cv = new ContentValues();
+        cv.put("agroasset_id",agroassetId);
+        db.beginTransaction();
+        db.insert("agroasset_extract","NULL",cv);
+        db.endTransaction();
+        pm.close();
+        return false;
+    }
+
+    public boolean dbInsert(Context context){
+        return false;
     }
 
     public Long getId() {
@@ -76,11 +93,11 @@ public class AgroassetExtract {
         this.weightUomId = weightUomId;
     }
 
-    public Long getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Long date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

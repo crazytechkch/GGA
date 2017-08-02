@@ -42,6 +42,11 @@ public class MainActivity extends AppCompatActivity
     public static final String STORAGE_DIR = Environment.getExternalStorageDirectory()+"/GAHARU-M/";
     public static final int PERM_READ_SD = 0;
 
+    public static class Request {
+        public static final int REQ_REC_NEW = 0;
+        public static final int REQ_REC_EDIT = 1;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

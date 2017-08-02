@@ -25,4 +25,7 @@
     <string name="inspection_pending">Pending Inspection</string>
     <string name="infusion_pending">Pending Infusion</string>
     <string name="view_all">View All</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="new_record">New Record</string>
 </resources>

@@ -56,9 +56,9 @@ public class AgroassetExtractListAdapter extends BaseAdapter {
         new SimpleDateFormat();
         String title = "";
         String dateStr = "";
-        if(extract.getDate()!=null)dateStr = new SimpleDateFormat("yyyy-MM-dd EEE HH:mm:ss").format(new Date(extract.getDate()));
-        String vol = "v:"+(extract.getVolume()!=null?String.format("%.2d",extract.getVolume()):"/");
-        String weight = "w:"+(extract.getWeight()!=null?String.format("%.2d",extract.getWeight()):"/");
+        if(extract.getDate()!=null)dateStr = extract.getDate();
+        String vol = "v:"+(extract.getVolume()!=null?String.format("%1$,.2f",extract.getVolume()):"/");
+        String weight = "w:"+(extract.getWeight()!=null?String.format("%1$,.2f",extract.getWeight()):"/");
         if(extract.getProdTypeId()==1) title = dateStr+" "+vol+" "+weight;
         else if(extract.getProdTypeId()==2) {
             String pod = "pod:"+(extract.getPodCount()!=null?extract.getPodCount():"/");

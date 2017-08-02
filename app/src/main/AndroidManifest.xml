@@ -47,6 +47,9 @@
             android:name=".agroasset.extract.AgroassetExtractActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
+            android:name=".agroasset.extract.AgroassetExtractEditActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name=".agroasset.hive.HiveExtractActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity

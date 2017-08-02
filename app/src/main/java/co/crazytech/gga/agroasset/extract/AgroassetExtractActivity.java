@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.crazytech.gga.MainActivity;
 import co.crazytech.gga.R;
 import co.crazytech.gga.db.PersistanceManager;
 
@@ -26,8 +28,6 @@ public class AgroassetExtractActivity extends Activity {
     private ListView lv;
     private Long agroassetId;
     private String sqlView,nickname,dcode,code;
-    private static final int REQ_REC_EDIT = 0;
-    private static final int REQ_REC_NEW = 1;
 
 
 
@@ -55,7 +55,8 @@ public class AgroassetExtractActivity extends Activity {
                 intent.putExtra("dcode",getDcode());
                 intent.putExtra("nickname",getNickname());
                 intent.putExtra("code",getCode());
-                startActivityForResult(intent,REQ_REC_EDIT);
+                intent.putExtra("reqCode",MainActivity.Request.REQ_REC_EDIT);
+                startActivityForResult(intent, MainActivity.Request.REQ_REC_EDIT);
 
             }
         });
@@ -69,6 +70,7 @@ public class AgroassetExtractActivity extends Activity {
         pm.open();
         SQLiteDatabase db = pm.getDb();
         Cursor cursor = db.rawQuery("select id from "+sqlView+" where agroasset_id="+agroassetId,null);
+        Log.d("Agroasset Extracts","Cursor size:"+cursor.getCount());
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
             extracts.add(new AgroassetExtract(this,cursor.getLong(0),sqlView));
@@ -76,6 +78,7 @@ public class AgroassetExtractActivity extends Activity {
         }
         cursor.close();
         pm.close();
+        Log.d("Agroasset Extracts",sqlView+":"+agroassetId+":"+extracts.size());
     }
 
     public Long getAgroassetId() {
