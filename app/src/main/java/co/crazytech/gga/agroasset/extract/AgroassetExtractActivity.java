@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -23,7 +24,7 @@ import co.crazytech.gga.db.PersistanceManager;
  * Created by eric on 8/1/2017.
  */
 
-public class AgroassetExtractActivity extends Activity {
+public class AgroassetExtractActivity extends FragmentActivity {
     private List<AgroassetExtract> extracts;
     private ListView lv;
     private Long agroassetId;

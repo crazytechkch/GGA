@@ -112,6 +112,7 @@ public class AgroassetListAdapter extends BaseExpandableListAdapter {
         });
 
         LinearLayout linlay = (LinearLayout) convertView.findViewById(R.id.linlay);
+        linlay.removeAllViews();
         linlay.setVisibility(View.GONE);
         return convertView;
     }

@@ -64,7 +64,7 @@ public class AgroassetExtractEditActivity extends Activity {
         Calendar date = Calendar.getInstance();
         try {
             if(extract.getDate()!=null)date.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(extract.getDate().replaceAll("\\p{Cntrl}", "")));
-            else date.setTimeInMillis(date.getTimeInMillis()+43200000);
+            else date.setTimeInMillis(date.getTimeInMillis());
         } catch (ParseException e) {
             Log.w("Date Parse Error",e.getMessage());
         }
@@ -76,12 +76,12 @@ public class AgroassetExtractEditActivity extends Activity {
         etTime.setOnClickListener(dateTimeClickListenser());
 
         etPods = (EditText)findViewById(R.id.editTextPods);
-        if(extract.getProdTypeId()!=null){
-            if(extract.getProdTypeId()==2)etPods.setText(extract.getPodCount()+"");
-            else {
-                LinearLayout linlayPod = (LinearLayout)findViewById(R.id.linlayPod);
-                linlayPod.setVisibility(View.GONE);
-            }
+        String code = getIntent().getStringExtra("code");
+        if (code.startsWith("BA")){
+            if(extract.getPodCount()!=null)etPods.setText(extract.getPodCount()+"");
+        } else {
+            LinearLayout linlayPod = (LinearLayout)findViewById(R.id.linlayPod);
+            linlayPod.setVisibility(View.GONE);
         }
         etVol = (EditText)findViewById(R.id.editTextVolume);
         etVol.setText(extract.getVolume()!=null?extract.getVolume().toString():null);
@@ -91,9 +91,13 @@ public class AgroassetExtractEditActivity extends Activity {
         etRemark.setText(extract.getRemark());
 
         spnVol = (Spinner)findViewById(R.id.spinnerVolume);
-        spnVol.setAdapter(new UomSpinnerAdapter(this,android.R.layout.simple_spinner_dropdown_item,MainActivity.Uom.VOLUME));
+        UomSpinnerAdapter adapterVol = new UomSpinnerAdapter(this,MainActivity.Uom.VOLUME);
+        spnVol.setAdapter(adapterVol);
+        if(extract.getVolUomId()!=null)spnVol.setSelection(adapterVol.getPosition(extract.getVolUomId()));
         spnWeight = (Spinner)findViewById(R.id.spinnerWeight);
-        spnWeight.setAdapter(new UomSpinnerAdapter(this,android.R.layout.simple_spinner_dropdown_item,MainActivity.Uom.WIEGHT));
+        UomSpinnerAdapter adapterWeight = new UomSpinnerAdapter(this,MainActivity.Uom.WIEGHT);
+        spnWeight.setAdapter(adapterWeight);
+        if(extract.getWeightUomId()!=null)spnWeight.setSelection(adapterWeight.getPosition(extract.getWeightUomId()));
 
         btnPodPlus = (Button)findViewById(R.id.btnPlus);
         btnPodPlus.setOnClickListener(podBtnClickListener(etPods));
@@ -194,7 +198,7 @@ public class AgroassetExtractEditActivity extends Activity {
                         }
                         etPod.setText(podCount+"");
                     }
-                }
+                } else if(v==btnPodPlus) etPod.setText("1");
             }
         };
     }

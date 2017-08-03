@@ -9,30 +9,37 @@
     tools:showIn="@layout/app_bar_main">
 
 
-    <LinearLayout
-        android:orientation="vertical"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:id="@+id/flContent">
 
-        <ImageButton
-            android:layout_weight=".5"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:id="@+id/buttonHive"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/backgroundsel"
-            android:scaleType="fitStart"
-            android:src="@drawable/bee" />
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
 
-        <ImageButton
-            android:layout_weight=".5"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:id="@+id/buttonTree"
-            android:background="@drawable/backgroundsel"
-            android:scaleType="fitEnd"
-            android:src="@drawable/tree" />
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/buttonHive"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight=".5"
+                android:background="@drawable/backgroundsel"
+                android:scaleType="fitStart"
+                android:src="@drawable/bee" />
+
+            <ImageButton
+                android:id="@+id/buttonTree"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".5"
+                android:background="@drawable/backgroundsel"
+                android:scaleType="fitEnd"
+                android:src="@drawable/tree" />
+        </LinearLayout>
+    </FrameLayout>
+
 </RelativeLayout>

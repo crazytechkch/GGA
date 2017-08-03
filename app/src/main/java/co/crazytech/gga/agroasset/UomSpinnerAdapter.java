@@ -35,7 +35,7 @@ public class UomSpinnerAdapter extends BaseAdapter {
 
 
 
-    public UomSpinnerAdapter(@NonNull Context context, @LayoutRes int resource, int uomType) {
+    public UomSpinnerAdapter(@NonNull Context context, int uomType) {
         this.context = context;
         this.uomType = uomType;
         uoms = new ArrayList<SimpleObject>();
@@ -106,4 +106,12 @@ public class UomSpinnerAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return uoms.get(position).getId();
     }
+
+    public int getPosition(Long itemId){
+        for (int i=0;i<uoms.size();i++){
+            if(uoms.get(i).getId()==itemId)return i;
+        }
+        return 0;
+    }
+
 }

@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -35,7 +36,7 @@ import co.crazytech.gga.camera.CameraPreview;
 /**
  * Created by eric on 7/18/2016.
  */
-public class BarcodeScanner extends AppCompatActivity {
+public class BarcodeScanner extends FragmentActivity {
 
     private Camera mCamera;
     private CameraPreview mPreview;

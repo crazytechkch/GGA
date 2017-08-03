@@ -229,13 +229,14 @@ public class AgroassetEditActivity extends AppCompatActivity{
     }
 
     private void initImageAdapter(){
-        File[] images = null;
+        List<File> images = new ArrayList<File>();
         dataDir = "";
         if(Permission.isPermissionGranted(this, Manifest.permission.READ_EXTERNAL_STORAGE,1))dataDir = MainActivity.STORAGE_DIR+"agroasset/pictures/"+agroasset.getCode();
         File imageDir = new File(dataDir);
         if(!imageDir.exists()&&Permission.isPermissionGranted(this, Manifest.permission.WRITE_EXTERNAL_STORAGE,2))imageDir.mkdirs();
-        images = imageDir.listFiles();
-        final File[] imgs = images;
+        for (File file:imageDir.listFiles()) {
+            images.add(file);
+        }
         imagePager.setAdapter(new AgroassetImageAdapter(this, images));
 
     }

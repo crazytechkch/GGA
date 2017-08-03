@@ -4,6 +4,7 @@ import android.app.ExpandableListActivity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +19,7 @@ import co.crazytech.gga.db.PersistanceManager;
 /**
  * Created by eric on 7/28/2016.
  */
-public class AgroassetListActivity extends AppCompatActivity{
+public class AgroassetListActivity extends FragmentActivity{
     ExpandableListView expandableListView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

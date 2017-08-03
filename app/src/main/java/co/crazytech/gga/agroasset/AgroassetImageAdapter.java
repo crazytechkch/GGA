@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import co.crazytech.gga.R;
 
@@ -36,9 +37,9 @@ public class AgroassetImageAdapter extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private File[] imageFiles;
+    private List<File> imageFiles;
 
-    public AgroassetImageAdapter(Context context, File[] imageFiles) {
+    public AgroassetImageAdapter(Context context, List<File> imageFiles) {
         this.imageFiles = imageFiles;
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -50,7 +51,7 @@ public class AgroassetImageAdapter extends PagerAdapter {
 
         ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
         FloatingActionButton fabDelete = (FloatingActionButton)view.findViewById(R.id.fabDelete);
-        final File imageFile = imageFiles[position];
+        final File imageFile = imageFiles.get(position);
         try {
             if(!imageFile.exists()||imageFile.isDirectory()) throw new FileNotFoundException();
             Glide.with(context).load(imageFile).into(imageView);
@@ -62,7 +63,7 @@ public class AgroassetImageAdapter extends PagerAdapter {
                         @Override
                         public void run() {
                             imageFile.delete();
-                            container.removeView(view);
+                            imageFiles.remove(position);
                             notifyDataSetChanged();
                         }
                     });
@@ -74,7 +75,7 @@ public class AgroassetImageAdapter extends PagerAdapter {
 
             String dateStr = "";
             String remark = "";
-            String imgIdx = (position+1)+" of "+imageFiles.length;
+            String imgIdx = (position+1)+" of "+imageFiles.size();
             if(directory!=null){
                 Date dateTaken = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_DIGITIZED);
                 if(dateTaken!=null) {
@@ -122,7 +123,7 @@ public class AgroassetImageAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return imageFiles.length;
+        return imageFiles.size();
     }
 
     @Override

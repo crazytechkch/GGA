@@ -3,6 +3,8 @@ package co.crazytech.gga.agroasset.extract;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 import co.crazytech.gga.R;
+import co.crazytech.gga.db.PersistanceManager;
 
 /**
  * Created by eric on 8/1/2017.
@@ -50,11 +53,17 @@ public class AgroassetExtractListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView==null){
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.agroasset_listitem,null);
         }
+        initConvertView(position,convertView,parent);
+
+        return convertView;
+    }
+
+    private void initConvertView(final int position,View convertView, ViewGroup parent){
         TextView tvTitle = (TextView) convertView.findViewById(R.id.title);
         AgroassetExtract extract = extracts.get(position);
         new SimpleDateFormat();
@@ -75,6 +84,7 @@ public class AgroassetExtractListAdapter extends BaseAdapter {
         String pod = (extract.getPodCount()!=null?extract.getPodCount():"/")+" pods";
 
         LinearLayout linlay = (LinearLayout) convertView.findViewById(R.id.linlay);
+        linlay.removeAllViews();
         TextView tvPod = new TextView(convertView.getContext());
         TextView tvVol = new TextView(convertView.getContext());
         TextView tvWeight = new TextView(convertView.getContext());
@@ -94,13 +104,22 @@ public class AgroassetExtractListAdapter extends BaseAdapter {
                 showAlertDialog("Delete this record?", new Runnable() {
                     @Override
                     public void run() {
+                        PersistanceManager pm = new PersistanceManager(context);
+                        pm.open();
+                        SQLiteDatabase db = pm.getDb();
+                        try {
+                            db.delete("agroasset_extract","id=?",new String[]{getItemId(position)+""});
+                        } catch (SQLException e){
+                            Log.w("SQL Delete Error",e.getMessage());
+                        } finally {
+                            pm.close();
+                        }
                         extracts.remove(position);
                         notifyDataSetChanged();
                     }
                 });
             }
         });
-        return convertView;
     }
 
 
@@ -122,5 +141,10 @@ public class AgroassetExtractListAdapter extends BaseAdapter {
                     }
                 })
                 .show();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
     }
 }

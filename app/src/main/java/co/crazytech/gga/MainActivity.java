@@ -13,6 +13,9 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -26,6 +29,7 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import co.crazytech.gga.agroasset.AgroassetListActivity;
 import co.crazytech.gga.agroasset.hive.Hive;
 import co.crazytech.gga.agroasset.hive.HiveEditActivity;
 import co.crazytech.gga.agroasset.hive.HiveListActivity;
@@ -138,20 +142,36 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        Fragment fragment = null;
+        Class fragmentClass = null;
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        switch (id) {
+            case R.id.nav_tree:
+                fragmentClass = AgroassetListActivity.class;
+                break;
+            case R.id.nav_hive:
+                fragmentClass = AgroassetListActivity.class;
+                break;
+            case R.id.nav_qr:
+                fragmentClass = BarcodeScanner.class;
+                break;
+            case R.id.nav_manage:
+                break;
+            case R.id.nav_share:
+                break;
+            case R.id.nav_send:
+                break;
+        }
+        /*
+        try {
+            fragment = (Fragment)fragmentClass.newInstance();
+        } catch (Exception e){
 
         }
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent,fragment).commit();
+        */
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
