@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "545814686035",
+    "firebase_url": "https://gaharu-e11c9.firebaseio.com",
+    "project_id": "gaharu-e11c9",
+    "storage_bucket": "gaharu-e11c9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545814686035:android:7a1408e15d7346fd",
+        "android_client_info": {
+          "package_name": "co.crazytech.gga"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545814686035-pep2erjbeoubga30o8t7m368t4ssqs90.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.crazytech.gga",
+            "certificate_hash": "3b801b836723e4b8b0e93de6ed0838485e0ed579"
+          }
+        },
+        {
+          "client_id": "545814686035-cj2v2sl9in2tm860fpmrd5m1pi2ejf6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaxQsnK5j53NmCyTED9X2-DHI0DC-jLcg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545814686035-cj2v2sl9in2tm860fpmrd5m1pi2ejf6n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
