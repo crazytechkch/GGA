@@ -25,6 +25,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile "com.google.android.gms:play-services-gcm:11.0.4"
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'me.dm7.barcodescanner:zbar:1.8.4'
     compile project(':ctcommons')
     compile project(':glide-full-4.0.0-RC1')

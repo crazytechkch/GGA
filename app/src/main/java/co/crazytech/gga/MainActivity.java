@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import co.crazytech.gga.agroasset.AgroassetEditActivity;
 import co.crazytech.gga.agroasset.AgroassetListActivity;
 import co.crazytech.gga.agroasset.hive.Hive;
 import co.crazytech.gga.agroasset.hive.HiveEditActivity;
@@ -199,6 +200,10 @@ public class MainActivity extends AppCompatActivity
                     intent = new Intent(this, TreeEditActivity.class);
                     putExtraFromDb(extras,qrres,"v_tree");
                     extras.putLong("prodTypeId",1);
+                }
+                else {
+                    intent = new Intent(this, AgroassetEditActivity.class);
+                    putExtraFromDb(extras,qrres,"agroasset");
                 }
                 extras.putString("typeCode",qrres.getTypeCode());
                 extras.putString("farmCode",qrres.getFarmCode());
