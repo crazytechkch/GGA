@@ -26,9 +26,6 @@ public class TreeEditActivity extends AgroassetEditActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Bundle extras = getIntent().getExtras();
-        tree = new Tree(this,extras,"v_tree");
-        setAgroasset(tree);
         super.onCreate(savedInstanceState);
         getBtnInfuseRec().setVisibility(View.VISIBLE);
         getBtnDone().setOnClickListener(doneListener("agroasset"));
@@ -36,6 +33,13 @@ public class TreeEditActivity extends AgroassetEditActivity {
         String treeInfo = (tree.getDcode()!=null?tree.getDcode()+" - ":"")+(tree.getNickname()!=null?tree.getNickname():getString(R.string.gaharu_tree));
         Toast.makeText(this,farmName+"\n"+treeInfo,Toast.LENGTH_LONG).show();
      }
+
+    @Override
+    protected void initAgroasset() {
+        Bundle extras = getIntent().getExtras();
+        tree = new Tree(this,extras,"v_tree");
+        setAgroasset(tree);
+    }
 
     @Override
     public View.OnClickListener btnExtractListener() {

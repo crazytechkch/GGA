@@ -16,15 +16,19 @@ public class HiveEditActivity extends AgroassetEditActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Bundle extras = getIntent().getExtras();
-        hive = new Hive(this,extras,"v_hive");
-        setAgroasset(hive);
         super.onCreate(savedInstanceState);
         getBtnDone().setOnClickListener(doneListener("agroasset"));
         String farmName = hive.getFarm()!=null?hive.getFarm().getFarmName():"Gaharu Gading";
         String hiveInfo = (hive.getDcode()!=null?hive.getDcode()+" - ":"")+(hive.getNickname()!=null?hive.getNickname():getString(R.string.hive));
         Toast.makeText(this,farmName+"\n"+hiveInfo,Toast.LENGTH_LONG).show();
      }
+
+    @Override
+    protected void initAgroasset() {
+        Bundle extras = getIntent().getExtras();
+        hive = new Hive(this,extras,"v_hive");
+        setAgroasset(hive);
+    }
 
     @Override
     public View.OnClickListener btnExtractListener() {

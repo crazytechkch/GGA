@@ -62,6 +62,8 @@ public class AgroassetEditActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.agroasset_edit);
 
+        initAgroasset();
+
         etId = (EditText)findViewById(R.id.editTextDcode);
         etId.setText(agroasset.getDcode());
         etNickname = (EditText)findViewById(R.id.editTextNickname);
@@ -98,6 +100,11 @@ public class AgroassetEditActivity extends AppCompatActivity{
         initImageButtons();
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+    }
+
+    protected void initAgroasset(){
+        Bundle extras = getIntent().getExtras();
+        setAgroasset(new Agroasset(this,extras,"agroasset"));
     }
 
 

@@ -195,13 +195,12 @@ public class MainActivity extends AppCompatActivity
                     intent = new Intent(this, HiveEditActivity.class);
                     putExtraFromDb(extras,qrres,"v_hive");
                     extras.putLong("prodTypeId",2);
-                }
+                } else
                 if(qrres.getTypeCode().equals("AA")) {
                     intent = new Intent(this, TreeEditActivity.class);
                     putExtraFromDb(extras,qrres,"v_tree");
                     extras.putLong("prodTypeId",1);
-                }
-                else {
+                } else {
                     intent = new Intent(this, AgroassetEditActivity.class);
                     putExtraFromDb(extras,qrres,"agroasset");
                 }
