@@ -26,4 +26,8 @@ public class SyncService extends Service {
     public IBinder onBind(Intent intent) {
         return syncAdapter.getSyncAdapterBinder();
     }
+
+    class DBVersion {
+        int user_version;
+    }
 }

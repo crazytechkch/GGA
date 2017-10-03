@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import co.crazytech.gga.db.DbHelper;
 import retrofit2.Retrofit;
 
 /**
@@ -39,8 +40,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         Retrofit retro = new Retrofit.Builder()
-                .baseUrl("http://swopt.gaharu.co").build();
-        retro.create(SyncService.class);
+                .baseUrl("http://swopt.gaharu.co:8080/").build();
+        syncService = retro.create(SyncService.class);
+
 
     }
 
