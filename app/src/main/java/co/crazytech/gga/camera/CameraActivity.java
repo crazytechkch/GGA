@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,13 +25,13 @@ import co.crazytech.gga.R;
  * Created by eric on 30/7/2017.
  */
 
-public class CameraActivity extends Activity {
+public class CameraActivity extends FragmentActivity {
     private Camera camera;
     private Handler afHandler;
     private CameraPreview camPreview;
-    private Boolean previewing;
+    private Boolean previewing,isFlashOn;
 
-    private FloatingActionButton fabCamera;
+    private FloatingActionButton fabCamera,fabFlash;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class CameraActivity extends Activity {
             preview.addView(camPreview);
         }
 
-        fabCamera = (FloatingActionButton)findViewById(R.id.fabCamera);
+        fabCamera = (FloatingActionButton) findViewById(R.id.fabCamera);
         fabCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +62,14 @@ public class CameraActivity extends Activity {
                 camera.startPreview();
                 previewing = true;
                 camera.autoFocus(autoFocusCB);
+            }
+        });
+
+        fabFlash = (FloatingActionButton) findViewById(R.id.fabFlash);
+        fabFlash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleFlash(v);
             }
         });
     }
@@ -81,6 +91,17 @@ public class CameraActivity extends Activity {
             camera.release();
             camera = null;
         }
+    }
+
+    protected void toggleFlash(View v){
+        FloatingActionButton fab = (FloatingActionButton)v;
+        if (isFlashOn) {
+            fab.setImageResource(R.drawable.ic_flash_off_white_24dp);
+        } else {
+            fab.setImageResource(R.drawable.ic_flash_on_white_24dp);
+        }
+        isFlashOn = !isFlashOn;
+
     }
 
 

@@ -23,6 +23,7 @@ import android.view.KeyEvent;
 import android.view.Surface;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import net.sourceforge.zbar.Config;
 import net.sourceforge.zbar.Image;
@@ -31,18 +32,19 @@ import net.sourceforge.zbar.Symbol;
 import net.sourceforge.zbar.SymbolSet;
 
 import co.crazytech.gga.R;
+import co.crazytech.gga.camera.CameraActivity;
 import co.crazytech.gga.camera.CameraPreview;
 
 /**
  * Created by eric on 7/18/2016.
  */
-public class BarcodeScanner extends FragmentActivity {
+public class BarcodeScanner extends CameraActivity {
 
     private Camera mCamera;
     private CameraPreview mPreview;
     private Handler autoFocusHandler;
 
-    private FloatingActionButton fabCamera;
+    private FloatingActionButton fabCamera, fabFlash;
     private ImageScanner scanner;
 
     private boolean barcodeScanned = false;
@@ -91,6 +93,14 @@ public class BarcodeScanner extends FragmentActivity {
                     previewing = true;
                     mCamera.autoFocus(autoFocusCB);
                 }
+            }
+        });
+
+        fabFlash = (FloatingActionButton) findViewById(R.id.fabFlash);
+
+        fabFlash.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                toggleFlash(v);
             }
         });
         if(getScreenOrientation()==ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
