@@ -43,6 +43,10 @@ public class HiveListActivity extends AgroassetListActivity {
         tvTotal.setText("Total records : "+count);
         Cursor cursor = db.rawQuery("select id,status_name from entity_status",null);
         cursor.moveToFirst();
+        sql = "select a.id,a.nickname,a.code,a.dcode,max(e.date) as maxdate,(julianday('now')-julianday(e.date)) as datediff,CAST(a.dcode as SIGNED) AS casted_column " +
+                "from v_hive a left join v_extract_hive e on a.id = e.agroasset_id " +
+                "where datediff <= 30  group by a.id order by datediff";
+        agrogrps.add(new AgroassetGroup(getString(R.string.recent_harvest),R.drawable.bee,agroassets(sql)));
         while (!cursor.isAfterLast()){
             Long id = cursor.getLong(0);
             String statName = cursor.getString(1);

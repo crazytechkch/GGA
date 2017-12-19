@@ -40,7 +40,11 @@ public class AgroassetListActivity extends FragmentActivity{
             String nickname = cursor.getString(1);
             String code = cursor.getString(2);
             String dcode = cursor.getString(3);
-            agroassets.add(new Agroasset(id,nickname,code,dcode));
+            Agroasset aaset = new Agroasset(id,nickname,code,dcode);
+            if(cursor.getColumnIndex("maxdate")!=-1)
+                Log.d("DbHarvDate",cursor.getLong(4)+"");
+                aaset.setHarvDate(cursor.getString(4));
+            agroassets.add(aaset);
             cursor.moveToNext();
         }
         cursor.close();

@@ -7,6 +7,7 @@ import android.media.Image;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import co.crazytech.gga.R;
@@ -96,6 +101,16 @@ public class AgroassetListAdapter extends BaseExpandableListAdapter {
         TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
         txtTitle.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,0.9f));
         Agroasset agroasset = agrogrps.get(groupPosition).getAgroassets().get(childPosition);
+        Log.d("HarvDate",agroasset.getHarvDate()+"");
+        String harvDate = "";
+        try {
+            if(agroasset.getHarvDate()!=null) {
+                Calendar date = Calendar.getInstance();
+                date.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(agroasset.getHarvDate()));
+                harvDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date.getTime());
+            }
+
+        } catch (ParseException e){}
         txtTitle.setText(agroasset.getDcode()+" - "+agroasset.getNickname()+" ("+agroasset.getCode().substring(5)+")");
         ImageButton btnDelete = (ImageButton) convertView.findViewById(R.id.fabDelete);
         btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +128,10 @@ public class AgroassetListAdapter extends BaseExpandableListAdapter {
 
         LinearLayout linlay = (LinearLayout) convertView.findViewById(R.id.linlay);
         linlay.removeAllViews();
-        linlay.setVisibility(View.GONE);
+        TextView tvHarvDate = new TextView(convertView.getContext());
+        tvHarvDate.setText(harvDate);
+        linlay.addView(tvHarvDate);
+        //linlay.setVisibility(View.GONE);
         return convertView;
     }
 

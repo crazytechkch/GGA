@@ -28,4 +28,5 @@
     <string name="date">Date</string>
     <string name="time">Time</string>
     <string name="new_record">New Record</string>
+    <string name="recent_harvest">Recently Harvested</string>
 </resources>

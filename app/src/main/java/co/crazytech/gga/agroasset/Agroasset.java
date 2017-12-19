@@ -21,7 +21,7 @@ import co.crazytech.gga.zbar.QRResult;
 public class Agroasset {
     private Long id,entityStatusId,farmId,date,geoInfoId,prodTypeId;
     private Integer intervExtract,intervInfuse,intervInspect;
-    private String code,dcode,nickname,remark;
+    private String code,dcode,nickname,remark,harvDate;
     private BigDecimal geoLat,geoLong;
     private Context context;
     private Farm farm;
@@ -228,6 +228,14 @@ public class Agroasset {
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    public String getHarvDate() {
+        return harvDate;
+    }
+
+    public void setHarvDate(String harvDate) {
+        this.harvDate = harvDate;
     }
 
     public String dbUpdate(String table) {

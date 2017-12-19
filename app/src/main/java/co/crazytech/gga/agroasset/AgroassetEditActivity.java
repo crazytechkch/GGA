@@ -30,6 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -70,6 +71,22 @@ public class AgroassetEditActivity extends AppCompatActivity{
         etNickname.setText(agroasset.getNickname());
         etRemark= (EditText)findViewById(R.id.editTextRemark);
         etRemark.setText(agroasset.getRemark());
+        etRemark.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                EditText etView = (EditText)view;
+                Calendar date = Calendar.getInstance();
+                String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date.getTime());
+                if (hasFocus) {
+                    if(etView.getText().length()>0)etView.setText(etView.getText()+System.lineSeparator());
+                    etView.setText(etView.getText()+dateStr+" ");
+                } else {
+                    etView.setText(etView.getText().toString().replace(dateStr+" ",""));
+                    if(etView.getText().toString().lastIndexOf(System.lineSeparator())==(etView.getText().length()-1))
+                        etView.setText(etView.getText().toString().replace(System.lineSeparator(),""));;
+                }
+            }
+        });
 
         TextView tvId = (TextView)findViewById(R.id.textViewId);
         tvId.setText(agroasset.getCode()!=null?agroasset.getCode().substring(5):"NOCODE");

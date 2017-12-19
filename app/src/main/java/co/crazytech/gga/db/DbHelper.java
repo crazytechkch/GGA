@@ -21,7 +21,7 @@ import java.io.OutputStream;
 public class DbHelper extends SQLiteOpenHelper {
     private Context context;
     public static final String DB_NAME = "ggadb";
-    public static final int DB_VERSION = 4;
+    public static final int DB_VERSION = 5;
 
     public DbHelper(Context context, String name, CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -32,6 +32,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         try {
             runFromFile(context,db,"ggadb.sqlite.sql");
+            runFromFile(context, db, "ggadb.sqlite.5.sql");
         } catch (SQLException | IOException e) {
             Log.e("SQL",e.getMessage());
         }
@@ -40,13 +41,20 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         try {
-            switch (oldVersion) {
+            /*switch (oldVersion) {
                 case 1: runFromFile(context, db, "ggadb.sqlite.2.sql");
                     runFromFile(context, db, "ggadb.sqlite.3.sql");
                     runFromFile(context, db, "ggadb.sqlite.4.sql");
+                    runFromFile(context, db, "ggadb.sqlite.5.sql");
                 case 2: runFromFile(context, db, "ggadb.sqlite.3.sql");
                     runFromFile(context, db, "ggadb.sqlite.4.sql");
+                    runFromFile(context, db, "ggadb.sqlite.5.sql");
                 case 3: runFromFile(context, db, "ggadb.sqlite.4.sql");
+                    runFromFile(context, db, "ggadb.sqlite.5.sql");
+                case 4: runFromFile(context, db, "ggadb.sqlite.5.sql");
+            }*/
+            for (int i = oldVersion; i<newVersion; i++) {
+                runFromFile(context, db, "ggadb.sqlite."+(i+1)+".sql");
             }
         } catch (SQLException | IOException e) {
             Log.e("SQL",e.getMessage());
