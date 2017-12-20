@@ -1,6 +1,7 @@
 package co.crazytech.gga.agroasset;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -72,6 +74,7 @@ public class AgroassetEditActivity extends AppCompatActivity{
         etRemark= (EditText)findViewById(R.id.editTextRemark);
         etRemark.setText(agroasset.getRemark());
         etRemark.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @TargetApi(Build.VERSION_CODES.KITKAT)
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 EditText etView = (EditText)view;

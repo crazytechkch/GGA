@@ -27,4 +27,5 @@
     <string name="time">时间</string>
     <string name="new_record">新记录</string>
     <string name="recent_harvest">最近提取</string>
+    <string name="save">储存</string>
 </resources>
