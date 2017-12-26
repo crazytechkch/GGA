@@ -1,6 +1,7 @@
 package co.crazytech.gga.agroasset;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -41,21 +42,40 @@ public class AgroassetProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        return null;
+        return AgroassetContract.Agroassets.CONTENT_TYPE;
     }
 
     @Override
     public Uri insert(Uri uri, ContentValues contentValues) {
-        return null;
+        Uri returnUri;
+        pm.open();
+        SQLiteDatabase db = pm.getDb();
+        Long id = db.insert(AgroassetContract.Agroassets.NAME,null,contentValues);
+        pm.close();
+        returnUri = ContentUris.withAppendedId(AgroassetContract.Agroassets.CONTENT_URI,id);
+        getContext().getContentResolver().notifyChange(uri,null);
+        return returnUri;
     }
 
     @Override
-    public int delete(Uri uri, String s, String[] strings) {
-        return 0;
+    public int delete(Uri uri, String s, String[] sArgs) {
+        int rows;
+        pm.open();
+        SQLiteDatabase db = pm.getDb();
+        rows = db.delete(AgroassetContract.Agroassets.NAME,s,sArgs);
+        pm.close();
+        getContext().getContentResolver().notifyChange(uri,null);
+        return rows;
     }
 
     @Override
-    public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
-        return 0;
+    public int update(Uri uri, ContentValues contentValues, String s, String[] sArgs) {
+        int rows;
+        pm.open();
+        SQLiteDatabase db = pm.getDb();
+        rows = db.update(AgroassetContract.Agroassets.NAME,contentValues,s,sArgs );
+        pm.close();
+        getContext().getContentResolver().notifyChange(uri,null);
+        return rows;
     }
 }

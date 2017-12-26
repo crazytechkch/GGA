@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SyncResult;
 import android.os.Bundle;
+import android.util.Log;
 
 /**
  * Created by eric on 12/21/2017.
@@ -27,6 +28,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     @Override
     public void onPerformSync(Account account, Bundle bundle, String s, ContentProviderClient contentProviderClient, SyncResult syncResult) {
-
+        Log.i("Sync","perform sync for account["+account.name+"]");
     }
 }
