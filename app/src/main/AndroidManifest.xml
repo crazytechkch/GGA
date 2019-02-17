@@ -60,8 +60,14 @@
         <activity android:name=".agroasset.hive.HiveListActivity"/>
         <activity android:name=".agroasset.tree.TreeListActivity"/>
 
+        <provider
+            android:name=".agroasset.AgroassetProvider"
+            android:authorities="co.crazytech.gga"
+            android:exported="false"
+            android:syncable="true"/>
+
         <service
-            android:name="co.crazytech.gga.sync.SyncService"
+            android:name=".util.SyncService"
             android:exported="true"
             android:process=":sync">
             <intent-filter>
@@ -69,6 +75,14 @@
             </intent-filter>
             <meta-data android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter" />
+        </service>
+
+        <service android:name=".accounts.AccountService" >
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
         </service>
     </application>
 

@@ -27,6 +27,8 @@ public class Agroasset {
     private Farm farm;
     private EntityStatus entityStatus;
 
+    public static final String TABLE_NAME= "agroasset";
+
     public Agroasset() {
     }
 
